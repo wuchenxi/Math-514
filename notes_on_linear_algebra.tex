@@ -1,0 +1,118 @@
+\documentclass[20pt]{article} % USenglish for autoref
+\usepackage[paper=screen, centering, papersize=15cm]{geometry}
+\usepackage{cmap}		% to search and copy ligatures
+\usepackage[utf8]{inputenc}	% for Linux computer and Mac
+%\usepackage[latin1]{inputenc}	% für Windows computer
+\usepackage[T1]{fontenc}	% to search for ligatures in the pdf
+\usepackage[USenglish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{graphicx}
+%\usepackage{stmaryrd}		% for \mapsfrom
+\usepackage{aliascnt}		% for Aliascounter so that autoref gives the thms the right names
+\usepackage[pdfborder={0 0 0}]{hyperref}   % if you want to have math environment in captions you have to use \texorpdfstring{$x^2$}{x2}; without frame around the links
+\usepackage[figure]{hypcap}		% to make autoref link to figures and not the captions of figures
+%\usepackage{paralist}		% for compactitem
+\usepackage{mathtools}		% for \coloneqq
+\usepackage[]{todonotes}	% use option disable to disable all the todos
+\usepackage{float}
+\usepackage{lipsum}
+\theoremstyle{break}
+\newtheorem{definition}{Definition}[section]  
+\newtheorem{exa}[definition]{Example}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{lem}[definition]{Lemma}
+\newtheorem{conj}[definition]{Conjecture}
+\newtheorem{quest}[definition]{Research question}
+\newtheorem{thm}[definition]{Theorem}  
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{rem}[definition]{Remark}
+
+
+\renewcommand{\labelenumi}{(\roman{enumi})} % roman numbers in enumerations
+
+\usepackage{graphicx,tikz} % Allows including images
+
+\usetikzlibrary{calc,decorations.markings}
+\usetikzlibrary{shapes,snakes}
+
+\DeclareMathOperator{\Aff}{Aff}
+\DeclareMathOperator{\der}{der}
+\DeclareMathOperator{\Trans}{Trans}
+\DeclareMathOperator{\dir}{dir}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\NN}{\mathbb{N}}
+
+
+%For L Cal and L Twidle:
+\newcommand{\LC}{\mathcal{L}} 
+\newcommand{\LT}{\widetilde{\mathcal{L}}}
+
+%For X bar
+\newcommand{\XB}{\overline{X}}
+
+%For the real and complex numbers
+\newcommand{\RR}{\mathbb{R}} 
+\newcommand{\CC}{\mathbb{C}} 
+
+
+\newcommand{\remark}[2][]{\todo[color=green!50, #1]{#2}}
+
+\title{Notes on Linear Algebra}
+
+
+\begin{document}
+\maketitle
+
+Recall that a (real) {\bf Vector space} $V$ is a set with an element $0$, a ``scalar multiplication'' map $\mathbb{R}\times V\rightarrow V$ and an ``addition'' map $V\times V\rightarrow V$, such that, for any $x, y, z\in V$, any $a, b\in \mathbb{R}$, the followings are true:
+\begin{enumerate}
+\item $x+y=y+x$
+\item $(x+y)+z=x+(y+z)$
+\item $0+x=0$
+\item $1x=x$
+\item $0x=0$
+\item $(a+b)x=ax+bx$
+\item $a(x+y)=ax+ay$
+\item $(ab)x=a(bx)$
+\end{enumerate}
+
+If $V$ is a vector space, any non empty subset $V'\subset V$ which is closed under addition and scalar multiplication is called a {\bf subspace}. The maximum number of linearly independent vectors in a vector space is called its {\bf dimension}.\\
+
+The set of $n$ dimensional column vectors $\mathbb{R}^n$, under the usual addition and scalar multiplication, is a vector space, and it has dimension $n$.\\
+
+The {\bf inner product} on $\mathbb{R}^n$ is defined as $(x, y)=x^Ty=\sum_ix_iy_i$. It is easy to check that this inner product satisfies the following properties:
+\begin{enumerate}
+\item Symmetry: $(x, y)=(y, x)$
+\item Bilinearity: $(ax+a'x', y)=a(x, y)+a'(x', y)$, $(x, by+b'y')=b(x, y)+b'(x, y')$.
+\item Positive definiteness: $(x, x)\geq 0$ and $(x, x)=0$ iff $x=0$.
+\end{enumerate}
+
+Let $V$ be a subspace of $\mathbb{R}^n$. We call a basis of $V$ {\bf orthogonal} if the inner product of distinct basis vectors are all $0$, {\bf orthonomal} if in addition, the inner product of any basis vector with itself is $1$.\\
+
+Given any basis $\{x_1, \dots, x_d\}$ of a subspace $V\subset \mathbb{R}^n$, we can make it into an orthogonal or orthonormal basis via the {\bf Gram-Schmidt process}:
+\[y_1=x_1\]
+\[y_i=x_i-\sum_{j<i}((y_j, x_i)/(y_j, y_j))y_j\]
+Then $\{y_i\}$ is an orthogonal basis, and $\{(y_i, y_i)^{-1/2}y_i\}$ is an orthonormal basis.\\
+
+If $V$ is a subspace of $\mathbb{R}^n$, $x\in \mathbb{R}^n$, we call the {\bf orthogonal projection} of $x$ on $V$, denoted as $P_V(x)$, the unique vector that satisfies $P_V(x)\in V$ and $(x-P_V(x), y)=0$ for all $y\in V$.\\
+
+For any $x'\in V$, $(x-P_V(x), x-P_V(x))\leq (x-x', x-x')$ and equality happens iff $x'=P_V(x)$.\\
+
+To calculate $P_V(x)$, we can use either of these formulas:
+
+\begin{enumerate}
+\item If $\{x_i\}$ is an orthonormal basis of $V$, then $P_V(x)=\sum_i(x, x_i)x_i$.
+\item If $\{x_i\}$ is an orthogonal basis of $V$, then $P_V(x)=\sum_i((x, x_i)/(x_i, x_i))x_i$.
+\item If $\{x_i\}$ is just a basis of $V$, let $X=[x_1, \dots x_d]$ be a $n\times d$ matrix, then
+  \[P_V(x)=X(X^TX)^{-1}X^Tx=\sum_i(\sum_j a_{ij}(x_j, x)) x_i\]
+  Where $A=[a_{ij}]=[(x_i, x_j)]^{-1}$ is a $d\times d$ matrix. 
+\end{enumerate}
+
+If one replace $(x, y)$ with $(x, y)_A$ defined as $x^TAy$, where $A$ is a symmetric matrix with all eigenvalues positive, then $(\cdot, \cdot)_A$ still satisfies symmetry, bilinearity and positive definiteness, and all the conclusions about $(\cdot, \cdot)$ above are still valid.
+
+\end{document}
