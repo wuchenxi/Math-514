@@ -1,0 +1,90 @@
+\documentclass[20pt]{article} % USenglish for autoref
+\usepackage[paper=screen, centering, papersize=15cm]{geometry}
+\usepackage{cmap}		% to search and copy ligatures
+\usepackage[utf8]{inputenc}	% for Linux computer and Mac
+%\usepackage[latin1]{inputenc}	% für Windows computer
+\usepackage[T1]{fontenc}	% to search for ligatures in the pdf
+\usepackage[USenglish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{graphicx}
+%\usepackage{stmaryrd}		% for \mapsfrom
+\usepackage{aliascnt}		% for Aliascounter so that autoref gives the thms the right names
+\usepackage[pdfborder={0 0 0}]{hyperref}   % if you want to have math environment in captions you have to use \texorpdfstring{$x^2$}{x2}; without frame around the links
+\usepackage[figure]{hypcap}		% to make autoref link to figures and not the captions of figures
+%\usepackage{paralist}		% for compactitem
+\usepackage{mathtools}		% for \coloneqq
+\usepackage[]{todonotes}	% use option disable to disable all the todos
+\usepackage{float}
+\usepackage{lipsum}
+\theoremstyle{break}
+\newtheorem{definition}{Definition}[section]  
+\newtheorem{exa}[definition]{Example}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{lem}[definition]{Lemma}
+\newtheorem{conj}[definition]{Conjecture}
+\newtheorem{quest}[definition]{Research question}
+\newtheorem{thm}[definition]{Theorem}  
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{rem}[definition]{Remark}
+
+
+\renewcommand{\labelenumi}{(\roman{enumi})} % roman numbers in enumerations
+
+\usepackage{graphicx,tikz} % Allows including images
+
+\usetikzlibrary{calc,decorations.markings}
+\usetikzlibrary{shapes,snakes}
+
+\DeclareMathOperator{\Aff}{Aff}
+\DeclareMathOperator{\der}{der}
+\DeclareMathOperator{\Trans}{Trans}
+\DeclareMathOperator{\dir}{dir}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\NN}{\mathbb{N}}
+
+
+%For L Cal and L Twidle:
+\newcommand{\LC}{\mathcal{L}} 
+\newcommand{\LT}{\widetilde{\mathcal{L}}}
+
+%For X bar
+\newcommand{\XB}{\overline{X}}
+
+%For the real and complex numbers
+\newcommand{\RR}{\mathbb{R}} 
+\newcommand{\CC}{\mathbb{C}} 
+
+
+\newcommand{\remark}[2][]{\todo[color=green!50, #1]{#2}}
+
+\title{HW 4}
+
+
+\begin{document}
+\maketitle
+
+1. Let $f(x)=x^3$, $p$ be the Lagrange interpolation polynomial of $f$ using interpolation points $x=0$, $x=1$.  On the interval $[0, 1]$, find the point $c$ that maximizes the interpolation error $|f(c)-p(c)|$, and find another point $s\in [0, 1]$ such that
+\[f(c)-p(c)=f''(s)c(c-1)/2\]
+
+2. Let $f(x)=e^x$, $p$ be the Lagrange interpolation polynomial of $f$ on interval $[0, 2]$ using interpolation points $x_0=0$, $x_1=1$, $x_2=2$, find an upper bound for the $L^\infty$ norm of $f(x)-p(x)$ on $[0, 2]$, using the error bound of Lagrange polynomial we covered in the lecture (Theorem 6.2 in textbook, Theorem 1.5 in lecture notes).\\
+
+3. Suppose $f$ is continuous and with continuous derivatives of order up to and including 5 on $[a, b]$, and there are three distinct points $x_0$, $x_1$, $x_2$ in $[a, b]$. Let $y_i=f(x_i)$, $i=0, 1, 2$; $z_j=f'(x_j)$, $j=0, 2$.
+\begin{enumerate}
+\item Find a polynomial $p$ of degree at most $4$, such that $p(x_i)=y_i$, $i=0, 1, 2$; $p'(x_j)=z_j$, $j=0, 2$.
+\item Use an argument similar to the error estimate of Hermite interpolation polynomial to show that for any $x\in [a, b]$, there is some number $s\in [a, b]$ such that
+  \[f(x)-p(x)=f^{(5)}(s)(x-x_0)^2(x-x_1)(x-x_2)^2/5!\]
+\end{enumerate}
+
+4. Let $q_j=(1-x^2)^j$, $\varphi_j=q_j^{(j)}$, show that $\varphi_j$ are orthogonal to each other in $L^2([-1, 1])$. In other words, if $j\not=j'$, $\int_{-1}^1\varphi_j\varphi_{j'}dx=0$. \\
+
+5. Find three distinct points $x_0$, $x_1$ and $x_2$ in $(-1, 1)$, such that for any polynomial function $f$ of degree $3$, the best approximation of $f$ under $L^2$ norm on $[-1, 1]$ of degree at most $2$ coincides with the Lagrange interpolation polynomial of $f$ using interpolation points $x_0$, $x_1$ and $x_2$.\\
+
+6. Let $f$ be a continuous function on $[0, 1]$, $p_n$ be the polynomial of best approximation of degree no more than $n$ under the $L^2$ norm. Then, after studying Theorem 9.5 in the textbook, which proved that $f-p_n$ is zero at at least $n+1$ distinct points in $(0, 1)$, find a function $f$ such that $f-p_2$ is zero at $4$ distinct points in $(0, 1)$.
+
+\end{document}
