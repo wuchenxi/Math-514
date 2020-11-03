@@ -776,7 +776,7 @@ Let $a=x_0<\dots<x_n=b$ be $n+1$ evenly spaced points on $[a, b]$. If $n=dm$, we
 For example, if $d=1$, we cut $[a, b]$ into $n$ subintervals and apply trapezium rule on each we get
 \[{b-a\over n}(f(x_0)/2+\sum_{i=1}^{n-1}f(x_i)+f(x_n)/2)\]
 If $d=2$, we cut $[a, b]$ into $n/2$ subintervals, and apply simpson's rule on each, we get
-\[{b-a\over 3n}(f(x_0)+4\sum_{i=1}^{n/2}f(x_{2i-1})+2\sum_{i=1}^{n/2-1}f(x_{2i})+f(x_n)\]
+\[{b-a\over 3n}(f(x_0)+4\sum_{i=1}^{n/2}f(x_{2i-1})+2\sum_{i=1}^{n/2-1}f(x_{2i})+f(x_n))\]
 
 \newpage
 
@@ -801,7 +801,7 @@ When $f$ is smooth with bounded higher order derivatives, the error estimate for
   \[I_m={4\sum_{i=1}^{m}\sin({2i-1\over 2m})+2\sum_{i=1}^{m-1}\sin({i\over m})+sin(1)\over 6m}\]
   \[={2(1-\cos(1))+\cos({1\over 2m})-\cos({2m-1\over 2m})+\sin(1)\sin({1\over 2m})\over 6m\sin({1\over 2m})}\]
   \[=(1-\cos(1))\cdot{2+\cos({1\over 2m})\over 6m\sin({1\over 2m})}\]
-  \[=(1-\cos(1))\cdot{3-(2m)^{-2}/2+O((2m)^{-4})\over 3-(2m)^{-2}/2+O((2m)^{-4})}\]
+  \[=(1-\cos(1))\cdot{3-(2m)^{-2}/2+(2m)^{-4}/24+O((2m)^{-6})\over 3-(2m)^{-2}/2+(2m)^{-4}/40+O((2m)^{-6})}\]
   \[=(1-\cos(1))+O(m^{-4})\]
 \end{itemize}
 
@@ -843,7 +843,7 @@ When $f$ is smooth with bounded higher order derivatives, the error estimate for
      $r\leftarrow r+2\times f({(n-i)a+ib\over n})$\;
    }
  }
- The answer is ${(b-a)r\over 6n}$\;
+ The answer is ${(b-a)r\over 3n}$\;
  \caption{Composite Simpson's rule}
 \end{algorithm}
 
