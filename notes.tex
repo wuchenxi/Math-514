@@ -135,7 +135,7 @@
   \begin{proof}
     Let
     \[p(x)=\sum_i\left( y_i\cdot {\prod_{j\not=i}(x-x_j)\over \prod_{j\not=i}(x_i-x_j)}\right)\]
-    Then by calculation, $p(x_i)=y_i$.
+    Then $p(x_k)=\sum_i\left( y_i\cdot {\prod_{j\not=i}(x_k-x_j)\over \prod_{j\not=i}(x_i-x_j)}\right)y_i$. The $k$-th term is $y_k\times 1$ while all other terms are zero, hence the answer is $y_k$.
   \end{proof}
 
   \newpage
@@ -238,7 +238,11 @@ Use the same strategy as the Lagrange case, possibly via a few trials and errors
   Let
   \[p(x)=\sum_i\left( z_i\cdot {(x-x_i)\prod_{j\not=i}(x-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2}\right. \]
   \[\left. +y_i\cdot \left(1-(x-x_i)\sum_{j\not=i}{2\over x_i-x_j}\right)\cdot {\prod_{j\not=i}(x-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2} \right)\]
-  Then by calculation, $p(x_i)=y_i$, $p'(x_i)=z_i$.
+  Then by calculation,
+  \[p(x_k)=\sum_i\left( z_i\cdot {(x_k-x_i)\prod_{j\not=i}(x_k-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2}\right. \]
+  \[\left. +y_i\cdot \left(1-(x_k-x_i)\sum_{j\not=i}{2\over x_i-x_j}\right)\cdot {\prod_{j\not=i}(x_k-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2} \right)\]
+  In the first sum, all terms have a factor $(x_k-x_k)$, so it must be zero. In the second sum, all but the $k$-th term is zero, and the $k$-th term is $y_k$.
+  Similarly, by taking derivative and let $x=x_k$, we can show that $p'(x_k)=z_k$.
   \end{proof}
 
 \newpage
@@ -989,25 +993,90 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
     
    Because the derivatives go to infinity at $x$ close to $\pm 1$, both methods only have $O(n^{-1})$ error bound.
 
+   \newpage
 
-% \subsection{Extrapolation}
+   Review:\\
+   
+   \begin{itemize}
+   \item Interpolation
+     \begin{itemize}
+      \item Lagrange interpolation
+      \item Hermite interpolation
+      \item Uniqueness and error estimate
+      \end{itemize}
+    \item Approximation theory
+      \begin{itemize}
+        \item Normed vector space and inner product space
+        \item Gram-Schmidt
+        \item Orthogonal projection
+        \end{itemize}
+      \item Numerical integration
+        \begin{itemize}
+        \item Quadrature rule: $I=\sum_{i=0}^nw_if(x_i)$
+        \item Newton-Cotes quadrature, $n=1, 2$
+        \item Error estimate via error estimate of Lagrange interpolation
+        \item Composite methods
+        \end{itemize}
+      \end{itemize}
+      \newpage
+      Example: $f(x)=\sin(x)$, $x\in [0, \pi]$, $x_0=0, x_1=\pi/2, x_2=\pi$.
+      \begin{itemize}
+      \item The Lagrange interpolation polynomial is
+        \[p(x)=0\cdot {(x-\pi/2)(x-\pi)\over \pi^2/2}+1\cdot {x(x-\pi)\over -\pi^2/4}+0\cdot {(x-\pi/2)x\over \pi^2/2}\]
+      \item The numerical integration using Simpson's rule is
+        \[I(f)=\int_0^\pi p(x)dx=0\cdot {\pi\over 6}+1\cdot {2\pi\over 3}+0\cdot {\pi\over 6}={2\pi\over 3}\]
+      \item The error estimate for Lagrange interpolation:
+        \[|f(x)-p(x)|=\left|{f'''(s)x(x-{\pi/2})(x-\pi)\over 3!}\right|\leq {1\over 6}|x(x-\pi/2)(x-\pi)|\]
+      \item Integrate the error estimate above, we get
+        \[|\int_0^\pi f(x)dx-I(f)|\leq {1\over 6}\int_0^\pi|x(x-\pi/2)(x-\pi)|={1\over 6}\cdot \pi^4 \cdot{1\over 32}={\pi^4\over 192}\approx 0.507\]
+      \item We can find an alternative error estimate via the following procedure
+        \begin{enumerate}
+         \item We see that if $g$ is a polynomial of degree $2$, $g$ equals its Lagrange interpolation at $x_0, x_1, x_2$, hence $I(g)=\int_0^\pi gdx$.
+         \item Furthermore, if $f_3=x(x-\pi/2)(x-\pi)$, $I(f_3)=0=\int_0^\pi f_3dx$.
+         \item Hence, if $g_3$ is a polynomial of degree 3, then $g_3=af_3+g$ for some $a\in\mathbb{R}$, and $g$ is a polynomial of degree $2$. Hence
+           \[I(g_3)=aI(f_3)+I(g)=\int_0^\pi g(x)dx=\int_0^\pi (af_3+g)dx=\int_0^\pi g_3dx\]
+         \item Now Let $p$ be the Lagrange interpolation polynomial of $f$ at $x_0, x_1, x_2, x_3=c$, then $\int_0^\pi pdx=I(p)=I(f)$.
+         \item The error estimate for Lagrange interpolation gives us
+           \[|f(x)-p(x)|=\left|{f''''(s)x(x-c)(x-{\pi/2})(x-\pi)\over 4!}\right|\]
+           \[\leq {1\over 24}|x(x-c)(x-\pi/2)(x-\pi)|\]
+         \item Integrate the error estimate, let $c\rightarrow {\pi/2}$, we get
+           \[|f(x)-I(f)|\leq {1\over 24}\int_0^\pi |x(x-\pi/2)^2(x-\pi)| dx={\pi^4\over 2880}\approx 0.106\]
+           This is the bound in Theorem 7.2 in the textbook.
+         \end{enumerate}
+       \item The actual error is $2\pi/3-2=0.094$.
+      \end{itemize}
+      \newpage
+      Exercises 1: Let $f(x)=x^3(1-x)$, $x\in [0, 1]$. $x_0=0$, $x_1=c$, $x_2=1$, $c\in (0, 1)$.
+      \begin{itemize}
+      \item Find the Lagrange interpolation of $f$ at $x_0$, $x_1$, $x_2$.
+      \item Integrate the Lagrange interpolation on $[0, 1]$ to get an estimate of $\int_0^1f(x)dx$. 
+      \item Find $c$ such that the estimate you found above is optimal.
+      \end{itemize}
+      
+      Exercise 2: Let $[a, b]=[0, 1]$, $x_0=0$, $x_1=0.5$, $x_2=1$.
+      \begin{itemize}
+      \item Write down the formula for Simpson's rule and the composite trapezium rule using $x_i$.
+      \item Find a continuous function on $[a, b]$ where the Simpson's rule works better than the composite trapezium rule, and vice versa.
+      \end{itemize}
 
-% A way to improve on the performance of the composite method above is via ``extrapolation''. \\
+      \newpage
 
-% Suppose $f\in C^\infty([a, b])$, $[a, b]$ evenly decomposed into $n$ subintervals, each with size $h$. Now consider the function
-% \[F_i(t)=\int_0^t (f(x_{i-1}+t)+f(x_i-t))dt\]
-% Then, $\int_a^bf(x)dx=\sum_iF_i(h/2)$.
-% Now do Talyor series expansion for $F_i$, we get:
-% \[F_i(h/2)={h\over 2}(f(x_{i-1})+f(x_i))+{h^2\over 8}(f'(x_{x-1})-f'(x_i))+\dots\]
+      \[\]
 
-% \newpage
+      \newpage
+      % Answer:\\
 
-% \begin{exa}Calculating $\int_0^1\sqrt{1-x^2} dx$. (The answer is $\pi/4$, so this is essentially calculating $\pi$.)
-
-% \end{exa}
-  
-% \subsection{Gauss rules}
-
-% \section{Initial Value Problem (Chapter 12)}
-
+      % Exercises 1:\\
+      % \begin{itemize}
+      % \item $p=c^3(1-c)\cdot {x(x-1))\over c(c-1)}=-cx(x-1)$.
+      % \item $I=c/6$. 
+      % \item $\int_0^1f(x)dx=1/20$, so $c$ should be $3/10$.
+      % \end{itemize}
+      
+      % Exercise 2:\\
+      % \begin{itemize}
+      % \item Simpson's rule: $f(0)/6+2f(0.5)/3+f(1)/6$. Composite trapezium rule: $f(0)/4+f(0.5)/2+f(1)/4$.
+      % \item $f(x)=x^2$. $f(x)=|x-0.5|$. 
+      % \end{itemize}
+      
 \end{document}

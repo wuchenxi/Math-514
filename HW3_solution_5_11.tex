@@ -1,0 +1,79 @@
+\documentclass[20pt]{article} % USenglish for autoref
+\usepackage[paper=screen, centering, papersize=15cm]{geometry}
+\usepackage{cmap}		% to search and copy ligatures
+\usepackage[utf8]{inputenc}	% for Linux computer and Mac
+%\usepackage[latin1]{inputenc}	% für Windows computer
+\usepackage[T1]{fontenc}	% to search for ligatures in the pdf
+\usepackage[USenglish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{graphicx}
+%\usepackage{stmaryrd}		% for \mapsfrom
+\usepackage{aliascnt}		% for Aliascounter so that autoref gives the thms the right names
+\usepackage[pdfborder={0 0 0}]{hyperref}   % if you want to have math environment in captions you have to use \texorpdfstring{$x^2$}{x2}; without frame around the links
+\usepackage[figure]{hypcap}		% to make autoref link to figures and not the captions of figures
+%\usepackage{paralist}		% for compactitem
+\usepackage{mathtools}		% for \coloneqq
+\usepackage[]{todonotes}	% use option disable to disable all the todos
+\usepackage{float}
+\usepackage{lipsum}
+\theoremstyle{break}
+\newtheorem{definition}{Definition}[section]  
+\newtheorem{exa}[definition]{Example}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{lem}[definition]{Lemma}
+\newtheorem{conj}[definition]{Conjecture}
+\newtheorem{quest}[definition]{Research question}
+\newtheorem{thm}[definition]{Theorem}  
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{rem}[definition]{Remark}
+
+
+\renewcommand{\labelenumi}{(\roman{enumi})} % roman numbers in enumerations
+
+\usepackage{graphicx,tikz} % Allows including images
+
+\usetikzlibrary{calc,decorations.markings}
+\usetikzlibrary{shapes,snakes}
+
+\DeclareMathOperator{\Aff}{Aff}
+\DeclareMathOperator{\der}{der}
+\DeclareMathOperator{\Trans}{Trans}
+\DeclareMathOperator{\dir}{dir}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\NN}{\mathbb{N}}
+
+
+%For L Cal and L Twidle:
+\newcommand{\LC}{\mathcal{L}} 
+\newcommand{\LT}{\widetilde{\mathcal{L}}}
+
+%For X bar
+\newcommand{\XB}{\overline{X}}
+
+%For the real and complex numbers
+\newcommand{\RR}{\mathbb{R}} 
+\newcommand{\CC}{\mathbb{C}} 
+
+
+\newcommand{\remark}[2][]{\todo[color=green!50, #1]{#2}}
+
+
+\begin{document}
+
+5.11 Let the unknowns be $\lambda, x_1,\dots, x_n$, and the system of equations be $F(\lambda, x_1,\dots, x_n)=((A-\lambda I)x, x^Tx-1)=0$. Then by calculation the Jacobian matrix is
+\[J=\left[\begin{array}{cc} A-\lambda I & -x \\ 2x^T & 0\end{array}\right]\]
+Hence Newton's method gives us
+\[\left[\begin{array}{c} x^{(1)} \\ \lambda^{(1)}\end{array}\right]=\left[\begin{array}{c} x^{(0)} \\ \lambda^{(0)}\end{array}\right]+\left[\begin{array}{c} \delta x \\ \delta\lambda\end{array}\right]\]
+\[J\left[\begin{array}{c} \delta x \\ \delta\lambda\end{array}\right]=-\left[\begin{array}{c} (A-\lambda^{(0)}I)x^{(0)} \\ (x^{(0)})^Tx^{(0)}-1\end{array}\right]\]
+Hence
+\[(A-\lambda^{(0)}I)\delta x-\delta\lambda x^{(0)}=-(A-\lambda^{(0)}I)x^{(0)}\]
+\[-{x^{(0)}}^T\delta x={1\over 2}({x^{(0)}}^Tx^{(0)}-1)\]
+It's easy to see that the direction of eigenvectors changes in the same way as inverse iteration, the difference being that at each step their norms are not strictly normalized into $1$.
+
+\end{document}
