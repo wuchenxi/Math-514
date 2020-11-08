@@ -1144,8 +1144,10 @@ Let $h(x)=\prod_{j\not=k}(x_k-x_j)-\prod_{j\not=k}(x-x_j)$, then $\deg(h)=n$, an
 
 \newpage
 
+\begin{rem} For comparison, when $n=3$, the Newton-Cotes quadrature weights are not all positive.\end{rem}
+
 As a consequence, we have:
-\begin{thm} Given any continuous function $f$, the Gauss-Legendre quadrature result $I_n(f)$ converges to $\int_a^bfdx$ as $n\rightarrow\infty. $\end{thm}
+\begin{thm} (Theorem 10.2 in textbook) Given any continuous function $f$, the Gauss-Legendre quadrature result $I_n(f)$ converges to $\int_a^bfdx$ as $n\rightarrow\infty. $\end{thm}
 \begin{proof}
   By Weierstrass approximation theorem there is some $p$ such that $|f-p|<\epsilon$ on $[a, b]$, hence for any $n>\deg(p)$,
   \[|\int_a^bfdx-I_n(f)|\leq |\int_a^bfdx-\int_a^bpdx|+|\int_a^bpdx-I_n(p)|+|I_n(p)-I_n(f)|\]
@@ -1153,11 +1155,24 @@ As a consequence, we have:
   Now let $\epsilon\rightarrow 0$ we get the convergence.
 \end{proof}
 
-
-
 \newpage  
 
-    \begin{rem} The Gauss-Legendre quadrature can be generalized to deal with the problem of estimating $\int_a^bfwdx$ where $w$ is a given weight function not depend on $f$, by replacing Legendre polynomials with other orthogonal polynomials, which are called ``Gauss-$\dots$ quadrature''.
-  \end{rem}
+    \begin{rem} The Gauss-Legendre quadrature can be generalized to deal with the problem of estimating $\int_a^bfwdx$ where $w$ is a given weight function not depend on $f$, by replacing Legendre polynomials with other orthogonal polynomials, which are called ``Gauss quadrature''.
+    \end{rem}
+
+ \begin{definition}
+  The Gauss quadrature points with weight $w$, $x_0,\dots, x_n$ on $[a, b]$ is defined as $x_j$ is the $j+1$-th root of the weight-$w$ orthogonal polynomial on $[a, b]$ with index $n+1$, $\psi_{n+1}$. The quadrature weights are chosen as $w_k=\int_a^bw{\prod_{j\not=k}(x-x_j)\over \prod_{j\not=k}(x_k-x_j)}dx$.
+\end{definition}
+
+\begin{thm}
+  \begin{enumerate}
+  \item $w_k=\int_a^bw\left({\prod_{j\not=k}(x-x_j)\over \prod_{j\not=k}(x_k-x_j)}\right)^2dx$ hence is always positive.
+\item If $f$ is a polynomial of degree no more than $2n+1$, then $\int_a^bwfdx=I_n(f)$, where $I$ is the Gauss quadrature rule with $n+1$ quadrature points.
+\item If $f$ is continuous on $[a, b]$, $\lim_{n\rightarrow\infty}I_n(f)=\int_a^bwfdx$ (Theorem 10.2 in textbook).
+\item If $f\in C^{2n+2}$, then there is some $c\in [a, b]$, where $\int_a^bwfdx-I(f)={f^{(2n+2)}(c)\over (2n+2)!}\int_a^bw\prod_i(x-x_i)^2 dx$. (Theorem 10.1 in textbook)
+  \end{enumerate}
+\end{thm}
+
+The proof is very similar to the Gauss-Legendre case.
   
 \end{document}
