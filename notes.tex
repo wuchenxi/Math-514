@@ -730,7 +730,7 @@ The proof is follows immediately from the error estimate of Lagrange interpolati
 
 For Newton-Cotes, when $n$ is even (in order words when we have odd number of quadrature points), the error bound can be improved to $\max|f^{(n+2)}|\cdot O((b-a)^{n+3})$ provided $f\in C^{n+2}$:
 
-\begin{thm}Let $n$ be an even number, $f\in C^{n+2}([a, b])$, $I_n(f)$ the Newton-Cotes formula using $n+1$ evenly spaced points on $[a, b]$, then there is some $C_n$ (depending on $n$) such that
+\begin{thm}\label{qbound} Let $n$ be an even number, $f\in C^{n+2}([a, b])$, $I_n(f)$ the Newton-Cotes formula using $n+1$ evenly spaced points on $[a, b]$, then there is some $C_n$ (depending on $n$) such that
   \[|\int_a^bf(x)dx-I_n(f)|\leq C_n\max|f^{(n+2)}|(b-a)^{n+3}\]
 \end{thm}
 \begin{proof}
@@ -1040,7 +1040,7 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
            \[|f(x)-p(x)|=\left|{f''''(s)x(x-c)(x-{\pi/2})(x-\pi)\over 4!}\right|\]
            \[\leq {1\over 24}|x(x-c)(x-\pi/2)(x-\pi)|\]
          \item Integrate the error estimate, let $c\rightarrow {\pi/2}$, we get
-           \[|f(x)-I(f)|\leq {1\over 24}\int_0^\pi |x(x-\pi/2)^2(x-\pi)| dx={\pi^4\over 2880}\approx 0.106\]
+           \[|\int_0^\pi f(x)dx-I(f)|\leq {1\over 24}\int_0^\pi |x(x-\pi/2)^2(x-\pi)| dx={\pi^5\over 2880}\approx 0.106\]
            This is the bound in Theorem 7.2 in the textbook.
          \end{enumerate}
        \item The actual error is $2\pi/3-2=0.094$.
@@ -1058,25 +1058,106 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
       \item Write down the formula for Simpson's rule and the composite trapezium rule using $x_i$.
       \item Find a continuous function on $[a, b]$ where the Simpson's rule works better than the composite trapezium rule, and vice versa.
       \end{itemize}
-
-      \newpage
-
-      \[\]
-
-      \newpage
-      % Answer:\\
-
-      % Exercises 1:\\
-      % \begin{itemize}
-      % \item $p=c^3(1-c)\cdot {x(x-1))\over c(c-1)}=-cx(x-1)$.
-      % \item $I=c/6$. 
-      % \item $\int_0^1f(x)dx=1/20$, so $c$ should be $3/10$.
-      % \end{itemize}
       
-      % Exercise 2:\\
-      % \begin{itemize}
-      % \item Simpson's rule: $f(0)/6+2f(0.5)/3+f(1)/6$. Composite trapezium rule: $f(0)/4+f(0.5)/2+f(1)/4$.
-      % \item $f(x)=x^2$. $f(x)=|x-0.5|$. 
-      % \end{itemize}
+       Answer:\\
+
+       Exercises 1:\\
+       \begin{itemize}
+       \item $p=c^3(1-c)\cdot {x(x-1))\over c(c-1)}=-c^2x(x-1)$.
+       \item $I=c^2/6$. 
+       \item $\int_0^1f(x)dx=1/20$, so $c$ should be $\sqrt{0.3}$.
+       \end{itemize}
       
+       Exercise 2:\\
+       \begin{itemize}
+       \item Simpson's rule: $f(0)/6+2f(0.5)/3+f(1)/6$. Composite trapezium rule: $f(0)/4+f(0.5)/2+f(1)/4$.
+       \item $f(x)=x^2$. $f(x)=|x-0.5|$. 
+       \end{itemize}
+
+       Correction for the lecture on 11/6: We can also estimate the integral by decomposing the interval into $n$ subintervals with the same length, and calculate the sum of the areas of rectangles with those subintervals as base. If the height is taken as the value of the function at end points (i.e. $I={b-a\over n}\sum_{i=0}^{n-1}f(x_i)$), or use the maximum or minimum on the interval as in the definition of Riemann integration, then the error grows as $O(1/n)$ if $f$ is smooth, where $n$ is the number of subintervals, which is worse than composite trapezium rule. However, if the height is taken as the value of the function at midpoints (i.e. $I={b-a\over n}\sum_{i=0}^{n-1}f({x_i+x_{i+1}\over 2})$) the error grows as $O(1/n^2)$ if $f$ is smooth (so it's about as accurate as the trapezium rule).
+       
+  \newpage     
+  \subsection{Gauss quadrature (See Sections 10.2-10.4 for an alternative formulation)}
+  Motivation:
+  \begin{enumerate}
+  \item From the error bound of composite rules, we know that if the quadrature has error bound $O(|b-a|^{-k})$, the composite rule will have an error bound of $O(n^{-k+1})$.
+  \item So suppose $f$ is sufficiently smooth, it might be good to try and make the number $k$ as large as possible.
+  \item From the proof of Theorem~\ref{qbound}, we see that if a quadrature rule gives accurate answer to polynomials of degree $d$, then the error bound is $O(|b-a|^{-d-2})$.
+  \item So, it may be good to strategically choose the quadrature points such that the quadrature rule works for polynomials of high degrees.
+  \end{enumerate}
+
+  Recall from the definition of Legendre polynomial, if $L_j$ are the Legendre polynomials, then
+  \[L_j\perp span\{L_0, L_1, \dots L_{j-1}\}\]
+  Under $L^2([-1, 1])$ norm.
+
+  \newpage
+
+  \begin{thm}\label{high_poly} Let $I(f)$ be the result of quadrature rule on $[-1, 1]$, using quadrature points  $x_i$, $i=0, \dots, n$, which the roots of $L_{n+1}$. For any polynomial $g$ of degree no more than $2n+1$, $I(g)=\int_{-1}^1gdx$.\end{thm}
+
+  \begin{proof}
+  It's easy to see that
+  \[span\{1, x, \dots x^{2n+1}\}=span\{L_0, \dots L_{n+1}, L_{n+1}L_1, \dots, L_{n+1}L_n\}\]
+  (A way to see it is by first recognizing that $span\{1, x, \dots x^{2n+1}\}$ has dimension $2n+1$, and show, from definition, that
+  \[\{L_0, \dots L_{n+1}, L_{n+1}L_1, \dots, L_{n+1}L_n\}\]
+  is a linearly independent set of $2n+1$ elements hence must be a basis.)
+
+  \newpage
+
+  Because both $I$ and $\int_{-1}^1$ are linear on the vector space consisting of polynomials of degree no more than $2n+1$, and two linear transformations are the same if and only if they are identical on the basis vectors, we only need to prove it when $g$ is $L_j$, $0\leq j\leq n$, as well as when $g$ is $L_jL_{n+1}$, $0\leq j\leq n$.
+  \begin{itemize}
+  \item Case 1: $g=L_j$ for some $j\leq n$. In this case, $p$ is of degree no more than $n$, hence $p$ is identical to its Lagrange interpolation at $n+1$ points. Hence $I(g)=\int_{-1}^1gdx$.
+   \item Case 2: $g=L_jL_{n+1}$, $j\leq n$. Because $g$ has a factor $L_{n+1}$, $g(x_i)=0$ for all $i$, hence $I(g)=0$. On the other hand, because $L_ {n+1}$ and $L_j$ are orthogonal on $L^2([-1, 1])$, $\int_{-1}^1gdx=0$
+  \end{itemize}
+  \end{proof}
+
+\newpage
+  
+  \begin{definition}
+  The Gauss-Legendre quadrature points $x_0,\dots, x_n$ on $[a, b]$ is defined as $x_j={a+b\over 2}+c_j{b-a\over 2}$, where $c_j$ is the $j+1$-th root of the $n+1$-th Legendre polynomial. In other words, $x_j$ is the $j+1$-th root of the weight-$1$ orthogonal polynomial on $[a, b]$ with index $n+1$, $\psi_{n+1}$.
+\end{definition}
+
+  Now we can use Theorem~\ref{high_poly} to prove an error bound for Gauss-Legendre quadrature:
+  \begin{thm}(Theorem 10.1 in textbook)
+    Let $f\in C^{2n+2}$, then there is some $c\in [a,  b]$ such that
+    \[\int_a^bfdx-I(f)={f^{(2n+2)}(c)\over (2n+2)!}\int_a^b\prod_i(x-x_i)^2 dx\]
+  \end{thm}
+
+  \begin{proof}
+  Let $H$ be the Hermite interpolation polynomial of $f$ at $x_i$, then Theorem~\ref{high_poly} implies that $\int_a^bHdx=I(H)=I(f)$. Hence the result follows from the error bound of Hermite interpolation (Theorem~\ref{err_her}).
+  \end{proof}
+
+  \newpage
+
+Another key property of the Gauss-Legendre quadrature is that all its weights are positive, because we have
+\begin{thm}\label{pos_wt}
+  The weight for Gauss-Legendre quadrature is
+  \[w_k=\int_a^b{\prod_{j\not=k}(x-x_j)\over \prod_{j\not=k}(x_k-x_j)}dx=\int_a^b\left({\prod_{j\not=k}(x-x_j)\over \prod_{j\not=k}(x_k-x_j)}\right)^2dx\]
+\end{thm}
+
+\begin{proof}
+Suppose $\psi_{n+1}=c\prod_i(x-x_i)$, then
+\[w_k=\int_a^b{\prod_{j\not=k}(x-x_j)\over \prod_{j\not=k}(x_k-x_j)}-\left({\prod_{j\not=k}(x-x_j)\over \prod_{j\not=k}(x_k-x_j)}\right)^2dx\]
+\[={1\over(\prod_{j\not=k}(x_k-x_j})^2\int_a^b\prod_{j\not=k}(x-x_j)(\prod_{j\not=k}(x_k-x_j)-\prod_{j\not=k}(x-x_j))dx\]
+Let $h(x)=\prod_{j\not=k}(x_k-x_j)-\prod_{j\not=k}(x-x_j)$, then $\deg(h)=n$, and $h(x_k)=0$, hence $h=(x-x_k)h_1$ where $\deg(h_1)=n-1$. Now we have
+\[\int_a^b\prod_{j\not=k}(x-x_j)(\prod_{j\not=k}(x_k-x_j)-\prod_{j\not=k}(x-x_j))dx=\int_a^b(\psi_{n+1}\cdot{h_1\over c})dx=0\]
+\end{proof}
+
+\newpage
+
+As a consequence, we have:
+\begin{thm} Given any continuous function $f$, the Gauss-Legendre quadrature result $I_n(f)$ converges to $\int_a^bfdx$ as $n\rightarrow\infty. $\end{thm}
+\begin{proof}
+  By Weierstrass approximation theorem there is some $p$ such that $|f-p|<\epsilon$ on $[a, b]$, hence for any $n>\deg(p)$,
+  \[|\int_a^bfdx-I_n(f)|\leq |\int_a^bfdx-\int_a^bpdx|+|\int_a^bpdx-I_n(p)|+|I_n(p)-I_n(f)|\]
+  \[\leq \epsilon(b-a)+0+\epsilon\]
+  Now let $\epsilon\rightarrow 0$ we get the convergence.
+\end{proof}
+
+
+
+\newpage  
+
+    \begin{rem} The Gauss-Legendre quadrature can be generalized to deal with the problem of estimating $\int_a^bfwdx$ where $w$ is a given weight function not depend on $f$, by replacing Legendre polynomials with other orthogonal polynomials, which are called ``Gauss-$\dots$ quadrature''.
+  \end{rem}
+  
 \end{document}
