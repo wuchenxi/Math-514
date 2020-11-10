@@ -1172,16 +1172,16 @@ Another key property of the Gauss-Legendre quadrature is that all its weights ar
 \end{thm}
 
 \begin{proof}
-Suppose $\psi_{n+1}=c\prod_i(x-x_i)$, then
-\[w_k=\int_a^b{\prod_{j\not=k}(x-x_j)\over \prod_{j\not=k}(x_k-x_j)}-\left({\prod_{j\not=k}(x-x_j)\over \prod_{j\not=k}(x_k-x_j)}\right)^2dx\]
-\[={1\over(\prod_{j\not=k}(x_k-x_j})^2\int_a^b\prod_{j\not=k}(x-x_j)(\prod_{j\not=k}(x_k-x_j)-\prod_{j\not=k}(x-x_j))dx\]
+Suppose $\psi_{n+1}=c\prod_i(x-x_i)$ is the weight 1 orthogonal polynomial on $[a, b]$ with index $n+1$, then
+\[\int_a^b{\prod_{j\not=k}(x-x_j)\over \prod_{j\not=k}(x_k-x_j)}-\left({\prod_{j\not=k}(x-x_j)\over \prod_{j\not=k}(x_k-x_j)}\right)^2dx\]
+\[={1\over(\prod_{j\not=k}(x_k-x_j)^2}\int_a^b\prod_{j\not=k}(x-x_j)(\prod_{j\not=k}(x_k-x_j)-\prod_{j\not=k}(x-x_j))dx\]
 Let $h(x)=\prod_{j\not=k}(x_k-x_j)-\prod_{j\not=k}(x-x_j)$, then $\deg(h)=n$, and $h(x_k)=0$, hence $h=(x-x_k)h_1$ where $\deg(h_1)=n-1$. Now we have
 \[\int_a^b\prod_{j\not=k}(x-x_j)(\prod_{j\not=k}(x_k-x_j)-\prod_{j\not=k}(x-x_j))dx=\int_a^b(\psi_{n+1}\cdot{h_1\over c})dx=0\]
 \end{proof}
 
 \newpage
 
-\begin{rem} For comparison, when $n=3$, the Newton-Cotes quadrature weights are not all positive.\end{rem}
+\begin{rem} For comparison, when $n=8$, the Newton-Cotes quadrature weights are not all positive.\end{rem}
 
 As a consequence, we have:
 \begin{thm} (Theorem 10.2 in textbook) Given any continuous function $f$, the Gauss-Legendre quadrature result $I_n(f)$ converges to $\int_a^bfdx$ as $n\rightarrow\infty. $\end{thm}
