@@ -1188,9 +1188,12 @@ As a consequence, we have:
 \begin{proof}
   By Weierstrass approximation theorem there is some $p$ such that $|f-p|<\epsilon$ on $[a, b]$, hence for any $n>\deg(p)$,
   \[|\int_a^bfdx-I_n(f)|\leq |\int_a^bfdx-\int_a^bpdx|+|\int_a^bpdx-I_n(p)|+|I_n(p)-I_n(f)|\]
-  \[\leq \epsilon(b-a)+0+\epsilon\]
-  Now let $\epsilon\rightarrow 0$ we get the convergence.
+  \[\leq \epsilon(b-a)+0+\epsilon(b-a)\]
+  The last bit is due to
+  \[|I_n(p)-I_n(f)|=|\sum_iw_i(p(x_i)-f(x_i))|\leq \epsilon\sum_i|w_i|=\epsilon\sum_iw_i\]
+  And $I_n(1)=\int_a^b1dx=b-a$ so $\sum_iw_i=b-a$.  Now let $\epsilon\rightarrow 0$ we get the convergence.
 \end{proof}
+If $w_i$ are not all positive, one can not remove the absolute value, hence this may not be true for other quadrature rules.
 
 \newpage  
 
