@@ -1,5 +1,5 @@
 \documentclass[20pt]{article} % USenglish for autoref
-\usepackage[paper=screen, centering, papersize=15cm]{geometry}
+\usepackage[paper=screen, centering, papersize=20cm]{geometry}
 \usepackage{cmap}		% to search and copy ligatures
 \usepackage[utf8]{inputenc}	% for Linux computer and Mac
 %\usepackage[latin1]{inputenc}	% für Windows computer
@@ -539,7 +539,7 @@ Where
 \begin{thm}\label{orth_exist} If $w$ is positive, continuous and integrable on $(a, b)$ then a system of {\bf orthogonal polynomials} with weight $w$ exists. \end{thm}
 
 \begin{proof}
-  This is Gram-Schmidt:
+  This is Gram-Schmidt applied to $\{1, x, x^2, x^3, \dots\}$.
   \[\phi_0=1\]
   \[\phi_j=x^j-\sum_{i=0}^{j-1}{\int_a^b wt^j\phi_i(t)dt\over \int_a^b w\phi_i^2(t)dt}\phi_i(x)\] 
 \end{proof}
@@ -1074,16 +1074,18 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
        \item $f(x)=x^2$. $f(x)=|x-0.5|$. 
        \end{itemize}
 
+\newpage
+       
        Correction for the lecture on 11/6: We can also estimate the integral by decomposing the interval into $n$ subintervals with the same length, and calculate the sum of the areas of rectangles with those subintervals as base. If the height is taken as the value of the function at end points (i.e. $I={b-a\over n}\sum_{i=0}^{n-1}f(x_i)$), or use the maximum or minimum on the interval as in the definition of Riemann integration, then the error grows as $O(1/n)$ if $f$ is smooth, where $n$ is the number of subintervals, which is worse than composite trapezium rule. However, if the height is taken as the value of the function at midpoints (i.e. $I={b-a\over n}\sum_{i=0}^{n-1}f({x_i+x_{i+1}\over 2})$) the error grows as $O(1/n^2)$ if $f$ is smooth (so it's about as accurate as the trapezium rule).
        
   \newpage     
-  \subsection{Gauss quadrature (See Sections 10.2-10.4 for an alternative formulation)}
+  \subsection{Gauss quadrature (Also see Sections 10.2-10.4 in the textbook)}
   Motivation:
   \begin{enumerate}
-  \item From the error bound of composite rules, we know that if the quadrature has error bound $O(|b-a|^{-k})$, the composite rule will have an error bound of $O(n^{-k+1})$.
+  \item From the error bound of composite rules, we know that if the quadrature has error bound $O(|b-a|^k)$, the composite rule will have an error bound of $O(n^{-k+1})$.
   \item So suppose $f$ is sufficiently smooth, it might be good to try and make the number $k$ as large as possible.
-  \item From the proof of Theorem~\ref{qbound}, we see that if a quadrature rule gives accurate answer to polynomials of degree $d$, then the error bound is $O(|b-a|^{-d-2})$.
-  \item So, it may be good to strategically choose the quadrature points such that the quadrature rule works for polynomials of high degrees.
+  \item From the proof of Theorem~\ref{qbound}, we see that if a quadrature rule gives accurate answer to polynomials of degree $d$, then the error bound is $O(|b-a|^{d+2})$. For example, for Simpson's rule $d=3$. 
+  \item So, it may be good to {\bf strategically choose the quadrature points} such that the quadrature rule works for polynomials of high degrees. 
   \end{enumerate}
 
   Recall from the definition of Legendre polynomial, if $L_j$ are the Legendre polynomials, then
@@ -1097,16 +1099,16 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
   \begin{proof}
   It's easy to see that
   \[span\{1, x, \dots x^{2n+1}\}=span\{L_0, \dots L_{n+1}, L_{n+1}L_1, \dots, L_{n+1}L_n\}\]
-  (A way to see it is by first recognizing that $span\{1, x, \dots x^{2n+1}\}$ has dimension $2n+1$, and show, from definition, that
+  (A way to see it is by first recognizing that $span\{1, x, \dots x^{2n+1}\}$ has dimension $2n+2$, and show, from definition, that
   \[\{L_0, \dots L_{n+1}, L_{n+1}L_1, \dots, L_{n+1}L_n\}\]
-  is a linearly independent set of $2n+1$ elements hence must be a basis.)
+  is a linearly independent set of $2n+2$ elements (because they all have different degrees) hence must be a basis.)
 
   \newpage
 
   Because both $I$ and $\int_{-1}^1$ are linear on the vector space consisting of polynomials of degree no more than $2n+1$, and two linear transformations are the same if and only if they are identical on the basis vectors, we only need to prove it when $g$ is $L_j$, $0\leq j\leq n$, as well as when $g$ is $L_jL_{n+1}$, $0\leq j\leq n$.
   \begin{itemize}
   \item Case 1: $g=L_j$ for some $j\leq n$. In this case, $p$ is of degree no more than $n$, hence $p$ is identical to its Lagrange interpolation at $n+1$ points. Hence $I(g)=\int_{-1}^1gdx$.
-   \item Case 2: $g=L_jL_{n+1}$, $j\leq n$. Because $g$ has a factor $L_{n+1}$, $g(x_i)=0$ for all $i$, hence $I(g)=0$. On the other hand, because $L_ {n+1}$ and $L_j$ are orthogonal on $L^2([-1, 1])$, $\int_{-1}^1gdx=0$
+   \item Case 2: $g=L_jL_{n+1}$, $j\leq n$. Note that $L_{n+1}$ is proportional to $L_{n+1}L_0$ as $L_0$ is of degree $0$ hence a constant. Because $g$ has a factor $L_{n+1}$, $g(x_i)=0$ for all $i$, hence $I(g)=0$. On the other hand, because $L_ {n+1}$ and $L_j$ are orthogonal on $L^2([-1, 1])$, $\int_{-1}^1gdx=0$
   \end{itemize}
   \end{proof}
 
@@ -1123,10 +1125,45 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
   \end{thm}
 
   \begin{proof}
-  Let $H$ be the Hermite interpolation polynomial of $f$ at $x_i$, then Theorem~\ref{high_poly} implies that $\int_a^bHdx=I(H)=I(f)$. Hence the result follows from the error bound of Hermite interpolation (Theorem~\ref{err_her}).
+    Let $H$ be the Hermite interpolation polynomial of $f$ at $x_i$, then Theorem~\ref{high_poly} implies that $\int_a^bHdx=I(H)=I(f)$. Hence the result follows from the error bound of Hermite interpolation (Theorem~\ref{err_her}).
+
+    \newpage
+
+  More precisely, if $M$ and $m$ are the upper and lower bound of $f^{(2n+2)}$ on $[a, b]$ respectively, we have
+    \[{m\prod_i(x-x_i)^2\over(2n+1)!}\leq f(x)-H(x)\leq {M\prod_i(x-x_i)^2\over(2n+1)!}\]
+
+  Hence
+    \[{m\over (2n+2)!}\int_a^b\prod_i(x-x_i)^2 dx\leq \int_a^bfdx-I(f)\leq {M\over (2n+2)!}\int_a^b\prod_i(x-x_i)^2\]
+    And the existence of $c$ follows from intermediate value theorem in analysis.
   \end{proof}
 
-  \newpage
+  
+  \begin{rem}
+As $|b-a|\rightarrow 0$ the error decay at $|b-a|^{2n+3}$, which is better than the $|b-a|^{n+2}$ or $|b-a|^{n+3}$ in Newton-Cotes.
+    \end{rem}
+  
+    \newpage
+
+    \begin{exa} Use $n=1$ Gauss-Legendre quadrature to estimate $\int_0^\pi \sin(x)dx$.
+    \end{exa}
+
+    Firstly find the quadrature points. The first method is by using the formula of Lagrange polynomials in HW4 problem 4, which is $(1-x^2)''=12x^2-4$, so roots are $\pm{1\over\sqrt{3}}$, so $x_0={\pi/2}(1-1/\sqrt{3})=0.6639$, $x_1={\pi/2}(1+1/\sqrt{3})=2.4777$.
+
+    The second method is by finding a monic quadratic polynomial orthogonal to both $1$ and $x$ under $L^2([0, \pi])$. In other words, we need $a$ and $b$ such that
+\[\int_0^\pi (x^2+ax+b)dx={\pi^2\over 3}+{a\pi\over 2}+b\pi=0\]
+\[\int_0^\pi (x^2+ax+b)xdx={\pi^4\over 4}+{a\pi^3\over 3}+{b\pi^2\over 2}=0\]
+Solve for $a$ and $b$ then find the roots.
+
+     \newpage
+
+    The quadrature weights are 
+\[w_0=\int_0^\pi{x-x_1\over x_0-x_1}dx={x_1\pi-\pi^2/2\over x_1-x_0}=\pi/2=1.5708\]
+\[w_1=\int_0^\pi{x-x_0\over x_1-x_0}dx={\pi^2/2-x_0\pi\over x_1-x_0}=\pi/2=1.5708\]
+    So 
+    \[I_1(\sin)=w_0\sin(x_0)+w_1\sin(x_1)=1.9358\]
+    Error is $0.064$.
+
+    \newpage
 
 Another key property of the Gauss-Legendre quadrature is that all its weights are positive, because we have
 \begin{thm}\label{pos_wt}
@@ -1163,6 +1200,8 @@ As a consequence, we have:
  \begin{definition}
   The Gauss quadrature points with weight $w$, $x_0,\dots, x_n$ on $[a, b]$ is defined as $x_j$ is the $j+1$-th root of the weight-$w$ orthogonal polynomial on $[a, b]$ with index $n+1$, $\psi_{n+1}$. The quadrature weights are chosen as $w_k=\int_a^bw{\prod_{j\not=k}(x-x_j)\over \prod_{j\not=k}(x_k-x_j)}dx$.
 \end{definition}
+
+ For example, if $[a, b]=[-1, 1]$, and $w$ is $(1-x^2)^{-1/2}$ we call it Chebyshev-Gauss quadrature.
 
 \begin{thm}
   \begin{enumerate}
