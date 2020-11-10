@@ -1,0 +1,95 @@
+\documentclass[20pt]{article} % USenglish for autoref
+\usepackage[paper=screen, centering, papersize=15cm]{geometry}
+\usepackage{cmap}		% to search and copy ligatures
+\usepackage[utf8]{inputenc}	% for Linux computer and Mac
+%\usepackage[latin1]{inputenc}	% für Windows computer
+\usepackage[T1]{fontenc}	% to search for ligatures in the pdf
+\usepackage[USenglish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{graphicx}
+%\usepackage{stmaryrd}		% for \mapsfrom
+\usepackage{aliascnt}		% for Aliascounter so that autoref gives the thms the right names
+\usepackage[pdfborder={0 0 0}]{hyperref}   % if you want to have math environment in captions you have to use \texorpdfstring{$x^2$}{x2}; without frame around the links
+\usepackage[figure]{hypcap}		% to make autoref link to figures and not the captions of figures
+%\usepackage{paralist}		% for compactitem
+\usepackage{mathtools}		% for \coloneqq
+\usepackage[]{todonotes}	% use option disable to disable all the todos
+\usepackage{float}
+\usepackage{lipsum}
+\theoremstyle{break}
+\newtheorem{definition}{Definition}[section]  
+\newtheorem{exa}[definition]{Example}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{lem}[definition]{Lemma}
+\newtheorem{conj}[definition]{Conjecture}
+\newtheorem{quest}[definition]{Research question}
+\newtheorem{thm}[definition]{Theorem}  
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{rem}[definition]{Remark}
+
+
+\renewcommand{\labelenumi}{(\roman{enumi})} % roman numbers in enumerations
+
+\usepackage{graphicx,tikz} % Allows including images
+
+\usetikzlibrary{calc,decorations.markings}
+\usetikzlibrary{shapes,snakes}
+
+\DeclareMathOperator{\Aff}{Aff}
+\DeclareMathOperator{\der}{der}
+\DeclareMathOperator{\Trans}{Trans}
+\DeclareMathOperator{\dir}{dir}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\NN}{\mathbb{N}}
+
+
+%For L Cal and L Twidle:
+\newcommand{\LC}{\mathcal{L}} 
+\newcommand{\LT}{\widetilde{\mathcal{L}}}
+
+%For X bar
+\newcommand{\XB}{\overline{X}}
+
+%For the real and complex numbers
+\newcommand{\RR}{\mathbb{R}} 
+\newcommand{\CC}{\mathbb{C}} 
+
+
+\newcommand{\remark}[2][]{\todo[color=green!50, #1]{#2}}
+
+\title{Hints for HW 4}
+
+
+\begin{document}
+\maketitle
+
+For problem 3, note that we don't have $f'(x_1)$ so we can't use Hermite interpolation directly. What we need to do is to follow the same procedure we used to derive the Lagrange and Hermite interpolation.\\
+
+I will show you the answer of a simpler version of problem 3:\\
+
+Suppose $f$ is continuous and with continuous derivatives of order up to and including 3 on $[a, b]$, and there are three distinct points $x_0$, $x_1$ in $[a, b]$. Let $y_i=f(x_i)$, $i=0, 1$; $z_j=f'(x_j)$, $j=0$.
+\begin{enumerate}
+\item Find a polynomial $p$ of degree at most $2$, such that $p(x_i)=y_i$, $i=0, 1$; $p'(x_j)=z_j$, $j=0$.
+\item Use an argument similar to the error estimate of Hermite interpolation polynomial to show that for any $x\in [a, b]$, there is some number $s\in [a, b]$ such that
+  \[f(x)-p(x)=f^{(3)}(s)(x-x_0)^2(x-x_1)/3!\]
+\end{enumerate}
+
+Answer: If we can find $p_0$, $p_1$ and $q_0$ of degree at most $2$, such that $p_0'(x_0)=p_0(x_1)=p_1(x_0)=p'_1(x_0)=q_0(x_0)=q_0(x_1)=0$, $p_0(x_0)=p_1(x_1)=q'_0(x_0)=1$, then we can let $p=y_0p_0+y_1p_1+z_0q_0$ and it's easy to check that it satisfies all three conditions.
+
+Now we try and find the three polynomials. By some calculation, we get $p_0={x-x_1\over x_0-x_1}(1-{x-x_0\over x_0-x_1})$, $q_0={(x-x_0)(x-x_1)\over x_0-x_1}$, $p_1={(x-x_0)^2\over (x_1-x_0)^2}$.
+
+To do the second half of the problem, suppose $x\not=x_0$, $x\not=x_1$, consider function
+\[G(t)=f(t)-p(t)-{(f(x)-p(x))(t-x_0)^2(t-x_1)\over (x-x_0)^2(x-x_1)}\]
+Then $G(x)=G(x_0)=G(x_1)=G'(x_0)=0$, hence $G'$ is zero at 3 points, $G'''$ is zero at one point, which is $s$.\\
+
+4. Use integration by parts formula: $\int_a^buv'dx=uv|_a^b-\int_a^bu'vdx$.\\
+
+5, 6: If $p$ is the $L^2$ best approximation of $f$ on $L=span\{1, x, x^2\}$, then $f-p\perp L$ under the $L^2$ inner product. So you may consider using the concept of orthogonal polynomials.
+
+\end{document}

@@ -81,9 +81,29 @@ Recall that a (real) {\bf Vector space} $V$ is a set with an element $0$, a ``sc
 \item $(ab)x=a(bx)$
 \end{enumerate}
 
-If $V$ is a vector space, any non empty subset $V'\subset V$ which is closed under addition and scalar multiplication is called a {\bf subspace}. The maximum number of linearly independent vectors in a vector space is called its {\bf dimension}.\\
+If $V$ is a vector space, any non empty subset $V'\subset V$ which is closed under addition and scalar multiplication is called a {\bf subspace}.\\
 
-The set of $n$ dimensional column vectors $\mathbb{R}^n$, under the usual addition and scalar multiplication, is a vector space, and it has dimension $n$.\\
+The {\bf span} of a set $S\subset V$ is the subset of $V$ consisting of finite linear combinations of elements of $S$. We call $S\subset V$ a {\bf linearly independent set} if for any finite collection of vectors $s_1, \dots s_n\in S$, $\sum_ia_is_i=0\implies a_i=0\forall i$. We call $S\subset V$ a {\bf basis} of $V$ if $S$ is linearly independent and $V=span(S)$.\\
+
+Any two basis of the same vector space have the same cardinality (number of elements). This cardinality is called the {\bf dimension} of $V$.\\
+
+\begin{exa}
+  \begin{itemize}
+  \item The set of $n$ dimensional column vectors $\mathbb{R}^n$, under the usual addition and scalar multiplication, is a vector space, and it has dimension $n$.
+  \item The set of polynomials of degree no more than $n$, under the usual addition and scalar multiplication, is also a vector space. A basis is $\{1, x, \dots, x^n\}$ hence its dimension is $n+1$.
+  \end{itemize}
+\end{exa}
+
+
+If $B=\{b_1, \dots, b_n\}$ is a basis of a vector space $V$ of dimension $n$, $v\in V$, the {\bf coordinate} of $v$ under $B$ is a vector $x\in\mathbb{R}^n$ such that $v=\sum_ix_ib_i$ where $x_i$ is the $i$-th entry of $x$.\\
+
+A map between two vector spaces $T: V\rightarrow W$ is called a {\bf linear transformation}, if
+\begin{itemize}
+\item $T(x+y)=T(x)+T(y)$
+\item $T(cx)=cT(x)$
+\end{itemize}
+
+If $T: V\rightarrow W$ is a linear transformation between two linear spaces, $x$ is the coordinate of $v$ in basis $B$, $y$ is the coordinate of $T(v)$ under basis $C$, then $y=Ax$ where $A=[a_{ij}]$, and $T(b_j)=\sum_ia_{ij}c_i$.\\
 
 The {\bf inner product} on $\mathbb{R}^n$ is defined as $(x, y)=x^Ty=\sum_ix_iy_i$. It is easy to check that this inner product satisfies the following properties:
 \begin{enumerate}
@@ -91,6 +111,8 @@ The {\bf inner product} on $\mathbb{R}^n$ is defined as $(x, y)=x^Ty=\sum_ix_iy_
 \item Bilinearity: $(ax+a'x', y)=a(x, y)+a'(x', y)$, $(x, by+b'y')=b(x, y)+b'(x, y')$.
 \item Positive definiteness: $(x, x)\geq 0$ and $(x, x)=0$ iff $x=0$.
 \end{enumerate}
+
+Two vectors are {\bf orthogonal} to each other iff their inner product is $0$. A set of vectors is orthogonal to another set if every vector in the first set is orthogonal to every vector in the second.
 
 Let $V$ be a subspace of $\mathbb{R}^n$. We call a basis of $V$ {\bf orthogonal} if the inner product of distinct basis vectors are all $0$, {\bf orthonomal} if in addition, the inner product of any basis vector with itself is $1$.\\
 
@@ -113,6 +135,8 @@ To calculate $P_V(x)$, we can use either of these formulas:
   Where $A=[a_{ij}]=[(x_i, x_j)]^{-1}$ is a $d\times d$ matrix. 
 \end{enumerate}
 
-If one replace $(x, y)$ with $(x, y)_A$ defined as $x^TAy$, where $A$ is a symmetric matrix with all eigenvalues positive, then $(\cdot, \cdot)_A$ still satisfies symmetry, bilinearity and positive definiteness, and all the conclusions about $(\cdot, \cdot)$ above are still valid.
+If one replace $(x, y)$ with $(x, y)_A$ defined as $x^TAy$, where $A$ is a symmetric matrix with all eigenvalues positive, then $(\cdot, \cdot)_A$ still satisfies symmetry, bilinearity and positive definiteness, and all the conclusions about $(\cdot, \cdot)$ above are still valid.\\
+
+Furthermore, if $V$ is any vector space and $(\cdot, \cdot)$ is a $\mathbb{R}$-valued function on $V\times V$ which is symmetric, bilinear and positive definite, all the conclusions above are valid as well.
 
 \end{document}
