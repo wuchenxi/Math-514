@@ -1216,5 +1216,69 @@ If $w_i$ are not all positive, one can not remove the absolute value, hence this
 \end{thm}
 
 The proof is very similar to the Gauss-Legendre case.
+
+\newpage
+
+Review:
+
+\begin{itemize}
+\item Definition of Gauss Legendre quadrature.
+\item Error bound.
+\item Convergence.
+\item General Gauss quadrature.
+\end{itemize}
+
+Key ideas:
+
+\begin{itemize}
+\item Error bound for Lagrange and Hermite interpolation.
+\item Quadrature and integration as linear transformation.
+\item Inner product and orthogonal polynomials.
+\end{itemize}
+
+\newpage
+
+\begin{exa}$I=\int_0^\pi{1\over \sqrt{\sin x}}dx$. The correct answer is 5.2441151\end{exa}
+
+\begin{itemize}
+\item By change of variable,
+  \[I={\pi\over 2}\int_{-1}^1{1\over\sqrt{\cos (\pi x/2)}}dx\]
+\item Let $w=(1-x^2)^{-1/2}$, $f={(1-x^2)^{-1/2}\over\sqrt{\cos (\pi x/2)}}$. Then $I=\int fwdx$.
+\item Now do Chebyshev-Gauss formula for $f$. Suppose $n=2$, then the quadrature points, which are the roots of $T_3=\cos(3\cos^{-1}x)$, are $0, \pm{\sqrt{3}\over 2}$.
+\item The quadrature weights are
+  \[w_1=\int_{-1}^1{(x^2-3/4)/(-3/4)\over\sqrt{1-x^2}}dx=\pi/3\]
+  \[w_0=w_2=\pi/3\]
+\item The Chebyshev-Gauss for $n=2$ is
+  \[I_2=\sum_{i=0}^2w_if(x_i)=3.3384\]
+\item The final answer is $5.2439$, difference is $0.00018$.
+\end{itemize}
+
+\newpage
+
+Exercises:
+
+\begin{enumerate}
+\item \begin{enumerate}
+  \item Write down the Lagrange interpolation polynomial $p$ of a function $f$, with interpolation points $-1$, $0$ and $1$.
+  \item Calculate $\int_0^1p(x)dx$, write it into the form of $w_0f(-1)+w_1f(0)+w_2f(1)$.
+  \item Show that the formula $I(f)=w_0f(-1)+w_1f(0)+w_2f(1)$ will give accurate answer if $f$ is a polynomial of degree $2$.
+\newpage
+    
+  \item Use the error estimate for Lagrange interpolation polynomial, find an upper bound for $\int_0^1f(x)dx-I(f)$.
+  \end{enumerate}
+  
+  \newpage
+  \item \begin{enumerate}
+    \item Let $w=e^{-x}$, $L^2_w([0, \infty))$ be the space of functions $f$ such that $\int_0^\infty wf^2dx$ exists. Show that $1, x, x^2\in L^2_w([0, \infty))$.
+    \item Use the inner product $(f, g)=\int_0^\infty wfgdx$, carry out Gram-Schmidt process for $\{1, x, x^2\}$ (the results are called {\bf Laguerre polynomials}).
+    \item Find the roots of the third polynomial you get from the above step, call them $x_0$ and $x_1$.
+    \item Find $w_0$ and $w_1$ such that $\int_0^\infty wgdx=w_0g(x_0)+w_1g(x_1)$ for any polynomial $g$ of degree 1. This is called the Gauss-Laguerre quadrature.
+     \end{enumerate}
+
+\end{enumerate}
+
+\newpage
+
+..
   
 \end{document}
