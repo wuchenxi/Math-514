@@ -1150,7 +1150,7 @@ As $|b-a|\rightarrow 0$ the error decay at $|b-a|^{2n+3}$, which is better than 
     Firstly find the quadrature points. The first method is by using the formula of Legendre polynomials in HW4 problem 4, which is ${(1-x^2)^2}''=12x^2-4$, so roots are $\pm{1\over\sqrt{3}}$, so $x_0={\pi/2}(1-1/\sqrt{3})=0.6639$, $x_1={\pi/2}(1+1/\sqrt{3})=2.4777$.
 
     The second method is by finding a monic quadratic polynomial orthogonal to both $1$ and $x$ under $L^2([0, \pi])$. In other words, we need $a$ and $b$ such that
-\[\int_0^\pi (x^2+ax+b)dx={\pi^2\over 3}+{a\pi^2\over 2}+b\pi=0\]
+\[\int_0^\pi (x^2+ax+b)dx={\pi^3\over 3}+{a\pi^2\over 2}+b\pi=0\]
 \[\int_0^\pi (x^2+ax+b)xdx={\pi^4\over 4}+{a\pi^3\over 3}+{b\pi^2\over 2}=0\]
 Solve for $a$ and $b$ then find the roots.
 
@@ -1248,6 +1248,7 @@ Key ideas:
 \item The quadrature weights are
   \[w_1=\int_{-1}^1{(x^2-3/4)/(-3/4)\over\sqrt{1-x^2}}dx=\pi/3\]
   \[w_0=w_2=\pi/3\]
+  (One can check that for Chebyshev-Gauss, the weights are always $\pi\over n+1$.)
 \item The Chebyshev-Gauss for $n=2$ is
   \[I_2=\sum_{i=0}^2w_if(x_i)=3.3384\]
 \item The final answer is $5.2439$, difference is $0.00018$.
@@ -1260,25 +1261,25 @@ Exercises:
 \begin{enumerate}
 \item \begin{enumerate}
   \item Write down the Lagrange interpolation polynomial $p$ of a function $f$, with interpolation points $-1$, $0$ and $1$.
+ \newpage
   \item Calculate $\int_0^1p(x)dx$, write it into the form of $w_0f(-1)+w_1f(0)+w_2f(1)$.
-  \item Show that the formula $I(f)=w_0f(-1)+w_1f(0)+w_2f(1)$ will give accurate answer if $f$ is a polynomial of degree $2$.
 \newpage
-    
+\item Show that the formula $I(f)=w_0f(-1)+w_1f(0)+w_2f(1)$ will give accurate answer if $f$ is a polynomial of degree $2$.
+\newpage
   \item Use the error estimate for Lagrange interpolation polynomial, find an upper bound for $\int_0^1f(x)dx-I(f)$.
   \end{enumerate}
   
   \newpage
   \item \begin{enumerate}
     \item Let $w=e^{-x}$, $L^2_w([0, \infty))$ be the space of functions $f$ such that $\int_0^\infty wf^2dx$ exists. Show that $1, x, x^2\in L^2_w([0, \infty))$.
+   \newpage
     \item Use the inner product $(f, g)=\int_0^\infty wfgdx$, carry out Gram-Schmidt process for $\{1, x, x^2\}$ (the results are called {\bf Laguerre polynomials}).
-    \item Find the roots of the third polynomial you get from the above step, call them $x_0$ and $x_1$.
+\newpage
+\item Find the roots of the third polynomial you get from the above step, call them $x_0$ and $x_1$.
+\newpage
     \item Find $w_0$ and $w_1$ such that $\int_0^\infty wgdx=w_0g(x_0)+w_1g(x_1)$ for any polynomial $g$ of degree 1. This is called the Gauss-Laguerre quadrature.
      \end{enumerate}
 
 \end{enumerate}
-
-\newpage
-
-..
   
 \end{document}
