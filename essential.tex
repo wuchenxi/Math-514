@@ -1,0 +1,193 @@
+\documentclass[20pt]{article} % USenglish for autoref
+\usepackage[paper=screen, centering, papersize=20cm]{geometry}
+\usepackage{cmap}		% to search and copy ligatures
+\usepackage[utf8]{inputenc}	% for Linux computer and Mac
+%\usepackage[latin1]{inputenc}	% für Windows computer
+\usepackage[T1]{fontenc}	% to search for ligatures in the pdf
+\usepackage[USenglish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[]{algorithm2e}
+%\usepackage{stmaryrd}		% for \mapsfrom
+\usepackage{aliascnt}		% for Aliascounter so that autoref gives the thms the right names
+\usepackage[pdfborder={0 0 0}]{hyperref}   % if you want to have math environment in captions you have to use \texorpdfstring{$x^2$}{x2}; without frame around the links
+\usepackage[figure]{hypcap}		% to make autoref link to figures and not the captions of figures
+%\usepackage{paralist}		% for compactitem
+\usepackage{mathtools}		% for \coloneqq
+\usepackage[]{todonotes}	% use option disable to disable all the todos
+\usepackage{float}
+\usepackage{lipsum}
+\theoremstyle{break}
+\newtheorem{definition}{Definition}[section]  
+\newtheorem{exa}[definition]{Example}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{lem}[definition]{Lemma}
+\newtheorem{conj}[definition]{Conjecture}
+\newtheorem{quest}[definition]{Research question}
+\newtheorem{thm}[definition]{Theorem}  
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{rem}[definition]{Remark}
+
+
+\renewcommand{\labelenumi}{(\roman{enumi})} % roman numbers in enumerations
+
+\usepackage{graphicx,tikz,pgfplots} % Allows including images
+
+\usetikzlibrary{calc,decorations.markings}
+\usetikzlibrary{shapes,snakes}
+
+\DeclareMathOperator{\Aff}{Aff}
+\DeclareMathOperator{\der}{der}
+\DeclareMathOperator{\Trans}{Trans}
+\DeclareMathOperator{\dir}{dir}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\NN}{\mathbb{N}}
+
+
+%For L Cal and L Twidle:
+\newcommand{\LC}{\mathcal{L}} 
+\newcommand{\LT}{\widetilde{\mathcal{L}}}
+
+%For X bar
+\newcommand{\XB}{\overline{X}}
+
+%For the real and complex numbers
+\newcommand{\RR}{\mathbb{R}} 
+\newcommand{\CC}{\mathbb{C}} 
+
+
+\newcommand{\remark}[2][]{\todo[color=green!50, #1]{#2}}
+
+\title{Essential concepts covered so far}
+
+
+\begin{document}
+\maketitle
+
+The following topics are the most important topics and will be covered in final exam. I try to present them in a way with minimal technical details and I hope this presentation would be more accessible.
+
+  \newpage
+
+  \section{Polynomial interpolation}
+
+  $x_0, \dots, x_n$ distinct points on the domain of some function $f$.\\
+  
+  Two kinds of polynomial interpolations:
+  \begin{enumerate}
+  \item Lagrange interpolation: find a polynomial $p$ of degree at most $n$, such that $p(x_i)=f(x_i)$.
+  \item Hermite interpolation: find a polynomial $p$ of degree at most $2n+1$, such that $p(x_i)=f(x_i)$, $p'(x_i)=f'(x_i)$.
+  \end{enumerate}
+
+  \newpage
+
+  How to find interpolation polynomials:
+
+  \begin{enumerate}
+  \item Lagrange interpolation:
+    \[p(x)=\sum_i\left( f(x_i)\cdot {\prod_{j\not=i}(x-x_j)\over \prod_{j\not=i}(x_i-x_j)}\right)\]
+  \item Hermite interpolation:
+    \[p(x_k)=\sum_i\left( f'(x_i)\cdot {(x_k-x_i)\prod_{j\not=i}(x_k-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2}\right. \]
+  \[\left. +f(x_i)\cdot \left(1-(x_k-x_i)\sum_{j\not=i}{2\over x_i-x_j}\right)\cdot {\prod_{j\not=i}(x_k-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2} \right)\]
+\end{enumerate}
+
+\newpage
+
+Why are these formulas valid?
+
+\begin{enumerate}
+\item Lagrange interpolation: $p=\sum_if(x_i)p_i$, where
+  \[p_i={\prod_{j\not=i}(x-x_j)\over \prod_{j\not=i}(x_i-x_j)}\]
+  By calculation, we can verify that
+  \[p_i(x_j)=\begin{cases}1 & i=j\\0 & i\not=j\end{cases}\]
+  So $p(x_i)=f(x_i)p_i(x_i)+\sum_{j\not=i}f(x_j)p_j(x_i)=p(x_i)$.
+\item Hermite interpolation: $p=\sum_if(x_i)p_i+\sum_jf'(x_i)q_i$.
+  \[p_i=\left(1-(x_k-x_i)\sum_{j\not=i}{2\over x_i-x_j}\right)\cdot {\prod_{j\not=i}(x_k-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2}\]
+  \[q_i={(x_k-x_i)\prod_{j\not=i}(x_k-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2}\]
+  By calculation, we can verify that
+  \[p_i(x_j)=\begin{cases}1 & i=j\\0 & i\not=j\end{cases}\]
+  \[p_i'(x_j)=0\]
+  \[q_i(x_j)=0\]
+  \[q_i'(x_j)=\begin{cases}1 & i=j\\0 & i\not=j\end{cases}\]
+\end{enumerate}
+
+\newpage
+
+\begin{thm}
+\item Both Lagrange and Hermite interpolations are unique given $f$ and interpolation points.
+\item If $p$ is the Lagrange interpolation of $f\in C^{n+1}$, $x, x_i\in [a, b]$, then there is $s\in [a, b]$:
+  \[f(x)-p(x)={f^{(n+1)}(s)\prod_i(x-x_i)\over (n+1)!}\]
+\item If $p$ is the Hermite interpolation of $f\in C^{2n+2}$, $x, x_i\in [a, b]$, then there is $s\in [a, b]$:
+  \[f(x)-p(x)={f^{(2n+2)}(s)\prod_i(x-x_i)^2\over (2n+2)!}\]  
+\end{thm}
+
+Intuition: If higher order derivative is zero, it's polynomial, hence error must be zero. So error should depend on higher order derivative. It takes time for higher order derivative to have an effect, so the more points there are the function being integrated should be smaller.
+
+\newpage
+
+\section{Approximation theory}
+
+\begin{itemize}
+\item $L^\infty([a, b])$ norm: $\|f-g\|_{\infty}=\sup_{x\in [a, b]}|f(x)-g(x)|$.
+\item $L^2([a, b])$ norm: $\|f-g\|_2=(\int_a^b(f-g)^2dx$.
+\item Weighted $L^2([a, b])$ norm: $\|f-g\|_2=(\int_a^bw(f-g)^2dx$.
+\end{itemize}
+
+\newpage
+
+Orthogonal polynomials:
+
+\begin{definition}We call $\phi_j$, $j=0, 1, 2, \dots$ a system of {\bf orthogonal polynomials} with weight $w$, if 
+  \begin{enumerate}
+   \item $\phi_j$ is of degree $j$.
+   \item $\int_a^bw\phi_j\phi_idx$ is non-zero iff $i=j$.
+  \end{enumerate}
+\end{definition}
+
+Orthogonal polynomials can be found via Gram-Schmidt applied to $\{1, x, x^2, x^3, \dots\}$.
+  \[\phi_0=1\]
+  \[\phi_j=x^j-\sum_{i=0}^{j-1}{\int_a^b wt^j\phi_i(t)dt\over \int_a^b w\phi_i^2(t)dt}\phi_i(x)\]
+  
+\newpage
+
+$L^2$ best approximation (used in two problems in HW4 but less important in final exam):\\
+
+Let $f, \psi_1, \dots, \psi_n\in L^2([a, b])$. Find a linear combination of $\psi_i$, $\sum_ia_i\psi_i$, such that $\|f-\sum_ia_i\psi_i$ is minimized.\\
+
+Key idea: see them as if they are vectors in $\mathbb{R}^m$, $f, g\mapsto \int_a^bfgdx$ as if it is the inner product in $\mathbb{R}^m$.\\
+
+The best approximation $f^*=\sum_ia_i\psi_i$ is the {\bf orthogonal projection}, i.e. $\int_a^b\psi_i(f-f^*)dx=0$ for all $i$.
+
+\newpage
+
+\section{Numerical Integration (Chapter 7, 10)}
+
+\subsection{Quadrature rule}
+
+Question: Estimate $\int_a^bf(x)dx$.\\
+
+Let $x_0, x_1, \dots, x_n$ be $n+1$ distinct points in $[a, b]$, then we can use the Lagrange interpolation polynomial to estimate $f$, and hence 
+\[\int_a^b f(x)dx\approx \sum_kw_kf(x_k)\]
+  Where
+  \[w_k=\int_a^b {\prod_{j\not=k}(x-x_j)\over \prod_{j\not=k}(x_k-x_j)} dx\]
+To estimate the integration.\\
+
+The points $x_i$ are called {\bf quadrature points}, and $w_i$ called {\bf quadrature weights}. 
+
+
+\newpage
+
+\begin{itemize}
+\item Newton-Cotes quadrature: quadrature points evenly spaces on $[a, b]$.
+\item Gauss quadrature: quadrature points are roots of orthogonal polynomials.
+\item Error bound via interpolation error bound.
+\item Composite method: divide the interval, then use quadrature rule on subintervals.
+\end{itemize}
+  
+\end{document}
