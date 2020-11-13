@@ -106,7 +106,7 @@ Why are these formulas valid?
   \[p_i={\prod_{j\not=i}(x-x_j)\over \prod_{j\not=i}(x_i-x_j)}\]
   By calculation, we can verify that
   \[p_i(x_j)=\begin{cases}1 & i=j\\0 & i\not=j\end{cases}\]
-  So $p(x_i)=f(x_i)p_i(x_i)+\sum_{j\not=i}f(x_j)p_j(x_i)=p(x_i)$.
+  So $p(x_i)=f(x_i)p_i(x_i)+\sum_{j\not=i}f(x_j)p_j(x_i)=f(x_i)$.
 \item Hermite interpolation: $p=\sum_if(x_i)p_i+\sum_jf'(x_i)q_i$.
   \[p_i=\left(1-(x-x_i)\sum_{j\not=i}{2\over x_i-x_j}\right)\cdot {\prod_{j\not=i}(x-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2}\]
   \[q_i={(x-x_i)\prod_{j\not=i}(x-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2}\]
@@ -127,7 +127,7 @@ Why are these formulas valid?
   \[f(x)-p(x)={f^{(2n+2)}(s)\prod_i(x-x_i)^2\over (2n+2)!}\]  
 \end{thm}
 
-Intuition: If higher order derivative is zero, it's polynomial, hence error must be zero. So error should depend on higher order derivative. It takes time for higher order derivative to have an effect, so the more points there are the function being integrated should be smaller.
+Intuition: If higher order derivative is zero, it's polynomial, hence error must be zero. So error should depend on higher order derivative. Just like Taylor series, higher order derivatives often come with higher degree polynomials.
 
 \newpage
 
@@ -135,8 +135,8 @@ Intuition: If higher order derivative is zero, it's polynomial, hence error must
 
 \begin{itemize}
 \item $L^\infty([a, b])$ norm: $\|f-g\|_{\infty}=\sup_{x\in [a, b]}|f(x)-g(x)|$.
-\item $L^2([a, b])$ norm: $\|f-g\|_2=(\int_a^b(f-g)^2dx$.
-\item Weighted $L^2([a, b])$ norm: $\|f-g\|_2=(\int_a^bw(f-g)^2dx$.
+\item $L^2([a, b])$ norm: $\|f-g\|_2=(\int_a^b(f-g)^2dx)^{1/2}$.
+\item Weighted $L^2([a, b])$ norm: $\|f-g\|_2=(\int_a^bw(f-g)^2dx)^{1/2}$.
 \end{itemize}
 
 \newpage
@@ -158,11 +158,9 @@ Orthogonal polynomials can be found via Gram-Schmidt applied to $\{1, x, x^2, x^
 
 $L^2$ best approximation (used in two problems in HW4 but less important in final exam):\\
 
-Let $f, \psi_1, \dots, \psi_n\in L^2([a, b])$. Find a linear combination of $\psi_i$, $\sum_ia_i\psi_i$, such that $\|f-\sum_ia_i\psi_i$ is minimized.\\
+Let $f, \psi_1, \dots, \psi_n\in L^2([a, b])$. Find a linear combination of $\psi_i$, $\sum_ia_i\psi_i$, such that $\|f-\sum_ia_i\psi_i\|_2$ is minimized.\\
 
-Key idea: see them as if they are vectors in $\mathbb{R}^m$, $f, g\mapsto \int_a^bfgdx$ as if it is the inner product in $\mathbb{R}^m$.\\
-
-The best approximation $f^*=\sum_ia_i\psi_i$ is the {\bf orthogonal projection}, i.e. $\int_a^b\psi_i(f-f^*)dx=0$ for all $i$.
+Key idea: The best approximation $f^*=\sum_ia_i\psi_i$ is the {\bf orthogonal projection}, i.e. $\int_a^b\psi_i(f-f^*)dx=0$ for all $i$.
 
 \newpage
 
