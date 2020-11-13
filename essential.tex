@@ -93,9 +93,9 @@ The following topics are the most important topics and will be covered in final 
   \item Lagrange interpolation:
     \[p(x)=\sum_i\left( f(x_i)\cdot {\prod_{j\not=i}(x-x_j)\over \prod_{j\not=i}(x_i-x_j)}\right)\]
   \item Hermite interpolation:
-    \[p(x_k)=\sum_i\left( f'(x_i)\cdot {(x_k-x_i)\prod_{j\not=i}(x_k-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2}\right. \]
-  \[\left. +f(x_i)\cdot \left(1-(x_k-x_i)\sum_{j\not=i}{2\over x_i-x_j}\right)\cdot {\prod_{j\not=i}(x_k-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2} \right)\]
-\end{enumerate}
+ \[p(x)=\sum_i\left( f'(x_i)\cdot {(x-x_i)\prod_{j\not=i}(x-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2}\right. \]
+  \[\left. +f(x_i)\cdot \left(1-(x-x_i)\sum_{j\not=i}{2\over x_i-x_j}\right)\cdot {\prod_{j\not=i}(x-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2} \right)\]
+ \end{enumerate}
 
 \newpage
 
@@ -108,8 +108,8 @@ Why are these formulas valid?
   \[p_i(x_j)=\begin{cases}1 & i=j\\0 & i\not=j\end{cases}\]
   So $p(x_i)=f(x_i)p_i(x_i)+\sum_{j\not=i}f(x_j)p_j(x_i)=p(x_i)$.
 \item Hermite interpolation: $p=\sum_if(x_i)p_i+\sum_jf'(x_i)q_i$.
-  \[p_i=\left(1-(x_k-x_i)\sum_{j\not=i}{2\over x_i-x_j}\right)\cdot {\prod_{j\not=i}(x_k-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2}\]
-  \[q_i={(x_k-x_i)\prod_{j\not=i}(x_k-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2}\]
+  \[p_i=\left(1-(x-x_i)\sum_{j\not=i}{2\over x_i-x_j}\right)\cdot {\prod_{j\not=i}(x-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2}\]
+  \[q_i={(x-x_i)\prod_{j\not=i}(x-x_j)^2\over \prod_{j\not=i}(x_i-x_j)^2}\]
   By calculation, we can verify that
   \[p_i(x_j)=\begin{cases}1 & i=j\\0 & i\not=j\end{cases}\]
   \[p_i'(x_j)=0\]
