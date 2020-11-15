@@ -1439,11 +1439,13 @@ Numerical integration can be seen as a special case of IVP of numerical ODE, wit
 
 \subsection{Euler's Method (12.2, 12.3)}
 
+$h$ is a small number, $z$ an approximation of $y$ evaluated using:
 \[z(0)=y_0\]
 \[z((n+1)h)=z(nh)+hf(t, z(nh))\]
 
 \begin{itemize}
-\item {\bf Truncated error} $T$ is the difference between the calculated $z((n+1)h)-z(nh)\over h$ and the true $y((n+1)h)-y(nh)\over h$. 
+\item The motivation is using PL function to approximate $y$.
+\item {\bf Truncated error} $T_n$ is the difference between the calculated $z((n+1)h)-z(nh)\over h$, and $y_n((n+1)h)-y_n(nh)\over h$, where $y_n$ is the solution for initial value $y_n(nh)=z(nh)$. 
 \item A method has {\bf order of accuracy} $p$ if when $f$ is sufficiently smooth, $T=O(h^p)$.
 \item {\bf Global error at time} $t$ is the difference between the estimated $z(t)$ and the true value of $y(t)$.
 \item A method is called {\bf consistent} if truncated error goes to $0$ as $h\rightarrow 0$. {\bf Convergent} if global error goes to $0$ as $h\rightarrow 0$.
