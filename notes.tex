@@ -1261,25 +1261,182 @@ Exercises:
 \begin{enumerate}
 \item \begin{enumerate}
   \item Write down the Lagrange interpolation polynomial $p$ of a function $f$, with interpolation points $-1$, $0$ and $1$.
- \newpage
   \item Calculate $\int_0^1p(x)dx$, write it into the form of $w_0f(-1)+w_1f(0)+w_2f(1)$.
-\newpage
 \item Show that the formula $I(f)=w_0f(-1)+w_1f(0)+w_2f(1)$ will give accurate answer if $f$ is a polynomial of degree $2$.
-\newpage
   \item Use the error estimate for Lagrange interpolation polynomial, find an upper bound for $\int_0^1f(x)dx-I(f)$.
   \end{enumerate}
-  
-  \newpage
   \item \begin{enumerate}
     \item Let $w=e^{-x}$, $L^2_w([0, \infty))$ be the space of functions $f$ such that $\int_0^\infty wf^2dx$ exists. Show that $1, x, x^2\in L^2_w([0, \infty))$.
-   \newpage
-    \item Use the inner product $(f, g)=\int_0^\infty wfgdx$, carry out Gram-Schmidt process for $\{1, x, x^2\}$ (the results are called {\bf Laguerre polynomials}).
-\newpage
+     \item Use the inner product $(f, g)=\int_0^\infty wfgdx$, carry out Gram-Schmidt process for $\{1, x, x^2\}$ (the results are called {\bf Laguerre polynomials}).
 \item Find the roots of the third polynomial you get from the above step, call them $x_0$ and $x_1$.
-\newpage
     \item Find $w_0$ and $w_1$ such that $\int_0^\infty wgdx=w_0g(x_0)+w_1g(x_1)$ for any polynomial $g$ of degree 1. This is called the Gauss-Laguerre quadrature.
-     \end{enumerate}
+\end{enumerate}
 
 \end{enumerate}
+\newpage
+Answer:
+
+\begin{enumerate}
+\item
+ \begin{enumerate}
+  \item $p(x)=f(-1)(x(x-1)/2)+f(0)(1-x^2)+f(1)(x(x+1)/2)$
+  \item $-f(-1)/12+2f(0)/3+5w_2f(1)/12$.
+\item Because in this case, due to uniqueness of Lagrange interpolation, $f=p$.
+  \item The error bound for Lagrange interpolation polynomial is $|f(x)-p(x)|\leq\max|f'''||x^3-x|/3!$, so the error bound for $I$ is $\max|f'''|/24$ Here maximum is taken on $[-1, 1]$.
+  \end{enumerate}
+ 
+\item Note that $\int_0^\infty x^ne^{-x}dx=n!$
+\begin{enumerate}
+    \item Because the weighted $L^2$ norms of them are $1, 2, 24$ respectively.
+     \item $\{1, x-1, x^2-4x+2\}$
+\item $2\pm\sqrt{2}$.
+\item \[{1+\sqrt{2}\over 2\sqrt{2}}g(2-\sqrt{2})+{\sqrt{2}-1\over 2\sqrt{2}}g(2+\sqrt{2})\]
+\end{enumerate}
+\end{enumerate}
+
+\newpage
+
+\subsection{Composite Gauss quadrature (Section 10.5)}
+
+One can combine composite method and Gauss quadrature: divide the interval into $m$ subintervals of equal length, then apply Gauss quadrature on each. For example, if we apply Gauss-Legendre quadrature with $k+1$ quadrature points to each subinterval, when the function is in $C^{2k+2}$, the error decay at a speed of $O(m^{2k+2})$.
+
+\newpage
+
+\begin{exa} $\int_{-0.5}^{0.5}\sqrt{1-x^2}dx$, using composite Gauss quadrature with $k=1$\end{exa}
+
+\begin{lstlisting}[language=Python]
+def composite_gauss(n, a, b, f):
+    r=0
+    m=int((n+1)/2)
+    for i in range(m):
+        l0=(i*b+(m-i)*a)/m
+        l1=((i+1)*b+(m-i-1)*a)/m
+        x0=(l0+l1)/2-(l1-l0)/2/(3**0.5)
+        x1=(l0+l1)/2+(l1-l0)/2/(3**0.5)
+        r+=f(x0)+f(x1)
+    return r/(n+1)
+\end{lstlisting}
+
+
+\begin{tikzpicture}
+	\begin{axis}[
+		xlabel=$log(n)$,
+		ylabel=$-log(Error)$]
+	\addplot[color=red,mark=x, only marks] coordinates {
+		(0.6931471805599453,3.746560449724477)
+(1.0986122886681098,4.547453810338138)
+(1.3862943611198906,5.118965503519308)
+(1.6094379124341003,5.5633925579666705)
+(1.791759469228055,5.927002052110047)
+(1.9459101490553132,6.2346716549051004)
+(2.0794415416798357,6.501320810552323)
+(2.1972245773362196,6.73660161087667)
+(2.302585092994046,6.947117728247236)
+(2.3978952727983707,7.137586004803848)
+(2.4849066497880004,7.311492816297971)
+(2.5649493574615367,7.4714878376833544)
+(2.6390573296152584,7.6196319546081686)
+(2.70805020110221,7.757559684401888)
+(2.772588722239781,7.886589202729626)
+(2.833213344056216,8.00779902926391)
+(2.8903717578961645,8.12208280373383)
+(2.9444389791664403,8.23018925813059)
+(2.995732273553991,8.332751940018328)
+(3.044522437723423,8.43031168655338)
+(3.091042453358316,8.52333387219665)
+(3.1354942159291497,8.612221823753858)
+(3.1780538303479458,8.697327381267385)
+(3.2188758248682006,8.778959303716851)
+(3.258096538021482,8.857390026592949)
+(3.295836866004329,8.932861144496894)
+(3.332204510175204,9.00558789696487)
+(3.367295829986474,9.075762867305217)
+(3.4011973816621555,9.143559054538375)
+};
+
+	\addplot[color=blue,mark=+, only marks] coordinates {
+	(1.3862943611198906,9.114856038771517)
+(1.791759469228055,10.641478993908981)
+(2.0794415416798357,11.752422282602218)
+(2.302585092994046,12.624884254357372)
+(2.4849066497880004,13.342684719274926)
+(2.6390573296152584,13.95214413140681)
+(2.772588722239781,14.481537873892268)
+(2.8903717578961645,14.949379792923526)
+(2.995732273553991,15.368444387441553)
+(3.091042453358316,15.7479127618939)
+(3.1780538303479458,16.09460251736614)
+(3.258096538021482,16.413713532022914)
+(3.332204510175204,16.70930151946475)
+(3.4011973816621555,16.98459025133957)
+};
+	\addplot[color=brown,mark=*, only marks] coordinates {
+(1.0986122886681098,9.533573517620844)
+(1.6094379124341003,11.053629765917707)
+(1.9459101490553132,12.161876761968388)
+(2.1972245773362196,13.032985223792194)
+(2.3978952727983707,13.750015347951813)
+(2.5649493574615367,14.358996558690196)
+(2.70805020110221,14.888073888245788)
+(2.833213344056216,15.3556959536854)
+(2.9444389791664403,15.774601761766425)
+(3.044522437723423,16.15395181051019)
+(3.1354942159291497,16.50055106888232)
+(3.2188758248682006,16.819591361689714)
+(3.295836866004329,17.115123042359492)
+(3.367295829986474,17.390366204550023)
+	};
+      \end{axis}
+      
+\end{tikzpicture}
+
+
+\newpage
+
+\subsection{Other topics in numerical integration}
+
+\subsubsection{Modified Gauss Quadratures (Section 10.6)}
+
+Sometimes some quadrature points are pre-determined while others can be chosen strategically, in which case we can choose them as roots of orthogonal polynomials. If the pre-determined point is one of the end point we call this strategy {\bf Radau quadrature}, if it is both end points we call it {\bf Lobatto quadrature}.\\
+
+If there are $n+1$ quadrature points, $k$ of them are predetermined and the rest roots of Legendre polynomial of degree $n+1-k$, the error is bounded by $O((b-a)^{2n+3-k})$. When $n=k=2$ we get Simpson's method.\\
+
+\newpage
+
+\subsubsection{Richardson Extrapolation (Section 7.6, 7.7)}
+
+A common trick in numerical analysis is {\bf extrapolation}: if a sequence $a_n$ can be calculated whose limit as $n\rightarrow \infty$ is some $a$, and the speed of convergence is known, we can use linear combination of successive terms to speed up the convergence. For example, for composite trapezium rule, Euler-Maclaurin formula says that, when $f$ is ``good enough'', 
+\[I_n-I=\sum_{k=1}^\infty c_kn^{-2k}\]
+So ${4I_{2n}-I_n\over 3}$ (which is identical to composite Simpson's rule) has $O(n^{-4})$ convergence, and one can do it repeatedly to get higher convergence speed.
+
+\newpage
+
+\section{Numerical ODE: IVP (Chapter 12)}
+
+Initial value problem of ODE:
+\[y'=f(t, y), y(0)=y_0\]
+Here $y$ can be a real valued function or $\mathbb{R}^n$-valued function. We always assume $f$ is continuous and Lipschitz on the second parameter. (So by Picard's Theorem, IVP has a unique solution.)\\
+
+Numerical integration can be seen as a special case of IVP of numerical ODE, with $f$ independent from $y$.\\
+
+\newpage
+
+\subsection{Euler's Method}
+
+\[y(t+h)=y(t)+hf(t, y(t))\]
+
+\begin{itemize}
+\item {\bf Global error at time} $t$ is the difference between the estimated $y(t)$ and the true value of $y(t)$.
+\item {\bf Truncated error} $T$ is the difference between the calculated $y(t+h)-y(t)\over h$ and the true $y(t+h)-y(t)\over h$.
+\item Under certain assumptions, global error at given time $t$ is controlled by the bound on truncated error (Theorem 12.2 in textbook). 
+\item A method has {\bf order of accuracy} $p$ if when $f$ is sufficiently smooth, $T=O(h^p)$.
+\end{itemize}
+
+By Taylor expansion,
+\[y(t+h)=y(t)+hf(t, y(t))+{h^2\over 2}y''(t)+\dots\]
+So for Euler's method $T=O(h)$, the order of accuracy is $1$.
+
+
+
   
 \end{document}
