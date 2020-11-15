@@ -1298,11 +1298,13 @@ Answer:
 
 \subsection{Composite Gauss quadrature (Section 10.5)}
 
-One can combine composite method and Gauss quadrature: divide the interval into $m$ subintervals of equal length, then apply Gauss quadrature on each. For example, if we apply Gauss-Legendre quadrature with $k+1$ quadrature points to each subinterval, when the function is in $C^{2k+2}$, the error decay at a speed of $O(m^{2k+2})$.
+One can combine composite method and Gauss quadrature: divide the interval into $m$ subintervals of equal length, then apply Gauss quadrature on each. For example, if we apply Gauss-Legendre quadrature with $k+1$ quadrature points to each subinterval, when the function is in $C^{2k+2}$, the error decay at a speed of $O(m^{-2k-2})$.
 
 \newpage
 
 \begin{exa} $\int_{-0.5}^{0.5}\sqrt{1-x^2}dx$, using composite Gauss quadrature with $k=1$\end{exa}
+
+Roots of degree $2$ Legendre polynomials are $\pm1/\sqrt{3}$.
 
 \begin{lstlisting}[language=Python]
 def composite_gauss(n, a, b, f):
@@ -1395,7 +1397,7 @@ def composite_gauss(n, a, b, f):
 
 \subsection{Other topics in numerical integration}
 
-\subsubsection{Modified Gauss Quadratures (Section 10.6)}
+\subsubsection{Modified Gauss Quadratures (Section 10.6), won't be in final exam}
 
 Sometimes some quadrature points are pre-determined while others can be chosen strategically, in which case we can choose them as roots of orthogonal polynomials. If the pre-determined point is one of the end point we call this strategy {\bf Radau quadrature}, if it is both end points we call it {\bf Lobatto quadrature}.\\
 
@@ -1403,7 +1405,7 @@ If there are $n+1$ quadrature points, $k$ of them are predetermined and the rest
 
 \newpage
 
-\subsubsection{Richardson Extrapolation (Section 7.6, 7.7)}
+\subsubsection{Richardson Extrapolation (Section 7.6, 7.7), won't be in final exam}
 
 A common trick in numerical analysis is {\bf extrapolation}: if a sequence $a_n$ can be calculated whose limit as $n\rightarrow \infty$ is some $a$, and the speed of convergence is known, we can use linear combination of successive terms to speed up the convergence. For example, for composite trapezium rule, Euler-Maclaurin formula says that, when $f$ is ``good enough'', 
 \[I_n-I=\sum_{k=1}^\infty c_kn^{-2k}\]
