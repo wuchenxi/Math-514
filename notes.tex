@@ -1429,26 +1429,76 @@ So ${4I_{2n}-I_n\over 3}$ (which is identical to composite Simpson's rule) has $
 
 Initial value problem of ODE:
 \[y'=f(t, y), y(0)=y_0\]
-Here $y$ can be a real valued function or $\mathbb{R}^n$-valued function. We always assume $f$ is continuous and Lipschitz on the second parameter. (So by Picard's Theorem, IVP has a unique solution.)\\
+Here $y$ can be a real valued function or $\mathbb{R}^n$-valued function. For now we focus on the case where $y$ is real valued.\\
+
+We always assume $f$ is continuous and Lipschitz on the second parameter ($|f(t, y)-f(t, z)|\leq L|y-z|$ for all pair $y, z$, $L$ is called the Lipschitz constant). So by Picard's Theorem, IVP has a unique solution.\\
 
 Numerical integration can be seen as a special case of IVP of numerical ODE, with $f$ independent from $y$.\\
 
 \newpage
 
-\subsection{Euler's Method (12.2)}
+\subsection{Euler's Method (12.2, 12.3)}
 
-\[y(t+h)=y(t)+hf(t, y(t))\]
+\[z(0)=y_0\]
+\[z((n+1)h)=z(nh)+hf(t, z(nh))\]
 
 \begin{itemize}
-\item {\bf Global error at time} $t$ is the difference between the estimated $y(t)$ and the true value of $y(t)$.
-\item {\bf Truncated error} $T$ is the difference between the calculated $y(t+h)-y(t)\over h$ and the true $y(t+h)-y(t)\over h$.
-\item Under certain assumptions, global error at given time $t$ is controlled by the bound on truncated error (Theorem 12.2 in textbook). 
+\item {\bf Truncated error} $T$ is the difference between the calculated $z((n+1)h)-z(nh)\over h$ and the true $y((n+1)h)-y(nh)\over h$. 
 \item A method has {\bf order of accuracy} $p$ if when $f$ is sufficiently smooth, $T=O(h^p)$.
+\item {\bf Global error at time} $t$ is the difference between the estimated $z(t)$ and the true value of $y(t)$.
+\item A method is called {\bf consistent} if truncated error goes to $0$ as $h\rightarrow 0$. {\bf Convergent} if global error goes to $0$ as $h\rightarrow 0$.
+\item Under certain assumptions, global error at given time $t$ is controlled by the bound on truncated error (Theorem 12.2 and 12.5 in textbook).
 \end{itemize}
 
-By Taylor expansion,
+\newpage
+
+By definition of derivative,
+\[y(t+h)=y(t)+hf(t, y(t))+o(h)\]
+If furthermore $f$ is smooth and we can use Taylor series, then
+\[y(t+h)=y(t)+hf(t, y(t))+{h^2\over 2}(f_1(s, y(s))+f_2(s, y(s))f(s, y(s)))\]
+for some $s\in [t, t+h]$, $f_1$ and $f_2$ are the partial derivative in first and second parameter. 
 \[y(t+h)=y(t)+hf(t, y(t))+{h^2\over 2}y''(t)+\dots\]
-So for Euler's method $T=O(h)$, the order of accuracy is $1$.
+So:
+\begin{itemize}
+\item Euler's method is {\bf consistent}.
+\item If $f$ is smooth,  $T=O(h)$, the order of accuracy is $1$.
+\item If $f$ and its partial derivatives are all bounded, $T$ is uniformly bounded by some $Ch$.
+\end{itemize}
+
+\newpage
+
+\begin{lem}
+If $f$ is $L$-Lip. on second paramater, $w_1$, $w_2$ are solutions of the same equation
+\[w'=f(t, w)\]
+Then for any $t_0<t_1$,
+\[|w_1(t_1)-w_2(t_1)|\leq e^{L(t_1-t_0)}|w_1(t_0)-w_2(t_0)|\]
+\end{lem}
+
+\begin{proof}
+  Let $g(t)=w_1(t)-w_2(t)$, then
+  \[g'\leq L|g|\]
+  \[(|g|e^{-Lt})'\leq 0\]
+  Hence $|g|e^{-Lt}$ can never increase.
+\end{proof}
+
+\newpage
+
+
+To estimate global error at time $t=nh$, let $y_k$ be the solution of IVP
+\[y_k(kh)=z(kh)\]
+\[y_k'=f(t, y_k)\]
+Then
+\[|y(nh)-z(nh)|=|y_0(nh)-y_n(nh)|\leq \sum_{k=0}^{n-1}|y_k(nh)-y_{k+1}(nh)|\]
+\[\leq \sum_{k=0}^{n-1}Ch^2 e^{L(n-k-1)h}\leq {Ch^2(e^{Lnh}-1)\over e^h-1}\]
+So
+\begin{thm}
+If
+\begin{itemize}
+\item $f$ is smooth, $f$ and its partial derivatives are bounded.
+\item $nh$ is fixed and $n\rightarrow\infty$
+\end{itemize}
+then the global error of Euler's method at time $nh$ converges to zero at $O(h)$. In other words, Euler's method is {\bf convergent}.
+\end{thm}
 
 \newpage
 
