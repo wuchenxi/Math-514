@@ -93,6 +93,9 @@
   The first topic will be the foundation of the second and third topic.
 
   \newpage
+\tableofcontents
+
+\newpage
   
   \section{Polynomial interpolation (Chapter 6)}
   
@@ -1411,6 +1414,15 @@ A common trick in numerical analysis is {\bf extrapolation}: if a sequence $a_n$
 \[I_n-I=\sum_{k=1}^\infty c_kn^{-2k}\]
 So ${4I_{2n}-I_n\over 3}$ (which is identical to composite Simpson's rule) has $O(n^{-4})$ convergence, and one can do it repeatedly to get higher convergence speed.
 
+\subsection{Review}
+
+\begin{itemize}
+\item Quadrature rule
+\item Newton-Cotes quadrature
+\item Gauss quadrature
+\item Composite method
+\end{itemize}
+
 \newpage
 
 \section{Numerical ODE: IVP (Chapter 12)}
@@ -1423,7 +1435,7 @@ Numerical integration can be seen as a special case of IVP of numerical ODE, wit
 
 \newpage
 
-\subsection{Euler's Method}
+\subsection{Euler's Method (12.2)}
 
 \[y(t+h)=y(t)+hf(t, y(t))\]
 
@@ -1437,6 +1449,20 @@ Numerical integration can be seen as a special case of IVP of numerical ODE, wit
 By Taylor expansion,
 \[y(t+h)=y(t)+hf(t, y(t))+{h^2\over 2}y''(t)+\dots\]
 So for Euler's method $T=O(h)$, the order of accuracy is $1$.
+
+\newpage
+
+\subsection{Ways to get higher order methods}
+
+\subsubsection{Linear multistep methods (12.4, 12.6)}
+
+\paragraph{Explicit Methods} Consider the function $g(t)=f(t, y(t))$. One can then use $g(t), g(t-h), \dots, g(t-kh)$ as interpolation point to estimate $\int_{t-dh}^{t+h}g(s)ds$, then use $g(t+h)=g(t-dh)+\int_t^{t+h}g(s)ds$.
+
+\paragraph{Implicit Methods} One can also use $g(t+h), g(t), g(t-h), \dots, g(t-kh)$ as interpolation point to estimate $\int_{t-dh}^{t+h}g(s)ds$, then use $g(t+h)=g(t-dh)+\int_t^{t+h}g(s)ds$. This way $g(t+h)$ appears on the right hand side and the calculation of $g(t+h)$ requires solving an equation, hence is called {\bf implicit}.
+
+\begin{exa}Explicit method for $d=0$, $k=1$ is Euler's Method. Implicit method for $d=0$, $k=0$ is the {\bf trapezium method} as the numerical integration is via trapezium rule:
+\[y(t+h)=y(t)+{h\over 2}{f(t, y(t))+f(t+h, y(t+h))\over 2}\] 
+  It has order of accuracy $2$.\end{exa}
 
 
 
