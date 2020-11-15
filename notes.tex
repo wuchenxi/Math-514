@@ -1461,8 +1461,12 @@ So for Euler's method $T=O(h)$, the order of accuracy is $1$.
 \paragraph{Implicit Methods} One can also use $g(t+h), g(t), g(t-h), \dots, g(t-kh)$ as interpolation point to estimate $\int_{t-dh}^{t+h}g(s)ds$, then use $g(t+h)=g(t-dh)+\int_t^{t+h}g(s)ds$. This way $g(t+h)$ appears on the right hand side and the calculation of $g(t+h)$ requires solving an equation, hence is called {\bf implicit}.
 
 \begin{exa}Explicit method for $d=0$, $k=1$ is Euler's Method. Implicit method for $d=0$, $k=0$ is the {\bf trapezium method} as the numerical integration is via trapezium rule:
-\[y(t+h)=y(t)+{h\over 2}{f(t, y(t))+f(t+h, y(t+h))\over 2}\] 
+\[y(t+h)=y(t)+{h\over 2}(f(t, y(t))+f(t+h, y(t+h)))\] 
   It has order of accuracy $2$.\end{exa}
+
+\newpage
+
+\subsubsection{Runge-Kutta methods}
 
 
 
