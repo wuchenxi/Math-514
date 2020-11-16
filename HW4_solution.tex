@@ -1,5 +1,5 @@
 \documentclass[20pt]{article} % USenglish for autoref
-\usepackage[paper=screen, centering, papersize=15cm]{geometry}
+\usepackage[paper=screen, centering, papersize=20cm]{geometry}
 \usepackage{cmap}		% to search and copy ligatures
 \usepackage[utf8]{inputenc}	% for Linux computer and Mac
 %\usepackage[latin1]{inputenc}	% für Windows computer
@@ -81,6 +81,8 @@ So this is maximalized at point $c={\sqrt{3}\over 3}$.
 So
 \[s={c+1\over 3}={\sqrt{3}+3\over 9}\]
 
+\newpage
+
 2. Let $f(x)=e^x$, $p$ be the Lagrange interpolation polynomial of $f$ on interval $[0, 2]$ using interpolation points $x_0=0$, $x_1=1$, $x_2=2$, find an upper bound for the $L^\infty$ norm of $f(x)-p(x)$ on $[0, 2]$, using the error bound of Lagrange polynomial we covered in the lecture (Theorem 6.2 in textbook, Theorem 1.5 in lecture notes).\\
 
 Answer:\\
@@ -91,6 +93,8 @@ When $c\in [0, 2]$, $|f'''(c)|\leq e^2$.\\
 When $x\in [0, 2]$, $|x(x-1)(x-2)|\leq {2\sqrt{3}\over 9}$.\\
 Hence an upper bound for this error is $e^2\sqrt{3}\over 27$.\\
 It's ok if you get a slightly larger error bound, for example $4e^2/3$.\\
+
+\newpage
 
 3. Suppose $f$ is continuous and with continuous derivatives of order up to and including 5 on $[a, b]$, and there are three distinct points $x_0$, $x_1$, $x_2$ in $[a, b]$. Let $y_i=f(x_i)$, $i=0, 1, 2$; $z_j=f'(x_j)$, $j=0, 2$.
 \begin{enumerate}
@@ -143,6 +147,7 @@ Answer:\\
       $G(x)=G(x_i)=G'(x_0)=G'(x_2)=0$, so $G'$ is zero at at least 5 points, $G{(5)}$ is zero at at least one point. Let that point be $s$, then $G^{(5)}(s)=0$ implies the equation we need to prove.
 \end{enumerate}
 
+\newpage
 
 4. Let $q_j=(1-x^2)^j$, $\varphi_j=q_j^{(j)}$, show that $\varphi_j$ are orthogonal to each other in $L^2([-1, 1])$. In other words, if $j\not=j'$, $\int_{-1}^1\varphi_j\varphi_{j'}dx=0$. \\
 
@@ -160,13 +165,19 @@ Now, because $\varphi_i$ are all non-zero, they all have non-zero $L^2$ norms on
 \[=\dots=(-1)^j\int_{-1}^jq_i^{(i+j)}q_jdx\]
 However the degree of $q_j$ is $2j<i+j$, hence $q_i^{(i+j)}=0$, which implies that the integration is zero.\\
 
+\newpage
+
 5. Find three distinct points $x_0$, $x_1$ and $x_2$ in $(-1, 1)$, such that for any polynomial function $f$ of degree $3$, the best approximation of $f$ under $L^2$ norm on $[-1, 1]$ of degree at most $2$ coincides with the Lagrange interpolation polynomial of $f$ using interpolation points $x_0$, $x_1$ and $x_2$.\\
 
-Answer: Suppose $f$ is the degree 3 Legendre polynomial $f_3=x^3-{3\over 5}x$, then, because it is orthogonal to the degree 0, 1, and 2 Legendre polynomials under $L^2([-1, 1])$, and these three Legendre polynomials form an orthogonal basis of the space $V_2$ of polynomials of degree no more than 2, the best approximation formula in inner product space implies that the best approximation of $f$ on $V_2$ under $L^2([-1, 1])$ norm must be $0$. By assumption, the Legendre interpolation of $f_3$ at $x_0$, $x_1$ and $x_2$ must also be zero, so these three points can only be the three roots of $x^3-{3\over 5}x$, which are $0, \pm\sqrt{3\over 5}$.\\
+Answer:\\
+
+Suppose $f$ is the degree 3 Legendre polynomial $f_3=x^3-{3\over 5}x$, then, because it is orthogonal to the degree 0, 1, and 2 Legendre polynomials under $L^2([-1, 1])$, and these three Legendre polynomials form an orthogonal basis of the space $V_2$ of polynomials of degree no more than 2, the best approximation formula in inner product space implies that the best approximation of $f$ on $V_2$ under $L^2([-1, 1])$ norm must be $0$. By assumption, the Legendre interpolation of $f_3$ at $x_0$, $x_1$ and $x_2$ must also be zero, so these three points can only be the three roots of $x^3-{3\over 5}x$, which are $0, \pm\sqrt{3\over 5}$.\\
 
 Now suppose $f=\sum_{i=0}^3a_ix^i$ is any degree $3$ polynomial. Then, because $f-a_3f_3$ is of degree at most $2$ and is identical to $f$ at $0, \pm\sqrt{3\over 5}$, the Lagrange interpolation of $f$ at $x_i$ is $f-a_3f_3$. On the other hand, let $e_0, e_1, e_2$ be any orthogonal basis of $V_2$, then the best approximation of $f$ on $V_2$ under $L^2([-1, 1])$ norm is $\sum_i(f, e_i)e_i$. However, because $f_3$ is orthogonal to $V_2$, $(f, e_i)=(f-a_3f_3, e_i)$, so the best approximation of $f$ is the same as the best approximation of $f-a_3f_3$, which must be $f-a_3f_3$ itself as $f-a_3f_3\in V_2$. This proves that $x_i$ being $0, \pm\sqrt{3\over 5}$ satisfies the requirement in the problem.\\
 
-6. Let $f$ be a continuous function on $[0, 1]$, $p_n$ be the polynomial of best approximation of degree no more than $n$ under the $L^2$ norm. Then, after studying Theorem 9.5 in the textbook, which proved that $f-p_n$ is zero at at least $n+1$ distinct points in $(0, 1)$, find a function $f$ such that $f-p_2$ is zero at $4$ distinct points in $(0, 1)$.
+\newpage
+
+6. Let $f$ be a continuous function on $[0, 1]$, $p_n$ be the polynomial of best approximation of degree no more than $n$ under the $L^2$ norm. Then, after studying Theorem 9.5 in the textbook, which proved that $f-p_n$ is zero at at least $n+1$ distinct points in $(0, 1)$, find a function $f$ such that $f-p_2$ is zero at $4$ distinct points in $(0, 1)$.\\
 
 Answer:\\
 
