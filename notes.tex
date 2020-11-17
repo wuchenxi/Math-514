@@ -1480,24 +1480,30 @@ $y_n(t)=(1+h)^ne^{t-nh}$, so the truncated error at time $nh$ is ${(1+h)^ne^h-(1
   \draw[scale=1, domain=0.75:1, smooth, variable=\x, red] plot({\x}, {(exp(\x-0.75)*1.25*1.25*1.25});
 \end{tikzpicture}
 
+To study global error, we need to understand:
 
-\newpage
-
-
-By definition of derivative,
-\[y(t+h)=y(t)+hf(t, y(t))+o(h)\]
-If furthermore $f$ is smooth and we can use Taylor series, then
-\[y(t+h)=y(t)+hf(t, y(t))+{h^2\over 2}(f_1(s, y(s))+f_2(s, y(s))f(s, y(s)))\]
-for some $s\in [t, t+h]$, $f_1$ and $f_2$ are the partial derivative in first and second parameter. 
-\[y(t+h)=y(t)+hf(t, y(t))+{h^2\over 2}y''(t)+\dots\]
-So:
 \begin{itemize}
-\item Euler's method is {\bf consistent}.
-\item If $f$ is smooth,  $T=O(h)$, the order of accuracy is $1$.
-\item If $f$ and its partial derivatives are all bounded, $T$ is uniformly bounded by some $Ch$.
+\item What are the truncated errors?
+\item How do error introduced in prior steps grow with time?
 \end{itemize}
 
 \newpage
+
+\begin{itemize}
+\item By definition of derivative, if $t=nh$,
+\[y_n(t+h)=y_n(t)+hf(t, y_n(t))+o(h)\]
+So $T_n={o(h)\over h}$, Euler's method is {\bf consistent}.
+\item If $f$ is sufficiently smooth, so is $y_n$, so
+\[y_n(t+h)=y_n(t)+hf(t, y_n(t))+{h^2\over 2}y''_n(t)+o(n^2)\]
+So $T_n=O(h)$, Euler's method is of order of accuracy $1$.
+\item Furthermore, if we write down the remainder of Taylor's series, we have
+\[y(t+h)=y(t)+hf(t, y(t))+{h^2\over 2}(f_1(s, y(s))+f_2(s, y(s))f(s, y(s)))\]
+for some $s\in [t, t+h]$, $f_1$ and $f_2$ are the partial derivative in first and second parameter. So,  if $f$ and its partial derivatives are all bounded, $T$ is uniformly bounded by some $Ch$.
+\end{itemize}
+
+\newpage
+
+Let's now analyze how error grow in Euler's method:
 
 \begin{lem}
 If $f$ is $L$-Lip. on second paramater, $w_1$, $w_2$ are solutions of the same equation
@@ -1516,10 +1522,7 @@ Then for any $t_0<t_1$,
 \newpage
 
 
-To estimate global error at time $t=nh$, let $y_k$ be the solution of IVP
-\[y_k(kh)=z(kh)\]
-\[y_k'=f(t, y_k)\]
-Then
+Now let's estimate global error at time $t=nh$:
 \[|y(nh)-z(nh)|=|y_0(nh)-y_n(nh)|\leq \sum_{k=0}^{n-1}|y_k(nh)-y_{k+1}(nh)|\]
 \[\leq \sum_{k=0}^{n-1}Ch^2 e^{L(n-k-1)h}\leq {Ch^2(e^{Lnh}-1)\over e^h-1}\]
 So
