@@ -128,7 +128,7 @@ Answer:\\
     \[+y_2{(x-x_0)^2(x-x_1)\over (x_2-x_0)^2(x_2-x_1)}(1-(x-x_2)({2\over x_2-x_0}+{1\over x_2-x_1}))\]
     \[+z_0{(x-x_0)(x-x_1)(x-x_2)^2\over (x_0-x_1)(x_0-x_2)^2}\]
     \[+z_2{(x-x_0)^2(x-x_1)(x-x_2)\over (x_2-x_0)^2(x_2-x_1)}\]
-  \item We can also use Hermite interpolation polynomial: suppose $p'(x_1)=a$, use all information for $f(x_i)$, $i=0, 1, 2$ and $f'(x_i)$, $i=0, 1, 2$, we can write down the Hermite interpolation polynomial which is a polynomial of degree at most $5$. The coefficient for $x^5$ is
+  \item We can also use Hermite interpolation polynomial: suppose $p'(x_1)=a$, use all information for $p(x_i)$, $i=0, 1, 2$ and $p'(x_i)$, $i=0, 1, 2$, we can write down the Hermite interpolation polynomial which is a polynomial of degree at most $5$. The coefficient for $x^5$ is
     \[-{y_0\over (x_0-x_1)^2(x_0-x_2)^2}({2\over x_0-x_1}+{2\over x_0-x_2})\]
     \[-{y_1\over (x_1-x_0)^2(x_1-x_2)^2}({2\over x_1-x_0}+{2\over x_1-x_2})\]
     \[-{y_2\over (x_2-x_1)^2(x_2-x_0)^2}({2\over x_2-x_1}+{2\over x_2-x_0})\]
@@ -162,7 +162,7 @@ Now, because $\varphi_i$ are all non-zero, they all have non-zero $L^2$ norms on
 \[\int_{-1}^1\varphi_i\varphi_jdx=\int_{-1}^1 q_i^{(i)}q_j^{(j)}dx\]
 \[=-\int_{-1}^1q_i^{(i+1)}q_j^{(j-1)}dx\]
 \[=\int_{-1}^1q_i^{(i+2)}q_j^{(j-2)}dx\]
-\[=\dots=(-1)^j\int_{-1}^jq_i^{(i+j)}q_jdx\]
+\[=\dots=(-1)^j\int_{-1}^1q_i^{(i+j)}q_jdx\]
 However the degree of $q_i$ is $2i<i+j$, hence $q_i^{(i+j)}=0$, which implies that the integration is zero.\\
 
 \newpage
