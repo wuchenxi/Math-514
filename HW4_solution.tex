@@ -108,7 +108,7 @@ Answer:\\
 \begin{enumerate}
 \item \begin{itemize}
   \item Approach I: We can find five polynomials $p_0$, $p_1$, $p_2$, $q_0$, $q_2$, such that
-    \[p_0(x_0)=p_1(x_1)=p_2(x_2)=q'_0(x_0)=q'_2(x_2)=0\]
+    \[p_0(x_0)=p_1(x_1)=p_2(x_2)=q'_0(x_0)=q'_2(x_2)=1\]
     \[p_i(x_j)=0\text{ when }i\not=j\]
     \[p_i'(x_j)=0\text{ when }j=0, 2\]
     \[q'_0(x_2)=q'_2(x_0)=0\]
@@ -128,7 +128,7 @@ Answer:\\
     \[+y_2{(x-x_0)^2(x-x_1)\over (x_2-x_0)^2(x_2-x_1)}(1-(x-x_2)({2\over x_2-x_0}+{1\over x_2-x_1}))\]
     \[+z_0{(x-x_0)(x-x_1)(x-x_2)^2\over (x_0-x_1)(x_0-x_2)^2}\]
     \[+z_2{(x-x_0)^2(x-x_1)(x-x_2)\over (x_2-x_0)^2(x_2-x_1)}\]
-  \item We can also use Hermite interpolation polynomial: suppose $f'(x_1)=a$, use all information for $f(x_i)$, $i=0, 1, 2$ and $f'(x_i)$, $i=0, 1, 2$, we can write down the Hermite interpolation polynomial which is a polynomial of degree at most $5$. The coefficient for $x^5$ is
+  \item We can also use Hermite interpolation polynomial: suppose $p'(x_1)=a$, use all information for $f(x_i)$, $i=0, 1, 2$ and $f'(x_i)$, $i=0, 1, 2$, we can write down the Hermite interpolation polynomial which is a polynomial of degree at most $5$. The coefficient for $x^5$ is
     \[-{y_0\over (x_0-x_1)^2(x_0-x_2)^2}({2\over x_0-x_1}+{2\over x_0-x_2})\]
     \[-{y_1\over (x_1-x_0)^2(x_1-x_2)^2}({2\over x_1-x_0}+{2\over x_1-x_2})\]
     \[-{y_2\over (x_2-x_1)^2(x_2-x_0)^2}({2\over x_2-x_1}+{2\over x_2-x_0})\]
@@ -144,7 +144,7 @@ Answer:\\
 
     \item If $x=x_i$ it's trivially true. Now suppose $x\not=x_i$ for any $i$, consider
       \[G(t)=f(t)-p(t)-{(f(x)-p(x))(t-x_0)^2(t-x_1)(t-x_2)^2\over (x-x_0)^2(x-x_1)(x-x_2)^2}\]
-      $G(x)=G(x_i)=G'(x_0)=G'(x_2)=0$, so $G'$ is zero at at least 5 points, $G{(5)}$ is zero at at least one point. Let that point be $s$, then $G^{(5)}(s)=0$ implies the equation we need to prove.
+      $G(x)=G(x_i)=G'(x_0)=G'(x_2)=0$, so $G'$ is zero at at least 5 points, $G^{(5)}$ is zero at at least one point. Let that point be $s$, then $G^{(5)}(s)=0$ implies the equation we need to prove.
 \end{enumerate}
 
 \newpage
@@ -163,7 +163,7 @@ Now, because $\varphi_i$ are all non-zero, they all have non-zero $L^2$ norms on
 \[=-\int_{-1}^1q_i^{(i+1)}q_j^{(j-1)}dx\]
 \[=\int_{-1}^1q_i^{(i+2)}q_j^{(j-2)}dx\]
 \[=\dots=(-1)^j\int_{-1}^jq_i^{(i+j)}q_jdx\]
-However the degree of $q_j$ is $2j<i+j$, hence $q_i^{(i+j)}=0$, which implies that the integration is zero.\\
+However the degree of $q_i$ is $2i<i+j$, hence $q_i^{(i+j)}=0$, which implies that the integration is zero.\\
 
 \newpage
 
