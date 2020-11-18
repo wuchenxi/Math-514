@@ -1,0 +1,99 @@
+\documentclass[20pt]{article} % USenglish for autoref
+\usepackage[paper=screen, centering, papersize=20cm]{geometry}
+\usepackage{cmap}		% to search and copy ligatures
+\usepackage[utf8]{inputenc}	% for Linux computer and Mac
+%\usepackage[latin1]{inputenc}	% für Windows computer
+\usepackage[T1]{fontenc}	% to search for ligatures in the pdf
+\usepackage[USenglish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{graphicx}
+%\usepackage{stmaryrd}		% for \mapsfrom
+\usepackage{aliascnt}		% for Aliascounter so that autoref gives the thms the right names
+\usepackage[pdfborder={0 0 0}]{hyperref}   % if you want to have math environment in captions you have to use \texorpdfstring{$x^2$}{x2}; without frame around the links
+\usepackage[figure]{hypcap}		% to make autoref link to figures and not the captions of figures
+%\usepackage{paralist}		% for compactitem
+\usepackage{mathtools}		% for \coloneqq
+\usepackage[]{todonotes}	% use option disable to disable all the todos
+\usepackage{float}
+\usepackage{lipsum}
+\theoremstyle{break}
+\newtheorem{definition}{Definition}[section]  
+\newtheorem{exa}[definition]{Example}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{lem}[definition]{Lemma}
+\newtheorem{conj}[definition]{Conjecture}
+\newtheorem{quest}[definition]{Research question}
+\newtheorem{thm}[definition]{Theorem}  
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{rem}[definition]{Remark}
+
+
+\renewcommand{\labelenumi}{(\roman{enumi})} % roman numbers in enumerations
+
+\usepackage{graphicx,tikz} % Allows including images
+
+\usetikzlibrary{calc,decorations.markings}
+\usetikzlibrary{shapes,snakes}
+
+\DeclareMathOperator{\Aff}{Aff}
+\DeclareMathOperator{\der}{der}
+\DeclareMathOperator{\Trans}{Trans}
+\DeclareMathOperator{\dir}{dir}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\NN}{\mathbb{N}}
+
+
+%For L Cal and L Twidle:
+\newcommand{\LC}{\mathcal{L}} 
+\newcommand{\LT}{\widetilde{\mathcal{L}}}
+
+%For X bar
+\newcommand{\XB}{\overline{X}}
+
+%For the real and complex numbers
+\newcommand{\RR}{\mathbb{R}} 
+\newcommand{\CC}{\mathbb{C}} 
+
+
+\newcommand{\remark}[2][]{\todo[color=green!50, #1]{#2}}
+
+\title{HW 5}
+
+
+\begin{document}
+\maketitle
+
+1. (Problem 7.6 in textbook) Consider the trapezium and Simpson's rule applied to $\int_0^1(x^5-Cx^4)dx$.
+\begin{itemize}
+\item Write down the error for trapezium and Simpson's rule, as functions of $C$.
+\item Find $C$ that makes the error under trapezium rule is $0$.
+\item Find the range of $C$ where the trapezium rule is more accurate than Simpson's rule.
+\end{itemize}
+
+2. (Problem 7.11 in textbook) Suppose $f\in C^4([-1, 1])$. Let $p$ be the Hermite interpolation polynomial of $f$ at $x_0=-1$, $x_1=1$.
+\begin{itemize}
+\item Calculate $\int_{-1}^1pdx$ and write it as a linear combination of $f(\pm 1)$, $f'(\pm 1)$.
+\item Prove that
+  \[|\int_{-1}^1fdx-\int_{-1}^1pdx|\leq {2\over 45}\max_{c\in [-1, 1]}|f^{(4)}(c)|\]
+\end{itemize}
+
+
+3. (Problem 10.3 in textbook) Show that if $f\in C^2([0, 1])$, then there is some point $c\in (0, 1)$ such that
+\[\int_0^1xfdx={1\over 2}f(2/3)+{1\over 72}f''(c)\]
+Hint: use Gauss quadrature with weight $x$.\\
+
+4. \begin{itemize}
+\item Suppose $f$ is continuous on $[0, 1]$. Let $I_n$ be the estimate of $\int_0^1fdx$ using composite trapezium rule. Show that there is some $C$ independent from $n$, such that
+  \[|\int_0^1fdx-I_n|\leq {C\over n}\]
+ Hint: use the definition of absolute continuity.
+\item (Optional) Find a continuous function $f$, such that there is $C>0$ such that 
+  \[|\int_0^1fdx-I_n|\geq {C\over n}\]
+  Hint: if $f$ has bounded second derivative then the error decays like $O(1/n^2)$, so you need to find some $f$ that doesn't have second order derivative or has unbounded second order derivative.
+\end{itemize}
+\end{document}

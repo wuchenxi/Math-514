@@ -772,6 +772,17 @@ Hence
 Now apply mean value theorem for $f'''$ on $[(b+a)/2-c_3, (b+a)/2+c_3]$, we get the $c$. 
 \end{proof}
 
+\begin{proof}[Alternative proof]
+  Following the same argument as Theorem~\ref{qbound}, we know that if $f$ is a polynomial of degree $3$, $\int_a^bfdx$ equals the result of Simpson's rule.\\
+
+  Now let $p$ be the Lagrange interpolation of $f$ at four distinct points $a$, $b$, $a+b\over 2$ and $d$. Then
+  \[\int_a^bpdx=(b-a)({p(a)\over 6}+{2p((a+b)/2)\over 3}+{p(b)\over 6})\]
+  \[=(b-a)({f(a)\over 6}+{2f((a+b)/2)\over 3}+{f(b)\over 6})\]
+  However, by error bound of Lagrange polynomials, 
+  \[f(x)-p(x)={f^{(4)}(c)(x-a)(x-b)(x-(a+b)/2)(x-d)\over 4!}\]
+  Now push $d$ towards $c$, which makes $(x-a)(x-b)(x-(a+b)/2)(x-d)$ non positive on $[a, b]$. Now integrate for $x\in [a, b]$ and use integration mean value theorem, we get the theorem.
+\end{proof}
+
 \newpage
 
 \subsection{Composite Method}
@@ -1319,7 +1330,7 @@ def composite_gauss(n, a, b, f):
         x0=(l0+l1)/2-(l1-l0)/2/(3**0.5)
         x1=(l0+l1)/2+(l1-l0)/2/(3**0.5)
         r+=f(x0)+f(x1)
-    return r/(n+1)
+    return r*(b-a)/(n+1)
 \end{lstlisting}
 
 
@@ -1447,8 +1458,8 @@ $h$ is a small number, $z$ an approximation of $y$ evaluated using:
 
 \begin{itemize}
 \item The motivation is using PL function to approximate $y$.
-\item {\bf Truncated error} $T_n$ is error introduced at step $n$, divided by step size. More precisely, let $y_n$ be the solution for initial value $y_n(nh)=z(nh), y_n'=f(t, y_n)$, then
-  \[T_n={z((n+1)h)-y_n((n+1)h)\over h}\]. 
+\item {\bf Truncated error} $T_n$ is error introduced at step $n$, divided by step size. More precisely, suppose the method is $z((n+1)h)=G(z(nh))$, then
+  \[T_n={G(y(nh))-y((n+1)h)\over h}\]. 
 \item A method has {\bf order of accuracy} $p$ if when $f$ is sufficiently smooth, $T=O(h^p)$.
 \item {\bf Global error at time} $t$ is the difference between the estimated $z(t)$ and the true value of $y(t)$.
 \item A method is called {\bf consistent} if truncated error goes to $0$ as $h\rightarrow 0$. {\bf Convergent} if global error goes to $0$ as $h\rightarrow 0$.
@@ -1466,19 +1477,25 @@ Approximated solution using Euler's method with step-size $h$:
 
 So the global error at time $t=nh$ is $e^t-(1+h)^n=e^t-(1+h)^{t/h}$, which converges to $0$ as $h\rightarrow 0$.\\
 
-$y_n(t)=(1+h)^ne^{t-nh}$, so the truncated error at time $nh$ is ${(1+h)^ne^h-(1+h)^{n+1}\over h}=O(h)$, so the method is consistent with order of accuracy $1$.\\
+To understand the error created at each step, consider the sequence $z_k(nh)$, such that
+\[z_k(kh)=y(kh)=e^{kh}\]
+\[z_k((n+1)h)=z_k(nh)+hz_k(nh)\]
+So
+\[z_k(nh)=e^{kh}(1+h)^{n-k}\]
+\[T_n={e^{(n+1)h}-e^{nh}(1+h)\over h}=O(h)\]
+So the method is consistent with order of accuracy $1$.\\
+
+\newpage
 
 \begin{tikzpicture}[yscale=2, xscale=8]
   \draw[->] (0, 0) -- (1, 0) node[right] {$x$};
   \draw[->] (0, 0) -- (0, 3) node[above] {$y$};
   \draw[scale=1, domain=0:1, smooth, variable=\x, black] plot ({\x}, {exp(\x)});
   \draw[-, blue] (0, 1)--(0.25, 1.25)--(0.5, 1.25*1.25)--(0.75, 1.25*1.25*1.25)--(1, 1.25*1.25*1.25*1.25);
-  \draw[scale=1, domain=0.25:1, smooth, variable=\x, red] plot({\x}, {(exp(\x-0.25)*1.25});
-  
-  \draw[scale=1, domain=0.5:1, smooth, variable=\x, red] plot({\x}, {(exp(\x-0.5)*1.25*1.25});
-  
-  \draw[scale=1, domain=0.75:1, smooth, variable=\x, red] plot({\x}, {(exp(\x-0.75)*1.25*1.25*1.25});
-\end{tikzpicture}
+  \draw[-, red] (0.25, 1.28402541669)--(0.5, 1.28402541669*1.25)--(0.75, 1.28402541669*1.25*1.25)--(1, 1.28402541669*1.25*1.25*1.25);
+  \draw[-, red] (0.5, 1.6487212707)--(0.75, 1.6487212707*1.25)--(1, 1.6487212707*1.25*1.25);
+  \draw[-, red] (0.75, 2.11700001661)--(1, 2.11700001661*1.25);
+  \end{tikzpicture}
 
 To study global error, we need to understand:
 
@@ -1491,39 +1508,36 @@ To study global error, we need to understand:
 
 \begin{itemize}
 \item By definition of derivative, if $t=nh$,
-\[y_n(t+h)=y_n(t)+hf(t, y_n(t))+o(h)\]
+\[y(t+h)=y(t)+hf(t, y(t))+o(h)\]
 So $T_n={o(h)\over h}$, Euler's method is {\bf consistent}.
 \item If $f$ is sufficiently smooth, so is $y_n$, so
-\[y_n(t+h)=y_n(t)+hf(t, y_n(t))+{h^2\over 2}y''_n(t)+o(n^2)\]
+\[y(t+h)=y(t)+hf(t, y(t))+{h^2\over 2}y''(t)+o(n^2)\]
 So $T_n=O(h)$, Euler's method is of order of accuracy $1$.
 \item Furthermore, if we write down the remainder of Taylor's series, we have
-\[y(t+h)=y(t)+hf(t, y(t))+{h^2\over 2}(f_1(s, y(s))+f_2(s, y(s))f(s, y(s)))\]
+  \[y(t+h)=y(t)+hy'(t)+{h^2\over 2}y''(s)\]
+  \[=y(t)+hf(t, y(t))+{h^2\over 2}(f_1(s, y(s))+f_2(s, y(s))f(s, y(s)))\]
 for some $s\in [t, t+h]$, $f_1$ and $f_2$ are the partial derivative in first and second parameter. So,  if $f$ and its partial derivatives are all bounded, $T$ is uniformly bounded by some $Ch$.
 \end{itemize}
 
 \newpage
 
-Let's now analyze how error grow in Euler's method:
+Let's now analyze how error grows in Euler's method:
 
 \begin{lem}
-If $f$ is $L$-Lip. on second paramater, $w_1$, $w_2$ are solutions of the same equation
-\[w'=f(t, w)\]
-Then for any $t_0<t_1$,
-\[|w_1(t_1)-w_2(t_1)|\leq e^{L(t_1-t_0)}|w_1(t_0)-w_2(t_0)|\]
+  If $f$ is $L$-Lip. on second paramater, $z_1$, $z_2$ two functions defined on $mh, (m+1)h, \dots, nh$, such that
+  \[z_i((k+1)h)=z_i(kh)+hf(kh, z_i(kh))\]
+  Then 
+\[|z_1(nh)-z_2(nh)|\leq e^{L(n-m)h}|z_1(mh)-z_2(mh)|\]
 \end{lem}
 
 \begin{proof}
-  Let $g(t)=w_1(t)-w_2(t)$, then
-  \[g'\leq L|g|\]
-  \[(|g|e^{-Lt})'\leq 0\]
-  Hence $|g|e^{-Lt}$ can never increase.
+  \[LHS\leq (1+hL)|z_1((n-1)h)-z_2((n-1)h)|\leq\]
+    \[\dots\leq (1+hL)^{n-m}|z_1(mh)-z_2(mh)|\]
+ And \[(1+hL)^{n-m}\leq e^{L(n-m)h}\]
 \end{proof}
 
-\newpage
-
-
 Now let's estimate global error at time $t=nh$:
-\[|y(nh)-z(nh)|=|y_0(nh)-y_n(nh)|\leq \sum_{k=0}^{n-1}|y_k(nh)-y_{k+1}(nh)|\]
+\[|y(nh)-z(nh)|=|z_{n}(nh)-z_{0}(nh)|\leq \sum_{k=0}^{n-1}|z_k(nh)-z_{k+1}(nh)|\]
 \[\leq \sum_{k=0}^{n-1}Ch^2 e^{L(n-k-1)h}\leq {Ch^2(e^{Lnh}-1)\over e^h-1}\]
 So
 \begin{thm}
