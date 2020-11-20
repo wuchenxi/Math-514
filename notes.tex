@@ -1541,8 +1541,12 @@ Let's now analyze how error grows in Euler's method:
 Now let's estimate global error at time $t=nh$. Let $z_k(nh)$, $n\geq k$, be
 \[z_k(kh)=y(kh)\]
 \[z_k((n+1)h)=z_k(nh)+hf(nh, z_k(nh))\]
-\[|y(nh)-z(nh)|=|z_{n}(nh)-z_{0}(nh)|\leq \sum_{k=0}^{n-1}|z_k(nh)-z_{k+1}(nh)|\leq \sum_{k=0}^{n-1}e^{Lh(n-k-1)}|z_k((k+1)h)-z_{k+1}((k+1)h)|\]
+\[|y(nh)-z(nh)|=|z_{n}(nh)-z_{0}(nh)|\leq \sum_{k=0}^{n-1}|z_k(nh)-z_{k+1}(nh)|\]
+(Triangle inequality)
+\[\leq \sum_{k=0}^{n-1}e^{Lh(n-k-1)}|z_k((k+1)h)-z_{k+1}((k+1)h)|\]
+(The Lemma from previous page)
 \[\leq \sum_{k=0}^{n-1}Ch^2 e^{L(n-k-1)h}\leq {Ch^2(e^{Lnh}-1)\over e^h-1}\]
+(Bound on truncated error)\\
 So
 \begin{thm}
 If
@@ -1571,9 +1575,9 @@ Review:
 \begin{exa}Midpoint rule\end{exa}
 \begin{enumerate}
 \item The weight $1$ orthogonal polynomial on $[a, b]$ of degree $1$. It is $x-{b+a\over 2}$. The root of it is ${b+a\over 2}$.
-\item Hence, the Gauss-Legendre quadrature with $n=0$ is $x_0={b+a\over 2}$. Quadrature weight is ${b-a\over 2}$.
+\item Hence, the Gauss-Legendre quadrature with $n=0$ is $x_0={b+a\over 2}$. Quadrature weight is ${b-a}$.
 \item If $f$ is differentiable, the error bound is
-  \[|\int_a^bfdx-{b-a\over 2}f({a+b\over 2})|\leq {\max|f''|\int_a^b(x-{a+b\over 2})^2\over 2!}={\max|f''|(b-a)^3\over 24}\]
+  \[|\int_a^bfdx-{(b-a)}f({a+b\over 2})|\leq {\max|f''|\int_a^b(x-{a+b\over 2})^2\over 2!}={\max|f''|(b-a)^3\over 24}\]
 \item Now decompose $f$ into $m$ subintervals, each applying the Gauss-Legendre quadrature, we get
   \[I={b-a\over m}\sum_{i=0}^{m-1} f(a+{(i+1/2)(b-a)\over m})\]
   And the error bound is $\max|f''|(b-a)^3\over 24m^2$.
@@ -1587,12 +1591,12 @@ Review:
 \item Euler's method is:
 \[z(0)=1, z(nh)=z((n-1)h)+h\sin(z(nh))\]
 \item Truncated error for Euler's method at time $t$ is
-  \[|{y''(s)h\over 2!}|=|{y'\cos(y')h\over 2!}|\]
-  \[=|{\sin(y)\cos(\sin(y))h\over 2!}|\leq Ch\]
+  \[|{y''(s)h\over 2!}|=|{y'\cos(y)h\over 2!}|\]
+  \[=|{\sin(y)\cos(y)h\over 2!}|\leq Ch\]
   What is the number $C$?
 \item $\sin(y)$ is $L$-Lipschitz. In other words, $|\sin(a)-\sin(b)|\leq L|a-b|$ for all $a, b$. What's a valid $L$?
 \item Now the argument from last lecture shows that the global error bound at time $t=nh$ is ${Ch^2(e^{Lt}-1)\over e^h-1}$. 
-\item Let $t=1$, $h=0.1$, Euler's method get $z(1)=1.95109$. True answer is $y(1)=1.95629$. Error bound as calculated from above is $0.08169$.
+\item Let $t=1$, $h=0.1$, Euler's method get $z(1)=1.95109$. True answer is $y(1)=1.95629$. Error bound as calculated from above is $0.04084$.
 \end{enumerate}
 
 
