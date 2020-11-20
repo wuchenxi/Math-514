@@ -1510,8 +1510,8 @@ To study global error, we need to understand:
 \item By definition of derivative, if $t=nh$,
 \[y(t+h)=y(t)+hf(t, y(t))+o(h)\]
 So $T_n={o(h)\over h}$, Euler's method is {\bf consistent}.
-\item If $f$ is sufficiently smooth, so is $y_n$, so
-\[y(t+h)=y(t)+hf(t, y(t))+{h^2\over 2}y''(t)+o(n^2)\]
+\item If $f$ is sufficiently smooth, so is $y$, so
+\[y(t+h)=y(t)+hf(t, y(t))+{h^2\over 2}y''(t)+o(h^2)\]
 So $T_n=O(h)$, Euler's method is of order of accuracy $1$.
 \item Furthermore, if we write down the remainder of Taylor's series, we have
   \[y(t+h)=y(t)+hy'(t)+{h^2\over 2}y''(s)\]
@@ -1524,20 +1524,24 @@ for some $s\in [t, t+h]$, $f_1$ and $f_2$ are the partial derivative in first an
 Let's now analyze how error grows in Euler's method:
 
 \begin{lem}
-  If $f$ is $L$-Lip. on second paramater, $z_1$, $z_2$ two functions defined on $mh, (m+1)h, \dots, nh$, such that
-  \[z_i((k+1)h)=z_i(kh)+hf(kh, z_i(kh))\]
+  If $f$ is $L$-Lip. on second paramater, $w_1$, $w_2$ two functions defined on $mh, (m+1)h, \dots, nh$, such that
+  \[w_i((k+1)h)=w_i(kh)+hf(kh, w_i(kh))\]
   Then 
-\[|z_1(nh)-z_2(nh)|\leq e^{L(n-m)h}|z_1(mh)-z_2(mh)|\]
+\[|w_1(nh)-w_2(nh)|\leq e^{L(n-m)h}|w_1(mh)-w_2(mh)|\]
 \end{lem}
 
 \begin{proof}
-  \[LHS\leq (1+hL)|z_1((n-1)h)-z_2((n-1)h)|\leq\]
-    \[\dots\leq (1+hL)^{n-m}|z_1(mh)-z_2(mh)|\]
+  \[LHS\leq (1+hL)|w_1((n-1)h)-w_2((n-1)h)|\leq\]
+    \[\dots\leq (1+hL)^{n-m}|w_1(mh)-w_2(mh)|\]
  And \[(1+hL)^{n-m}\leq e^{L(n-m)h}\]
 \end{proof}
 
-Now let's estimate global error at time $t=nh$:
-\[|y(nh)-z(nh)|=|z_{n}(nh)-z_{0}(nh)|\leq \sum_{k=0}^{n-1}|z_k(nh)-z_{k+1}(nh)|\]
+\newpage
+
+Now let's estimate global error at time $t=nh$. Let $z_k(nh)$, $n\geq k$, be
+\[z_k(kh)=y(kh)\]
+\[z_k((n+1)h)=z_k(nh)+hf(nh, z_k(nh))\]
+\[|y(nh)-z(nh)|=|z_{n}(nh)-z_{0}(nh)|\leq \sum_{k=0}^{n-1}|z_k(nh)-z_{k+1}(nh)|\leq \sum_{k=0}^{n-1}e^{Lh(n-k-1)}|z_k((k+1)h)-z_{k+1}((k+1)h)|\]
 \[\leq \sum_{k=0}^{n-1}Ch^2 e^{L(n-k-1)h}\leq {Ch^2(e^{Lnh}-1)\over e^h-1}\]
 So
 \begin{thm}
@@ -1548,6 +1552,63 @@ If
 \end{itemize}
 then the global error of Euler's method at time $nh$ converges to zero at $O(h)$. In other words, Euler's method is {\bf convergent}.
 \end{thm}
+
+\newpage
+
+Review:
+
+\begin{itemize}
+\item Composite Gauss Quadrature
+\item Euler's method.
+\item Truncated error and global error.
+\item Consistency and order of accuracy.
+\item Convergence.
+\end{itemize}
+
+
+\newpage
+
+\begin{exa}Midpoint rule\end{exa}
+\begin{enumerate}
+\item The weight $1$ orthogonal polynomial on $[a, b]$ of degree $1$. It is $x-{b+a\over 2}$. The root of it is ${b+a\over 2}$.
+\item Hence, the Gauss-Legendre quadrature with $n=0$ is $x_0={b+a\over 2}$. Quadrature weight is ${b-a\over 2}$.
+\item If $f$ is differentiable, the error bound is
+  \[|\int_a^bfdx-{b-a\over 2}f({a+b\over 2})|\leq {\max|f''|\int_a^b(x-{a+b\over 2})^2\over 2!}={\max|f''|(b-a)^3\over 24}\]
+\item Now decompose $f$ into $m$ subintervals, each applying the Gauss-Legendre quadrature, we get
+  \[I={b-a\over m}\sum_{i=0}^{m-1} f(a+{(i+1/2)(b-a)\over m})\]
+  And the error bound is $\max|f''|(b-a)^3\over 24m^2$.
+\end{enumerate}
+
+\newpage
+
+\begin{exa} $y'=\sin(y)$, $y(0)=1$\end{exa}
+\begin{enumerate}
+\item True solution: $y(t)=2\tan^{-1}(\tan(1/2)e^x)$\\
+\item Euler's method is:
+\[z(0)=1, z(nh)=z((n-1)h)+h\sin(z(nh))\]
+\item Truncated error for Euler's method at time $t$ is
+  \[|{y''(s)h\over 2!}|=|{y'\cos(y')h\over 2!}|\]
+  \[=|{\sin(y)\cos(\sin(y))h\over 2!}|\leq Ch\]
+  What is the number $C$?
+\item $\sin(y)$ is $L$-Lipschitz. In other words, $|\sin(a)-\sin(b)|\leq L|a-b|$ for all $a, b$. What's a valid $L$?
+\item Now the argument from last lecture shows that the global error bound at time $t=nh$ is ${Ch^2(e^{Lt}-1)\over e^h-1}$. 
+\item Let $t=1$, $h=0.1$, Euler's method get $z(1)=1.95109$. True answer is $y(1)=1.95629$. Error bound as calculated from above is $0.08169$.
+\end{enumerate}
+
+
+\newpage
+
+\begin{exa}Consider IVP $y'=f(y)$, $y(0)=y_0$. Suppose $f$ is {\bf real analytic}, i.e. the Taylor series at every point converges at a neighborhood of the point. Suppose $h$ is a small positive number. The theory of ODE tells us that $y$ is also real analytic.\end{exa}
+
+Suppose $f(x)=\sum_ia_i(x-y_0)^i$.
+
+\begin{enumerate}
+\item Write down the Taylor expansion of $y$ at $t=0$, up to $t^2$ term.
+\item Write down the result of $z(h)=z(0)+hf(z(0))$, as a power series of $h$.
+\item Write down the result of $z(2h)=z(h)+hf(z(h))$, as a power series of $h$.
+\item Find a linear combination of $y_0$, $z(h)$, $z(2h)$ which is close to $y(2h)$ up to the $h^2$ term. This is called the 2nd order Runge-Kutta method (rk2).
+\end{enumerate}
+
 
 \newpage
 
