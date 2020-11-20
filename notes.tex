@@ -1577,7 +1577,7 @@ Review:
 \item The weight $1$ orthogonal polynomial on $[a, b]$ of degree $1$. It is $x-{b+a\over 2}$. The root of it is ${b+a\over 2}$.
 \item Hence, the Gauss-Legendre quadrature with $n=0$ is $x_0={b+a\over 2}$. Quadrature weight is ${b-a}$.
 \item If $f$ is differentiable, the error bound is
-  \[|\int_a^bfdx-{(b-a)}f({a+b\over 2})|\leq {\max|f''|\int_a^b(x-{a+b\over 2})^2\over 2!}={\max|f''|(b-a)^3\over 24}\]
+  \[|\int_a^bfdx-{(b-a)}f({a+b\over 2})|\leq {\max|f''|\int_a^b(x-{a+b\over 2})^2dx\over 2!}={\max|f''|(b-a)^3\over 24}\]
 \item Now decompose $f$ into $m$ subintervals, each applying the Gauss-Legendre quadrature, we get
   \[I={b-a\over m}\sum_{i=0}^{m-1} f(a+{(i+1/2)(b-a)\over m})\]
   And the error bound is $\max|f''|(b-a)^3\over 24m^2$.
@@ -1589,14 +1589,14 @@ Review:
 \begin{enumerate}
 \item True solution: $y(t)=2\tan^{-1}(\tan(1/2)e^x)$\\
 \item Euler's method is:
-\[z(0)=1, z(nh)=z((n-1)h)+h\sin(z(nh))\]
+\[z(0)=1, z(nh)=z((n-1)h)+h\sin(z((n-1)h))\]
 \item Truncated error for Euler's method at time $t$ is
   \[|{y''(s)h\over 2!}|=|{y'\cos(y)h\over 2!}|\]
   \[=|{\sin(y)\cos(y)h\over 2!}|\leq Ch\]
   What is the number $C$?
 \item $\sin(y)$ is $L$-Lipschitz. In other words, $|\sin(a)-\sin(b)|\leq L|a-b|$ for all $a, b$. What's a valid $L$?
 \item Now the argument from last lecture shows that the global error bound at time $t=nh$ is ${Ch^2(e^{Lt}-1)\over e^h-1}$. 
-\item Let $t=1$, $h=0.1$, Euler's method get $z(1)=1.95109$. True answer is $y(1)=1.95629$. Error bound as calculated from above is $0.04084$.
+\item Let $t=1$, $h=0.1$, Euler's method get $z(1)=1.95109$. True answer is $y(1)=1.95629$. Error bound as calculated from above, using $C=1/4, L=1$, is $0.04084$.
 \end{enumerate}
 
 
@@ -1611,6 +1611,15 @@ Suppose $f(x)=\sum_ia_i(x-y_0)^i$.
 \item Write down the result of $z(h)=z(0)+hf(z(0))$, as a power series of $h$.
 \item Write down the result of $z(2h)=z(h)+hf(z(h))$, as a power series of $h$.
 \item Find a linear combination of $y_0$, $z(h)$, $z(2h)$ which is close to $y(2h)$ up to the $h^2$ term. This is called the 2nd order Runge-Kutta method (rk2).
+\end{enumerate}
+
+Answer:
+
+\begin{enumerate}
+\item $y(t)=y_0+a_0t+{a_0a_1\over 2}t^2+O(t^3)$
+\item $z(h)=y_0+a_0h$
+\item $z(2h)=y_0+2a_0h+a_0a_1h^2+O(h^3)$
+\item $y(2h)=y_0-2z(h)+2z(2h)+O(h^3)$
 \end{enumerate}
 
 
