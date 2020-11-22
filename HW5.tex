@@ -91,7 +91,7 @@ Hint: use Gauss quadrature with weight $x$.\\
 4. \begin{itemize}
 \item Suppose $f$ is continuous on $[0, 1]$. Let $I_n$ be the estimate of $\int_0^1fdx$ using composite trapezium rule with $n$ subintervals. Show that
   \[\lim_{n\rightarrow\infty}|\int_0^1fdx-I_n|=0\]
- Hint: use the fact that any continuous function on a closed interval is absolutely continuous.
+ Hint: There are many possible approaches. You can use the fact that any continuous function on a closed interval is absolutely continuous, or use the Weierstrass approximation theorem.
 \item (Optional) Find a continuous function $f$, such that there is $C>0$ such that 
   \[|\int_0^1fdx-I_n|\geq {C\over n}\]
   Hint: if $f$ has bounded second derivative then the error decays like $O(1/n^2)$, so you need to find some $f$ that doesn't have second order derivative or has unbounded second order derivative.
