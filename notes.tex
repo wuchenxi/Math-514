@@ -1627,15 +1627,57 @@ Answer:
 
 \subsection{Ways to get higher order methods}
 
-\subsubsection{Linear multistep methods (12.4, 12.6)}
+\subsubsection{Linear Multistep Method (12.4, 12.6)}
 
-\paragraph{Explicit Methods} Consider the function $g(t)=f(t, y(t))$. One can then use $g(t), g(t-h), \dots, g(t-kh)$ as interpolation point to estimate $\int_{t-dh}^{t+h}g(s)ds$, then use $g(t+h)=g(t-dh)+\int_t^{t+h}g(s)ds$.
+Firstly some methods based on Lagrange interpolation:
 
-\paragraph{Implicit Methods} One can also use $g(t+h), g(t), g(t-h), \dots, g(t-kh)$ as interpolation point to estimate $\int_{t-dh}^{t+h}g(s)ds$, then use $g(t+h)=g(t-dh)+\int_t^{t+h}g(s)ds$. This way $g(t+h)$ appears on the right hand side and the calculation of $g(t+h)$ requires solving an equation, hence is called {\bf implicit}.
+\paragraph{Explicit Methods} Consider the function $g(t)=f(t, y(t))$. One can then use $g(t-h), \dots, g(t-kh)$ as interpolation point to estimate $\int_{t-dh}^{t}g(s)ds$, then use $g(t)=g(t-dh)+\int_{t-dh}^{t}g(s)ds$.
 
-\begin{exa}Explicit method for $d=0$, $k=1$ is Euler's Method. Implicit method for $d=0$, $k=0$ is the {\bf trapezium method} as the numerical integration is via trapezium rule:
-\[y(t+h)=y(t)+{h\over 2}(f(t, y(t))+f(t+h, y(t+h)))\] 
-  It has order of accuracy $2$.\end{exa}
+\paragraph{Implicit Methods} One can also use $g(t), g(t-h), \dots, g(t-kh)$ as interpolation point to estimate $\int_{t-dh}^{t}g(s)ds$, then use $g(t)=g(t-dh)+\int_{t-dh}^{t}g(s)ds$. This way $g(t)$ appears on the right hand side and the calculation of $g(t)$ requires solving an equation, hence is called {\bf implicit}.
+
+\newpage
+
+\begin{exa}\begin{itemize}
+  \item Explicit method for $d=1$, $k=1$ is Euler's Method.
+  \item Implicit method for $d=1$, $k=1$ is the {\bf trapezium method} as the numerical integration is via trapezium rule:
+\[z(t)=z(t-h)+{h\over 2}(f(t, z(t))+f(t-h, z(t-h)))\] 
+We can show that it is consistent with order of accuracy $2$.
+\item Implicit method for $k=2$, $d=2$ will be
+  \[z(t)=z(t-2h)+{h\over 3}(f(t, z(t))+4f(t-h, z(t-h))+f(t-2h, z(t-2h)))\]
+  When $f(t, y)=f(t)$ this reduces to Simpson's rule.
+\item When $d=1$, the explicit methods are called $k$-th step {\bf Adams-Bashforth} methods, while the implicit methods are called {\bf Adams-Moulton} methods. For example, let $k=4$, we get
+  \[z(t)=z(t-h)+{h\over 24}(55f(t-h, z(t-h))-59f(t-2h, z(t-2h))+37f(t-3h, z(t-3h))-9f(t-4h, z(t-4h))\]
+\end{itemize}
+\end{exa}
+
+
+\newpage
+
+General Linear $k$-step Method:
+
+\[\sum_{j=0}^k\alpha_jz((n+j)h)=h\sum_{j=0}^k\beta_jf((n+j)h, z((n+j)h))\]
+
+If $\beta_k=0$ it is explicit, otherwise it is implicit.
+
+\begin{itemize}  
+\item We want a linear $k$-step method to be {\bf zero-stable}. In other words, if the equation is $y'=0$, then the $z(nh)$ does not go to infinity as $n\rightarrow\infty$. From the theory in linear difference equations in linear algebra, we know that this is equivalent to the {\bf first characteristic polynomial} $\rho(z)=\sum_{j=0}^k\alpha_jz^j$ having all roots inside the closed unit disc and at most only single roots on the unit circle.
+\item Why do we need zero-stability? Suppose we let $h\rightarrow 0$ and $t=hn$ remain unchanged, then $n\rightarrow\infty$. If there is no zero stability, error at previous steps will grow indefinitely.
+\end{itemize}
+
+\newpage
+
+\begin{itemize}
+\item To get consistency, let $\sigma(z)=\sum_{j=0}^k\beta_jz^j$ be the {\bf second characteristic polynomial}. When $f$ is smooth, $h<<1$, $f(nh+s, y(nh+s))=f(nh, y(nh))+O(s)$, $y(nh+s)=y(nh)+sf(nh, y(nh))+O(s^2)$. To make method consistent, we want to make sure that if we put $y((n+j)h)$ in place of $z((n+j)h)$, the left hand side and right hand side are off by $o(h)$, hence
+  \[\rho(1)+\rho'(0)f(nh, y(nh))h=h\sigma(1)f(nh, y(nh))+O(h^2)\]
+  So $\rho(1)=0$, $\rho'(0)=\sigma(1)$.
+\item To get order of consistency, carry out the same argument as above but do higher order power expansion for $y(nh+s)$ and $f(nh+s, y(nh+s))$.
+\end{itemize}
+
+For global convergence of linear multistep methods we have the Dahlquist's theorems:
+\begin{itemize}
+\item If a linear $k$-step method has zero stability, then it is consistent iff it is convergent, and the truncated error and global error has the same order as $h\rightarrow 0$.
+\item (First Dahlquist barrier) If a linear $k$-step method is $k$ stable then the order of accuracy is no more than $k+1$ if $k$ is odd (e.g. AM), $k+2$ if $k$ is even (e.g. $d=k$ implicit), and $k$ if it has to be explicit (e.g. AB).
+\end{itemize}
 
 \newpage
 
