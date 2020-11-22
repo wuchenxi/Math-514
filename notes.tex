@@ -1642,12 +1642,40 @@ Firstly some methods based on Lagrange interpolation:
   \item Implicit method for $d=1$, $k=1$ is the {\bf trapezium method} as the numerical integration is via trapezium rule:
 \[z(t)=z(t-h)+{h\over 2}(f(t, z(t))+f(t-h, z(t-h)))\] 
 We can show that it is consistent with order of accuracy $2$.
-\item Implicit method for $k=2$, $d=2$ will be
+\item Implicit method for $k=d=2$ will be
   \[z(t)=z(t-2h)+{h\over 3}(f(t, z(t))+4f(t-h, z(t-h))+f(t-2h, z(t-2h)))\]
-  When $f(t, y)=f(t)$ this reduces to Simpson's rule.
+  When $f(t, y)=f(t)$ this reduces to Simpson's rule. This is called the $2$-step {\bf Milne's method}.
 \item When $d=1$, the explicit methods are called $k$-th step {\bf Adams-Bashforth} methods, while the implicit methods are called {\bf Adams-Moulton} methods. For example, let $k=4$, we get
   \[z(t)=z(t-h)+{h\over 24}(55f(t-h, z(t-h))-59f(t-2h, z(t-2h))+37f(t-3h, z(t-3h))-9f(t-4h, z(t-4h))\]
 \end{itemize}
+\end{exa}
+
+
+\newpage
+
+An alternative to implicit method is the {\bf predictor-corrector method}: for example, instead of Trapzsium method, we first estimate $z(t)$ using Euler's method, then ``correct'' it using the trapezium rule formula, and get:
+\[z_{p}(t)=z(t-h)+hf(t-h, z(t-h))\]
+\[z(t)=z(t-h)+{h\over 2}(f(t, z_p(t))+f(t-h, z(t-h)))\] 
+This is called {\bf Henu's method}.
+
+\newpage
+
+\begin{exa}
+  $y'=y$, $y(0)=1$
+  \begin{itemize}
+  \item Euler's method:
+    \[z(nh+h)=z(nh)+hz(nh)\]
+    \[z(nh)=(1+h)^n\]
+  \item Trapezium rule method:
+    \[z(nh+h)=z(nh)+{h\over 2}(z(nh+h)+z(nh))\]
+    \[z(nh)={(1+h/2)^n\over (1-h/2)^n}\]
+    Truncated error is
+    \[O({e^h-{1+h/2\over 1-h/2}\over h})=O(h^2)\]
+  \item Henu's rule is
+    \[z(nh+h)=z(nh)+{h\over 2}(2z(nh)+hz(nh))\]
+    \[z(nh)=(1+h+h^2/2)^n\]
+    Truncated error is also $O(h^2)$.
+  \end{itemize}
 \end{exa}
 
 
@@ -1672,6 +1700,8 @@ If $\beta_k=0$ it is explicit, otherwise it is implicit.
   So $\rho(1)=0$, $\rho'(0)=\sigma(1)$.
 \item To get order of consistency, carry out the same argument as above but do higher order power expansion for $y(nh+s)$ and $f(nh+s, y(nh+s))$.
 \end{itemize}
+
+\newpage
 
 For global convergence of linear multistep methods we have the Dahlquist's theorems:
 \begin{itemize}
