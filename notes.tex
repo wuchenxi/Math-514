@@ -1714,6 +1714,7 @@ If $\beta_k=0$ it is explicit, otherwise it is implicit.
 \item To get consistency, let $\sigma(z)=\sum_{j=0}^k\beta_jz^j$ be the {\bf second characteristic polynomial}. When $f$ is smooth, $s<<1$, $f(nh+s, y(nh+s))=f(nh, y(nh))+O(s)$, $y(nh+s)=y(nh)+sf(nh, y(nh))+O(s^2)$. To make method consistent, we want to make sure that if we put $y((n+j)h)$ in place of $z((n+j)h)$, the left hand side and right hand side are off by $o(h)$, hence
   \[\sum_i\alpha_i+\sum_ii\alpha_if(nh, y(nh))h=h\sum_i\beta_if(nh, y(nh))+O(h^2)\]
   So $\rho(1)=\sum_i\alpha_i=0$, $\rho'(0)=\sum_ii\alpha_i=\sum_i\beta_i=\sigma(1)$.
+\item All the methods obtained via Lagrange interpolation are consistent, by looking at $f=1$.
 \item To get order of consistency, carry out the same argument as above but do higher order power expansion for $y(nh+s)$ and $f(nh+s, y(nh+s))$.
 \end{itemize}
 
