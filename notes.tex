@@ -1631,9 +1631,9 @@ Answer:
 
 Firstly some methods based on Lagrange interpolation:
 
-\paragraph{Explicit Methods} Consider the function $g(t)=f(t, y(t))$. One can then use $g(t-h), \dots, g(t-kh)$ as interpolation point to estimate $\int_{t-dh}^{t}g(s)ds$, then use $g(t)=g(t-dh)+\int_{t-dh}^{t}g(s)ds$.
+\paragraph{Explicit Methods} Consider the function $g(t)=f(t, y(t))$. One can then use $g(t-h), \dots, g(t-kh)$ as quadrature point to estimate $\int_{t-dh}^{t}g(s)ds$, then use $g(t)=g(t-dh)+\int_{t-dh}^{t}g(s)ds$.
 
-\paragraph{Implicit Methods} One can also use $g(t), g(t-h), \dots, g(t-kh)$ as interpolation point to estimate $\int_{t-dh}^{t}g(s)ds$, then use $g(t)=g(t-dh)+\int_{t-dh}^{t}g(s)ds$. This way $g(t)$ appears on the right hand side and the calculation of $g(t)$ requires solving an equation, hence is called {\bf implicit}.
+\paragraph{Implicit Methods} One can also use $g(t), g(t-h), \dots, g(t-kh)$ as quadrature point to estimate $\int_{t-dh}^{t}g(s)ds$, then use $g(t)=g(t-dh)+\int_{t-dh}^{t}g(s)ds$. This way $g(t)$ appears on the right hand side and the calculation of $g(t)$ requires solving an equation, hence is called {\bf implicit}.
 
 \newpage
 
@@ -1645,10 +1645,25 @@ We can show that it is consistent with order of accuracy $2$.
 \item Implicit method for $k=d=2$ will be
   \[z(t)=z(t-2h)+{h\over 3}(f(t, z(t))+4f(t-h, z(t-h))+f(t-2h, z(t-2h)))\]
   When $f(t, y)=f(t)$ this reduces to Simpson's rule. This is called the $2$-step {\bf Milne's method}.
-\item When $d=1$, the explicit methods are called $k$-th step {\bf Adams-Bashforth} methods, while the implicit methods are called {\bf Adams-Moulton} methods. For example, let $k=4$, we get
-  \[z(t)=z(t-h)+{h\over 24}(55f(t-h, z(t-h))-59f(t-2h, z(t-2h))+37f(t-3h, z(t-3h))-9f(t-4h, z(t-4h))\]
+\item When $d=1$, the explicit methods are called $k$-th step {\bf Adams-Bashforth} methods, while the implicit methods are called {\bf Adams-Moulton} methods. 
 \end{itemize}
 \end{exa}
+
+\newpage
+
+\begin{exa}Let's deduce the Adams-Bashforth method for $k=4$.\end{exa}
+
+\begin{enumerate}
+\item The Lagrange interpolation of $f(s, z(s))$ at $t-h$, $t-2h$, $t-3h$, $t-4h$ is
+  \[p(s)=f(t-h, z(t-h)){(s-(t-2h))(s-(t-3h))(s-(t-4h))\over 6h^3}\]
+  \[+f(t-2h, z(t-2h)){(s-(t-h))(s-(t-3h))(s-(t-4h))\over -2h^3}\]
+  \[+f(t-3h, z(t-3h)){(s-(t-h))(s-(t-2h))(s-(t-4h))\over 2h^2}\]
+  \[+f(t-4h, z(t-4h)){(s-(t-h))(s-(t-2h))(s-(t-3h))\over -6h^3}\]
+\item
+  \[z(t)=z(t-h)+\int_{t-h}^tp(s)ds\]
+  \[=z(t-h)+h({55\over 24}f(t-h, z(t-h))-{59\over 24}f(t-2h, z(t-2h))\]
+  \[+{37\over 24}f(t-3h, z(t-3h))-{3\over 8}f(t-4h, z(t-4h)))\]
+\end{enumerate}
 
 
 \newpage
@@ -1690,14 +1705,15 @@ If $\beta_k=0$ it is explicit, otherwise it is implicit.
 \begin{itemize}  
 \item We want a linear $k$-step method to be {\bf zero-stable}. In other words, if the equation is $y'=0$, then the $z(nh)$ does not go to infinity as $n\rightarrow\infty$. From the theory in linear difference equations in linear algebra, we know that this is equivalent to the {\bf first characteristic polynomial} $\rho(z)=\sum_{j=0}^k\alpha_jz^j$ having all roots inside the closed unit disc and at most only single roots on the unit circle.
 \item Why do we need zero-stability? Suppose we let $h\rightarrow 0$ and $t=hn$ remain unchanged, then $n\rightarrow\infty$. If there is no zero stability, error at previous steps will grow indefinitely.
+\item All the method obtained via Lagrange interpolation, including Adams-Moulton and Adams-Bashforth, are zero-stable.
 \end{itemize}
 
 \newpage
 
 \begin{itemize}
-\item To get consistency, let $\sigma(z)=\sum_{j=0}^k\beta_jz^j$ be the {\bf second characteristic polynomial}. When $f$ is smooth, $h<<1$, $f(nh+s, y(nh+s))=f(nh, y(nh))+O(s)$, $y(nh+s)=y(nh)+sf(nh, y(nh))+O(s^2)$. To make method consistent, we want to make sure that if we put $y((n+j)h)$ in place of $z((n+j)h)$, the left hand side and right hand side are off by $o(h)$, hence
-  \[\rho(1)+\rho'(0)f(nh, y(nh))h=h\sigma(1)f(nh, y(nh))+O(h^2)\]
-  So $\rho(1)=0$, $\rho'(0)=\sigma(1)$.
+\item To get consistency, let $\sigma(z)=\sum_{j=0}^k\beta_jz^j$ be the {\bf second characteristic polynomial}. When $f$ is smooth, $s<<1$, $f(nh+s, y(nh+s))=f(nh, y(nh))+O(s)$, $y(nh+s)=y(nh)+sf(nh, y(nh))+O(s^2)$. To make method consistent, we want to make sure that if we put $y((n+j)h)$ in place of $z((n+j)h)$, the left hand side and right hand side are off by $o(h)$, hence
+  \[\sum_i\alpha_i+\sum_ii\alpha_if(nh, y(nh))h=h\sum_i\beta_if(nh, y(nh))+O(h^2)\]
+  So $\rho(1)=\sum_i\alpha_i=0$, $\rho'(0)=\sum_ii\alpha_i=\sum_i\beta_i=\sigma(1)$.
 \item To get order of consistency, carry out the same argument as above but do higher order power expansion for $y(nh+s)$ and $f(nh+s, y(nh+s))$.
 \end{itemize}
 
@@ -1706,7 +1722,7 @@ If $\beta_k=0$ it is explicit, otherwise it is implicit.
 For global convergence of linear multistep methods we have the Dahlquist's theorems:
 \begin{itemize}
 \item If a linear $k$-step method has zero stability, then it is consistent iff it is convergent, and the truncated error and global error has the same order as $h\rightarrow 0$.
-\item (First Dahlquist barrier) If a linear $k$-step method is $k$ stable then the order of accuracy is no more than $k+1$ if $k$ is odd (e.g. AM), $k+2$ if $k$ is even (e.g. $d=k$ implicit), and $k$ if it has to be explicit (e.g. AB).
+\item (First Dahlquist barrier) If a linear $k$-step method is $k$ stable then the order of accuracy is no more than $k+1$ if $k$ is odd (e.g. Adams-Moulton, by Theorem~\ref{bound1}), $k+2$ if $k$ is even (e.g. $d=k$ implicit, by Theorem~\ref{qbound}), and $k$ if it has to be explicit (e.g. Adams-Bashforth, by Theorem~\ref{bound1}).
 \end{itemize}
 
 \newpage
