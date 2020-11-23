@@ -1,0 +1,93 @@
+\documentclass[20pt]{article} % USenglish for autoref
+\usepackage[paper=screen, centering, papersize=20cm]{geometry}
+\usepackage{cmap}		% to search and copy ligatures
+\usepackage[utf8]{inputenc}	% for Linux computer and Mac
+%\usepackage[latin1]{inputenc}	% für Windows computer
+\usepackage[T1]{fontenc}	% to search for ligatures in the pdf
+\usepackage[USenglish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{graphicx}
+%\usepackage{stmaryrd}		% for \mapsfrom
+\usepackage{aliascnt}		% for Aliascounter so that autoref gives the thms the right names
+\usepackage[pdfborder={0 0 0}]{hyperref}   % if you want to have math environment in captions you have to use \texorpdfstring{$x^2$}{x2}; without frame around the links
+\usepackage[figure]{hypcap}		% to make autoref link to figures and not the captions of figures
+%\usepackage{paralist}		% for compactitem
+\usepackage{mathtools}		% for \coloneqq
+\usepackage[]{todonotes}	% use option disable to disable all the todos
+\usepackage{float}
+\usepackage{lipsum}
+\theoremstyle{break}
+\newtheorem{definition}{Definition}[section]  
+\newtheorem{exa}[definition]{Example}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{lem}[definition]{Lemma}
+\newtheorem{conj}[definition]{Conjecture}
+\newtheorem{quest}[definition]{Research question}
+\newtheorem{thm}[definition]{Theorem}  
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{rem}[definition]{Remark}
+
+
+\renewcommand{\labelenumi}{(\roman{enumi})} % roman numbers in enumerations
+
+\usepackage{graphicx,tikz} % Allows including images
+
+\usetikzlibrary{calc,decorations.markings}
+\usetikzlibrary{shapes,snakes}
+
+\DeclareMathOperator{\Aff}{Aff}
+\DeclareMathOperator{\der}{der}
+\DeclareMathOperator{\Trans}{Trans}
+\DeclareMathOperator{\dir}{dir}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\NN}{\mathbb{N}}
+
+
+%For L Cal and L Twidle:
+\newcommand{\LC}{\mathcal{L}} 
+\newcommand{\LT}{\widetilde{\mathcal{L}}}
+
+%For X bar
+\newcommand{\XB}{\overline{X}}
+
+%For the real and complex numbers
+\newcommand{\RR}{\mathbb{R}} 
+\newcommand{\CC}{\mathbb{C}} 
+
+
+\newcommand{\remark}[2][]{\todo[color=green!50, #1]{#2}}
+
+\title{HW 5}
+
+
+\begin{document}
+\maketitle
+
+1. (Exercise 7.13) Use relations $2\sin(a)\sin(b)=\cos(b-a)-\cos(b+a)$ to show that the composite Trapezium rule always give accurate answer to $\int_0^{2\pi}\sin(x)dx$.\\  
+
+2. (Exercise 10.7) Let $[a, b]=[-1, 1]$, let $p_{n-1}$ be the degree $n-1$ Legendre polynomial, and let $I_n$ be the quadrature rule where the quadrature points are roots of $(x^2-1)p_{n-1}(x)$.
+\begin{itemize}
+\item Show that if $q$ is a polynomial of degree no more than $2n-1$, then $\int_{-1}^1qdx=I_n(q)$.
+\item Show that all quadrature weights are positive.
+\item Suppose $f$ is smooth, find a constant $C$ such that $|\int_{-1}^1fdx-I_n(f)|\leq C\max_{x\in [-1, 1]}|f^{2n}(x)|$.
+\end{itemize}
+
+3. Suppose $f$ is smooth and periodic with period $1$, $|f''|\leq 1$. Let $I_n$ be the result of composite quadrature rule for $\int_0^1fdx$ using $n$ subintervals. Find a number $C$ such that
+\[|\int_0^1fdx-I_n(f)|\leq {C\over n^2}\]
+
+4. Consider the initial value problem $y'=\sin(y)$, $y(0)=1$.
+
+\begin{itemize}
+\item Write down the formula for two step Adams-Bashforth.
+\item Show that the two step Adams-Bashforth has order of accuracy $2$ for this problem.
+\item Suppose we use starting points $z(0)=1$, $z(h)=1+h$ to carry out Adams-Bashforth till time $t=nh=1$. Find number $C$ such that
+  \[|z(1)-y(1)|\leq Ch^2\]
+\end{itemize}
+
+\end{document}

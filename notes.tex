@@ -1631,9 +1631,9 @@ Answer:
 
 Firstly some methods based on Lagrange interpolation:
 
-\paragraph{Explicit Methods} Consider the function $g(t)=f(t, y(t))$. One can then use $g(t-h), \dots, g(t-kh)$ as quadrature point to estimate $\int_{t-dh}^{t}g(s)ds$, then use $g(t)=g(t-dh)+\int_{t-dh}^{t}g(s)ds$.
+\paragraph{Explicit Methods} Consider the function $g(t)=f(t, y(t))$. One can then use $g(t-h), \dots, g(t-kh)$ as quadrature point to estimate $\int_{t-dh}^{t}g(s)ds$, then use $y(t)=y(t-dh)+\int_{t-dh}^{t}g(s)ds$.
 
-\paragraph{Implicit Methods} One can also use $g(t), g(t-h), \dots, g(t-kh)$ as quadrature point to estimate $\int_{t-dh}^{t}g(s)ds$, then use $g(t)=g(t-dh)+\int_{t-dh}^{t}g(s)ds$. This way $g(t)$ appears on the right hand side and the calculation of $g(t)$ requires solving an equation, hence is called {\bf implicit}.
+\paragraph{Implicit Methods} One can also use $g(t), g(t-h), \dots, g(t-kh)$ as quadrature point to estimate $\int_{t-dh}^{t}g(s)ds$, then use $y(t)=y(t-dh)+\int_{t-dh}^{t}g(s)ds$. This way $y(t)$ appears on the right hand side and the estimate of $y(t)$ requires solving an equation, hence is called {\bf implicit}.
 
 \newpage
 
@@ -1731,7 +1731,7 @@ If $\beta_k=0$ it is explicit, otherwise it is implicit. To start the $k$-step m
   Has solution that grows to infinity, then the error created at time $(k+2)h$, after propagating to $t=nh$, will be $w_{n-k-1}$ which goes to $\infty$ as $h\rightarrow 0$.
 \end{enumerate}
 
-This is when $t=1$, $h=0.1$:\\
+This is when $t=1$, $h=0.1$ (See \url{https://github.com/wuchenxi/Math-514/blob/main/zero_stability.py}):\\
 
 \begin{tikzpicture}[yscale=1, xscale=8]
 
@@ -1772,6 +1772,41 @@ For global convergence of linear multistep methods we have the Dahlquist's theor
 
 \subsubsection{Runge-Kutta methods (12.5)}
 
+To get initial conditions for linear multistep methods, we need one step methods with higher orders of accuracy. To accomplish that we need to have more evaluations of $f$ per step.\\
+
+Recall Henu's method:
+\[z_p((n+1)h)=z(nh)+hf(nh, z(nh))\]
+\[z((n+1)h)=z(nh)+{h\over 2}(f(nh, z(nh))+(f((n+1)h, z_p((n+1)h))))\]
+We can rewrite it as
+\[k_1=f(nh, z(nh))\]
+\[k_2=f(nh+h, z(nh)+hk_1\]
+\[z((n+1)h)=z(nh)+h({k_1\over 2}+{k_2\over 2})\]
+
+\newpage
+General Runge-Kutta:
+\[k_1=f(nh, z(nh))\]
+\[k_j=f(nh+\alpha_jh, z(nh)+\sum_{i<j}\beta_{ij}hk_i)\]
+\[z((n+1)h)=z(nh)+\sum_jc_jk_j\]
+Some popular choice of parameters:
+\begin{enumerate}
+\item Henu's method, or improved Euler method: $\alpha_2=\beta_{12}=1$, $c_1=c_2=1/2$
+\item RK2, or modified Euler's method: $\alpha_2=\beta_{12}=1/2$, $c_1=0$, $c_2=1$.
+\item RK4: $\alpha_2=\alpha_3=\beta_{12}=\beta_{23}=1/2$, $\alpha_4=\beta_{34}=1$, $c_1=c_4=1/6$, $c_2=c_3=1/3$.   
+\end{enumerate}
+
+\newpage
+
+How to check consistency and order of accuracy: Taylor series expansion for $y$ and $f$.
+\begin{exa}Show that Henu's method is consistent and has order of accuracy $2$.\end{exa}
+\begin{enumerate}
+\item $f(t+s, y(t)+s)=
+
+
+\end{enumerate}
+
+
+
+\newpage
 
 \subsection{Stiffness and Absolute Stability}
 
