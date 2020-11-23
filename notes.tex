@@ -1009,7 +1009,7 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
 
    \newpage
 
-   Review:\\
+\subsection{Friday Review And Examples}
    
    \begin{itemize}
    \item Interpolation
@@ -1233,7 +1233,7 @@ The proof is very similar to the Gauss-Legendre case.
 
 \newpage
 
-Review:
+\subsection{Friday Review and Examples}
 
 \begin{itemize}
 \item Definition of Gauss Legendre quadrature.
@@ -1468,7 +1468,7 @@ $h$ is a small number, $z$ an approximation of $y$ evaluated using:
 
 \newpage
 
-\begin{exa} Euler's method applied to $y'=y$, $y(0)=1$\end{exa}
+\begin{exa}\label{Euler} Euler's method applied to $y'=y$, $y(0)=1$\end{exa}
 
 True solution: $y(t)=e^t$.\\
 
@@ -1559,7 +1559,7 @@ then the global error of Euler's method at time $nh$ converges to zero at $O(h)$
 
 \newpage
 
-Review:
+\subsection{Friday Review and Examples}
 
 \begin{itemize}
 \item Composite Gauss Quadrature
@@ -1627,7 +1627,7 @@ Answer:
 
 \subsection{Ways to get higher order methods}
 
-\subsubsection{Linear Multistep Method (12.4, 12.6)}
+\subsubsection{Method based on Lagrange Interpolation (12.4, 12.6)}
 
 Firstly some methods based on Lagrange interpolation:
 
@@ -1696,17 +1696,59 @@ This is called {\bf Henu's method}.
 
 \newpage
 
+\subsubsection{Theory of General Linear Multistep Methods (12.7-12.9)}
+
 General Linear $k$-step Method:
 
 \[\sum_{j=0}^k\alpha_jz((n+j)h)=h\sum_{j=0}^k\beta_jf((n+j)h, z((n+j)h))\]
 
-If $\beta_k=0$ it is explicit, otherwise it is implicit.
+If $\beta_k=0$ it is explicit, otherwise it is implicit. To start the $k$-step method, we need $k$ initial values $z(0), \dots, z((k-1)h)$, then solve the equation to get $z(kh), z((k+1)h, \dots$
 
 \begin{itemize}  
 \item We want a linear $k$-step method to be {\bf zero-stable}. In other words, if the equation is $y'=0$, then the $z(nh)$ does not go to infinity as $n\rightarrow\infty$. From the theory in linear difference equations in linear algebra, we know that this is equivalent to the {\bf first characteristic polynomial} $\rho(z)=\sum_{j=0}^k\alpha_jz^j$ having all roots inside the closed unit disc and at most only single roots on the unit circle.
-\item Why do we need zero-stability? Suppose we let $h\rightarrow 0$ and $t=hn$ remain unchanged, then $n\rightarrow\infty$. If there is no zero stability, error at previous steps will grow indefinitely.
 \item All the method obtained via Lagrange interpolation, including Adams-Moulton and Adams-Bashforth, are zero-stable.
+
+\newpage
+
+\item Why do we need zero-stability? Suppose we let $h\rightarrow 0$ and $t=hn$ remain unchanged, then $n\rightarrow\infty$. If there is no zero stability, error at previous steps will grow indefinitely.
 \end{itemize}
+
+\begin{exa}$y'=y$, $y(0)=1$. Use multistep method $z((n+2)h)-3z((n+1)h)+2z(nh)=-hf(nh, z(nh))$\end{exa}
+\begin{enumerate}
+\item Start with $z(0)=1$, $z(h)=e^h$.
+\item One can verify by doing Taylor expansion of $z$, that the method is consistent.
+\item Similar to Example~\ref{Euler}, define $z_k(nh)$ be $z_k(kh)=y(kh)$, $z_k((k+1)h)=y((k+1)h)$, and for all $n>k+1$, $z_k(nh)$ are calculated using the multistep method.
+\item Then the error created at time $(k+2)h$ is
+  \[z_k((k+2)h)-y((k+2)h)=z_k((k+2)h)-z_{k+1}((k+2)h)=O(h^2)\]
+
+\newpage
+\item Now let's see how this error grow with time: Let $w_m=z_k((k+1+n)h)-z_{k+1}((k+1+m)h)$. Then
+  \[w_0=0\]
+  \[w_1=O(h^2)\]
+  \[w_{m+2}-3w_{m+1}+2w_m=O(h)\]
+\item So if the linear difference equation
+  \[w_{m+2}-3w_{m+1}+2w_m=0\]
+  Has solution that grows to infinity, then the error created at time $(k+2)h$, after propagating to $t=nh$, will be $w_{n-k-1}$ which goes to $\infty$ as $h\rightarrow 0$.
+\end{enumerate}
+
+This is when $t=1$, $h=0.1$:\\
+
+\begin{tikzpicture}[yscale=1, xscale=8]
+
+  \draw[->] (0, 0) -- (1, 0) node[right] {$x$};
+  \draw[->] (0, -1) -- (0, 3) node[above] {$y$};
+\draw[scale=1, domain=0:1, smooth, variable=\x, blue] plot ({\x}, {exp(\x)});
+\draw[-](0.1,1.1051709180756477)--(0.2,1.215512754226943)--(0.3,1.3256793347219689)--(0.4,1.424461220289326)--(0.5,1.4894570579518434)--(0.6,1.4770026112479455)--(0.7,1.3031480120449657)--(0.8,0.8077385525142113)--(0.9,-0.3133951677517939)--(1,-2.6364364635352255);
+\draw[-](0.2,1.2214027581601699)--(0.3,1.3433493465216495)--(0.4,1.4651022474285917)--(0.5,1.5742731145903117)--(0.6,1.646104624170892)--(0.7,1.6323403318730216)--(0.8,1.4402012848601915)--(0.9,0.8926891576472291)--(1,-0.34635522526471507);
+\draw[-](0.3,1.3498588075760032)--(0.4,1.4846306305916523)--(0.5,1.61918839586535)--(0.6,1.73984086335358)--(0.7,1.8192269587435055)--(0.8,1.8040150631879985)--(0.9,1.5916685762026341)--(1,0.9865740959131053);
+\draw[-](0.4,1.4918246976412703)--(0.5,1.6407705970142044)--(0.6,1.7894799259959455)--(0.7,1.9228215242580071)--(0.8,2.0105567281825363)--(0.9,1.9937449836057943)--(1,1.7590658216340564);
+\draw[-](0.5,1.6487212707001282)--(0.6,1.8133319470537168)--(0.7,1.977681172690881)--(0.8,2.1250464292598377)--(0.9,2.222008825128663)--(1,2.20342897394033);
+\draw[-](0.6,1.822118800390509)--(0.7,2.0040417327012583)--(0.8,2.185675717283705)--(0.9,2.3485395131784728)--(1,2.4556995332396374);
+\draw[-](0.7,2.0137527074704766)--(0.8,2.21480864159136)--(0.9,2.4155452390860797)--(1,2.5955375699163827);
+\draw[-](0.8,2.225540928492468)--(0.9,2.4477420997894033)--(1,2.6695903495340274);
+\draw[-](0.9,2.45960311115695)--(1,2.705173383636667);
+\end{tikzpicture}
+
 
 \newpage
 
@@ -1728,9 +1770,16 @@ For global convergence of linear multistep methods we have the Dahlquist's theor
 
 \newpage
 
-\subsubsection{Runge-Kutta methods}
+\subsubsection{Runge-Kutta methods (12.5)}
 
 
+\subsection{Stiffness and Absolute Stability}
+
+\section{Boundary Value Problems}
+
+\subsection{Finite Difference (Chap. 13)}
+
+\subsection{Finite Element Method (Chap. 14)}
 
   
 \end{document}
