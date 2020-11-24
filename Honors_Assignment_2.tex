@@ -69,17 +69,19 @@
 \begin{document}
 \maketitle
 
-1. (Exercise 7.13) Use relations $2\sin(a)\sin(b)=\cos(b-a)-\cos(b+a)$ to show that the composite Trapezium rule always give accurate answer to $\int_0^{2\pi}\sin(x)dx$.\\  
+1. (Exercise 7.13) Show that the composite Trapezium rule always give accurate answer to $\int_0^{2\pi}\sin(x)dx$.\\  
 
 2. (Exercise 10.7) Let $[a, b]=[-1, 1]$, let $p_{n-1}$ be the degree $n-1$ Legendre polynomial, and let $I_n$ be the quadrature rule where the quadrature points are roots of $(x^2-1)p_{n-1}(x)$.
 \begin{itemize}
 \item Show that if $q$ is a polynomial of degree no more than $2n-1$, then $\int_{-1}^1qdx=I_n(q)$.
 \item Show that all quadrature weights are positive.
-\item Suppose $f$ is smooth, find a constant $C$ such that $|\int_{-1}^1fdx-I_n(f)|\leq C\max_{x\in [-1, 1]}|f^{2n}(x)|$.
+\item Suppose $f$ is smooth, find a constant $C$ such that
+  \[|\int_{-1}^1fdx-I_n(f)|\leq C\max_{x\in [-1, 1]}|f^{(2n)}(x)|\]
 \end{itemize}
 
-3. Suppose $f$ is smooth and periodic with period $1$, $|f''|\leq 1$. Let $I_n$ be the result of composite quadrature rule for $\int_0^1fdx$ using $n$ subintervals. Find a number $C$ such that
-\[|\int_0^1fdx-I_n(f)|\leq {C\over n^2}\]
+3. Suppose $f$ is smooth and periodic with period $1$, $|f^{(4)}|\leq 1$. Let $I_n$ be the result of composite trapezium rule for $\int_0^1fdx$ using $n$ subintervals. Find the largest integer $d$, and a number $C$, such that
+\[|\int_0^1fdx-I_n(f)|\leq {C\over n^d}\]
+Hint: You can do it using Hermit cubic spline. The integral of the linear spline is the result from composite trapezium rule, show that this integral is the same as the integral of the Hermit cubic spline.\\
 
 4. Consider the initial value problem $y'=\sin(y)$, $y(0)=1$.
 
