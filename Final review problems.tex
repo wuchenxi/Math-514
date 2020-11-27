@@ -140,7 +140,7 @@ So
 \[|\int_0^1fdx-I_n(f)|\leq \int_0^{1/n}|f_n(x)-p_n(x)|dx\leq \int_0^{1/n}{\max|f_n^{(4)}|x^2(x-1/n)^2\over 24}dx\leq {1\over 720n^4}\]
 
 6. Consider the 3-step Adams-Bashforth method for $y'=\cos(y)$:
-\[z(t+3h)=z(t+2h)+{23h\over 12}f(z(t+2h))-{16h\over 12}f(z(t+h))+{5h\over 12}f(z(t))\]
+\[z(t+3h)=z(t+2h)+{23h\over 12}f(z(t+2h))-{4h\over 3}f(z(t+h))+{5h\over 12}f(z(t))\]
 Suppose $z(t)=y(t)$, $z(t+h)=y(t+h)$, $z(t+2h)=y(t+2h)$, find $C$ such that
 \[|z(t+3h)-y(t+3h)|\leq Ch^4\]
 
