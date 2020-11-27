@@ -1,0 +1,161 @@
+\documentclass[20pt]{article} % USenglish for autoref
+\usepackage[paper=screen, centering, papersize=20cm]{geometry}
+\usepackage{cmap}		% to search and copy ligatures
+\usepackage[utf8]{inputenc}	% for Linux computer and Mac
+%\usepackage[latin1]{inputenc}	% für Windows computer
+\usepackage[T1]{fontenc}	% to search for ligatures in the pdf
+\usepackage[USenglish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{graphicx}
+%\usepackage{stmaryrd}		% for \mapsfrom
+\usepackage{aliascnt}		% for Aliascounter so that autoref gives the thms the right names
+\usepackage[pdfborder={0 0 0}]{hyperref}   % if you want to have math environment in captions you have to use \texorpdfstring{$x^2$}{x2}; without frame around the links
+\usepackage[figure]{hypcap}		% to make autoref link to figures and not the captions of figures
+%\usepackage{paralist}		% for compactitem
+\usepackage{mathtools}		% for \coloneqq
+\usepackage[]{todonotes}	% use option disable to disable all the todos
+\usepackage{float}
+\usepackage{lipsum}
+\theoremstyle{break}
+\newtheorem{definition}{Definition}[section]  
+\newtheorem{exa}[definition]{Example}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{lem}[definition]{Lemma}
+\newtheorem{conj}[definition]{Conjecture}
+\newtheorem{quest}[definition]{Research question}
+\newtheorem{thm}[definition]{Theorem}  
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{rem}[definition]{Remark}
+
+
+\renewcommand{\labelenumi}{(\roman{enumi})} % roman numbers in enumerations
+
+\usepackage{graphicx,tikz} % Allows including images
+
+\usetikzlibrary{calc,decorations.markings}
+\usetikzlibrary{shapes,snakes}
+
+\DeclareMathOperator{\Aff}{Aff}
+\DeclareMathOperator{\der}{der}
+\DeclareMathOperator{\Trans}{Trans}
+\DeclareMathOperator{\dir}{dir}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\NN}{\mathbb{N}}
+
+
+%For L Cal and L Twidle:
+\newcommand{\LC}{\mathcal{L}} 
+\newcommand{\LT}{\widetilde{\mathcal{L}}}
+
+%For X bar
+\newcommand{\XB}{\overline{X}}
+
+%For the real and complex numbers
+\newcommand{\RR}{\mathbb{R}} 
+\newcommand{\CC}{\mathbb{C}} 
+
+
+\newcommand{\remark}[2][]{\todo[color=green!50, #1]{#2}}
+
+\title{Final Review Problems}
+
+
+\begin{document}
+\maketitle
+
+
+\section{Basic Problems}
+
+1. Write down the Hermite interpolation polynomial $p(x)$ of $f(x)=\sin(x)$ at $x_0=0$, $x_1=\pi$, and find an upper bound of $|f(x)-p(x)|$ using the error bound of Hermite interpolation.\\
+
+Answer: The Hermite interpolation polynomial is
+\[p(x)={1\over \pi^2}(x(x-\pi)^2+x^2(\pi-x))\]
+And
+\[|f(x)-p(x)|={|-\sin(s)|x^2(x-\pi)^2\over 4!}\leq{x^2(x-\pi)^2\over 24}\]
+
+2. Find two points $x_0$ and $x_1$, such that for any polynomial $f$ of degree no more than $3$,
+\[\int_0^\pi\sin(x)f(x)dx={\pi\over 2}(f(x_0)+f(x_1))\]
+And find constant $c$ such that if $g\in C^6([0, \pi])$,
+\[|\int_0^\pi\sin(x)g(x)dx-{\pi\over 2}(g(x_0)+g(x_1))|\leq C\max|g^{(6)}|\]
+
+Answer: These two points are the Gauss quadrature points on interval $[0, \pi]$ with weight function $\sin(x)$, hence must be the root of the degree-2 orthogonal polynomial on $[0, \pi]$ with weight $\sin(x)$. Suppose this polynomial is $p_2=x^2+ax+b$, then
+\[0=\int_0^\pi \sin(x)p_2(x)dx=\pi^2-4+a\pi+2b\]
+\[0=\int_0^\pi \sin(x)xp_2(x)dx=\pi^3-6\pi+a(\pi^2-4)+b\pi\]
+So $a=-\pi$, $b=2$, $x_0={\pi-\sqrt{\pi^2-8}\over 2}$, $x_1={\pi+\sqrt{\pi^2-8}\over 2}$.
+And by Theorem 10.1 from the textbook or 3.19(iv) in the Lecture notes,
+\[C={\int_0^\pi\sin(x)(x^2-\pi x+2)^2dx\over 6!}={10-\pi^2\over 180}\]
+
+3. Estimate the solution of $y'=\sin(y)$, $y(0)=1$ at time $0.1$ using Euler's method, improved Euler's method, and rk4, using time step $h=0.1$. \\
+
+Answer:
+\begin{itemize}
+\item Euler's method gets $z(0.1)=1+0.1\times\sin(1)=1+\sin(1)/10\approx 1.0841471$.
+\item Improved Euler's method gets $z(0.1)=1+{1\over 20}(\sin(1)+\sin(1+\sin(1)/10))\approx 1.0862688$
+\item Runge-Kutta 4-th order gets $k_1=\sin(1)$, $k_2=\sin(1+k_1/20)$, $k_3=\sin(1+k_2/20)$, $k_4=\sin(1+k_3/10)$
+  \[z(0.1)=1+{\sin(1)\over 60}+{\sin(1+\sin(1)/20)\over 30}\]
+  \[+{\sin(1+\sin(1+\sin(1)/20)/20)\over 30}\]
+  \[+{\sin(1+\sin(1+\sin(1+\sin(1)/20)/20)/10)\over 60}\approx 1.0863557\]
+\end{itemize}
+The accurate answer is $1.0863558$.\\
+
+
+4. Consider explicit 2-step method for $y'=f(t, y)$:
+\[z((n+2)h)=az((n+1)h)+bz(nh)+chf((n+1)h, z((n+1)h))+dhf(nh, z(nh))\]
+Where $h$ is step size and $z(t)$ is the estimate for $y(t)$. Find all real numbers $a, b, c, d$ such that the method is zero stable and has order of accuracy at least $2$.
+
+Answer: The first characteristic polynomial is
+\[\rho(z)=z^2-az-b\]
+To make it consistent, $\rho(1)=0$, $c+d=2-a$, so $1-a-b=0$, $b=1-a$, and the other root must be $a-1$, so $0\leq a<2$ and $b=1-a$.
+
+Now let's calculate the order of accuracy. Firstly, let $t=nh$, suppose $y$ is the solution of the IVP, then
+\[y'(t)=f(t, y(t))\]
+\[y''(t)=\partial_tf(t, y(t))+\partial_yf(t, y(t))y'(t)\]
+
+Now let's do power series expansion, with respect to $h$, for
+\[y(t+2h)-ay(t+h)-(1-a)y(t)-chf(t+h, y(t+h))-dhf(t, y(t))\]
+And after cancelling some terms, we get
+\[2y''(t)h^2-ay''(t)h^2/2-c\partial_t f(t, y(t))h^2-c\partial_y f(t, y(t))y'(t)h^2+O(h^3)\]
+So $c=2-a/2$, $d=-a/2$. Note that when $a=1$ this is 2-step Adams-Bashforth.\\
+
+
+\section{More advanced problems}
+
+Problems like the ones below will account for no more than 10\% of the final exam, so don't worry about them unless you have a lot of time during final review.\\
+
+5. Suppose $f$ is smooth and periodic with period $1$, $|f^{(4)}|\leq 1$. Let $I_n$ be the result of composite trapezium rule for $\int_0^1fdx$ using $n$ subintervals. Find a number $C$, such that
+\[|\int_0^1fdx-I_n(f)|\leq {C\over n^4}\]
+
+Answer: Consider the function $f_n(x)=\sum_{i=0}^{n-1}(x+i/n)$. Then $f_n$ is periodic with period $1/n$, and it is easy to see that the composite trapezium rule for $\int_0^1fdx$ using $n$ subintervals is the same as the trapezium rule for $\int_0^{1/n}f_ndx$.\\
+
+Now let $p_n$ be the Hermite interpolation of $f_n$ at $0$ and $1/n$. Then because $f_n(0)=f_n(1/n)$, $f_n'(0)=f_n'(1/n)$, we have
+\[p_n(x)=f_n(0)+2f'_n(0)n^2x(x-{1\over 2n})(x-{1\over n})\]
+\[\int_0^{1/n}p_n(x)dx=f_n(0)/n=I_n(f)\]
+So
+\[|\int_0^1fdx-I_n(f)|\leq \int_0^{1/n}|f_n(x)-p_n(x)|dx\leq \int_0^{1/n}{\max|f_n^{(4)}|x^2(x-1/n)^2\over 24}dx\leq {1\over 720n^4}\]
+
+6. Consider the 3-step Adams-Bashforth method for $y'=\cos(y)$:
+\[z(t+3h)=z(t+2h)+{23h\over 12}f(z(t+2h))-{16h\over 12}f(z(t+h))+{5h\over 12}f(z(t))\]
+Suppose $z(t)=y(t)$, $z(t+h)=y(t+h)$, $z(t+2h)=y(t+2h)$, find $C$ such that
+\[|z(t+3h)-y(t+3h)|\leq Ch^4\]
+
+Answer: Let $g(t)=y'(t)=\cos(y(t))$, $p_3$ be the Lagrange interpolation of $g$ at $t$, $t+h$, $t+2h$, then the 3-step Adams-Bashforth can be written as
+\[z(t+3h)=y(t+2h)+\int_{t+2h}^{t+3h}p_3(s)ds\]
+So
+\[|z(t+3h)-y(t+3h)|\leq \int_{t+2h}^{t+3h}|g(s)-p_3(s)|ds\]
+Now by error estimate of Lagrange interpolation,
+\[|g(s)-p_3(s)|\leq{\max|g^{(3)}|(s-t)(s-t-h)(s-t-2h)\over 6}\]
+So after integration we get
+\[|z(t+3h)-y(t+3h)|\leq \max|g^{(3)}|\cdot{3h^4\over 8}\]
+
+\[g'=-y'\sin(y)=-\cos(y)\sin(y)=-{\sin(2y)\over 2}\]
+\[g''=-\cos(y)\cos(2y)=-{\cos(3y)+\cos(y)\over 2}\]
+\[g'''={3\sin(3y)\cos(y)+\sin(y)\cos(y)\over 2}\]
+So $|g'''|\leq 7/4$, or you can use a better bound, and $C=21/32$.
+
+\end{document}
