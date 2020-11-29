@@ -1757,7 +1757,7 @@ This is when $t=1$, $h=0.1$ (See \url{https://github.com/wuchenxi/Math-514/blob/
   \[\sum_i\alpha_i+\sum_ii\alpha_if(nh, y(nh))h=h\sum_i\beta_if(nh, y(nh))+O(h^2)\]
   So $\rho(1)=\sum_i\alpha_i=0$, $\rho'(0)=\sum_ii\alpha_i=\sum_i\beta_i=\sigma(1)$.
 \item All the methods obtained via Lagrange interpolation are consistent, by looking at $f=1$.
-\item To get order of consistency, carry out the same argument as above but do higher order power expansion for $y(nh+s)$ and $f(nh+s, y(nh+s))$.
+\item To get order of accuracy, carry out the same argument as above but do higher order power expansion for $y(nh+s)$ and $f(nh+s, y(nh+s))$.
 \end{itemize}
 
 \newpage
@@ -1765,7 +1765,7 @@ This is when $t=1$, $h=0.1$ (See \url{https://github.com/wuchenxi/Math-514/blob/
 For global convergence of linear multistep methods we have the Dahlquist's theorems:
 \begin{itemize}
 \item If a linear $k$-step method has zero stability, then it is consistent iff it is convergent, and the truncated error and global error has the same order as $h\rightarrow 0$.
-\item (First Dahlquist barrier) If a linear $k$-step method is $k$ stable then the order of accuracy is no more than $k+1$ if $k$ is odd (e.g. Adams-Moulton, by Theorem~\ref{bound1}), $k+2$ if $k$ is even (e.g. $d=k$ implicit, by Theorem~\ref{qbound}), and $k$ if it has to be explicit (e.g. Adams-Bashforth, by Theorem~\ref{bound1}).
+\item (First Dahlquist barrier) If a linear $k$-step method is 0-stable then the order of accuracy is no more than $k+1$ if $k$ is odd (e.g. Adams-Moulton, by Theorem~\ref{bound1}), $k+2$ if $k$ is even (e.g. $d=k$ implicit, by Theorem~\ref{qbound}), and $k$ if it has to be explicit (e.g. Adams-Bashforth, by Theorem~\ref{bound1}).
 \end{itemize}
 
 \newpage
@@ -1779,14 +1779,14 @@ Recall Henu's method:
 \[z((n+1)h)=z(nh)+{h\over 2}(f(nh, z(nh))+(f((n+1)h, z_p((n+1)h))))\]
 We can rewrite it as
 \[k_1=f(nh, z(nh))\]
-\[k_2=f(nh+h, z(nh)+hk_1\]
+\[k_2=f(nh+h, z(nh)+hk_1)\]
 \[z((n+1)h)=z(nh)+h({k_1\over 2}+{k_2\over 2})\]
 
 \newpage
 General Runge-Kutta:
 \[k_1=f(nh, z(nh))\]
 \[k_j=f(nh+\alpha_jh, z(nh)+\sum_{i<j}\beta_{ij}hk_i)\]
-\[z((n+1)h)=z(nh)+\sum_jc_jk_j\]
+\[z((n+1)h)=z(nh)+h\sum_jc_jk_j\]
 Some popular choice of parameters:
 \begin{enumerate}
 \item Henu's method, or improved Euler method: $\alpha_2=\beta_{12}=1$, $c_1=c_2=1/2$
@@ -1810,15 +1810,249 @@ How to check consistency and order of accuracy: Taylor series expansion for $y$ 
   \[k_2=f(t+h, y(t)+hk_1)=a_1+hf_1+a_1hf_2+O(h^2)=a_1+2ha_2+O(h^2)\]
   So
   \[z(t+h)=y_t+a_1h+a_2h^2+O(h^3)=y(t+h)+O(h^3)\]
-\item The method is consistent and has order of accuracy $2$
+\item The method is consistent and has order of accuracy $2$.
 \end{enumerate}
 
-Similarly, rk2 can be shown to have order of accuracy $2$ and rk4 order of accuracy $4$.
+Similarly, rk2 can be shown to have order of accuracy $2$ and rk4 order of accuracy $4$.\\
+
+Global error bound can then be obtained in a way similar to Euler's method.\\
+
+When using linear multistep methods of order of accuracy $n$, we can calculate the initial values using one-step methods of order $n-1$. This way the error created in the initial steps will be $O(h^n)$ which is comparable with global error of an $n$-th order method.
+
+\newpage
+
+\begin{exa}$y'=\sin(y)$, $y(0)=1$. $h=0.25$, $t=4h=1$.\end{exa}
+True answer is $y(1)=1.9562950$.
+\begin{enumerate}
+\item Euler's Method:
+  \[z(0.25)=y(0)+h\sin(y(0))=1.2103677\]
+  \[z(0.5)=y(0.25)+h\sin(y(0.25))=1.4443042\]
+  \[z(0.75)=1.6923068, z(1)=1.9404635\]
+\item Rouge-Kutta 2nd Order
+  \[z(0.25)=y(0)+h\sin(y(0)+h\sin(y(0))/2)=1.2233867\]
+  \[z(0.5)=1.4668103, z(0.75)=1.7167586, z(1)=1.9577257\]
+
+\newpage
+\item Improved Euler's Method+Adams-Bashforth 3rd order
+  \begin{enumerate}
+  \item Improved Euler's Method for $z(0.25)$ and $z(0.5)$:
+    \[z(0.25)=y(0)+{h\over 2}(\sin(y(0))+\sin(y(0)+h\sin(y_0)))=1.2221521\]
+    \[z(0.5)=1.4638248\]
+  \item Adams-Bashforth 3rd order:
+    \[z(0.75)=z(0.5)+h({23\over 12}\sin(z(0.5))-{4\over 3}\sin(z(0.25))+{5\over 12}\sin(y(0)))=1.7146269\]
+    \[z(1)=1.9553174\]
+  \end{enumerate}
+  \newpage
+  \item Rouge-Kutta 4th Order:
+    \begin{enumerate}
+    \item Calculate $z(0.25)$:
+      \[k_1=\sin(y(0))=0.8414710, k_2=\sin(y(0)+{h\over 2}k_1)=0.8935468\]
+      \[k_3=\sin(y(0)+{h\over 2}k_2)=0.8964504, k_4=\sin(y(0)+hk_3)=0.9405047\]
+      \[z(0.25)=y(0)+{h\over 6}(k_1+2k_2+2k_3+k_4)=1.2234154\]
+    \item Continue with the calculation, we get:
+      \[z(0.5)=1.4663981, z(0.75)=1.7156965, z(1)=1.9562859\]
+     \end{enumerate}
+\end{enumerate}
+
+\newpage
+
+Let $h=1/n$, $n=4, 5, \dots, 20$, the behavior of the global error at $t=1$ is (see \url{https://github.com/wuchenxi/Math-514/blob/main/ivp.py}):\\
+
+
+\begin{tikzpicture}
+	\begin{axis}[
+		xlabel=$log(n)$,
+		ylabel=$-log(Error)$]
+	\addplot[color=red,mark=x, only marks] coordinates {
+		(1.3862943611198906,4.145754760029328)
+(1.6094379124341003,4.430625024433864)
+(1.791759469228055,4.6560886339731)
+(1.9459101490553132,4.842100702500449)
+(2.0794415416798357,5.0001313065355)
+(2.1972245773362196,5.1373420061095265)
+(2.302585092994046,5.258487509184754)
+(2.3978952727983707,5.366877743429926)
+(2.4849066497880004,5.464905296079924)
+(2.5649493574615367,5.554353469858444)
+(2.6390573296152584,5.636585656204349)
+(2.70805020110221,5.712666777048321)
+(2.772588722239781,5.783443979079779)
+(2.833213344056216,5.849601900280024)
+(2.8903717578961645,5.911701522460055)
+(2.9444389791664403,5.9702081132143645)
+(2.995732273553991,6.025511727225925)
+};
+
+\addplot[color=orange,mark=+, only marks] coordinates {
+(1.3862943611198906,6.549539681499379)
+(1.6094379124341003,7.005961570384487)
+(1.791759469228055,7.375672389599312)
+(1.9459101490553132,7.686746757690344)
+(2.0794415416798357,7.955419332333807)
+(2.1972245773362196,8.19195614767128)
+(2.302585092994046,8.403275255915098)
+(2.3978952727983707,8.594266276895366)
+(2.4849066497880004,8.768515980147896)
+(2.5649493574615367,8.928735053587898)
+(2.6390573296152584,9.077022853878512)
+(2.70805020110221,9.215038910361171)
+(2.772588722239781,9.344118084267752)
+(2.833213344056216,9.46535027126746)
+(2.8903717578961645,9.579637011866296)
+(2.9444389791664403,9.687732612310596)
+(2.995732273553991,9.790274605691003)
+};
+	\addplot[color=blue,mark=*, only marks] coordinates {
+(1.3862943611198906,5.29904997141513)
+(1.6094379124341003,5.734040093549738)
+(1.791759469228055,6.091797514682703)
+(1.9459101490553132,6.3954812957886285)
+(2.0794415416798357,6.659239792615228)
+(2.1972245773362196,6.892327667161501)
+(2.302585092994046,7.101122869337775)
+(2.3978952727983707,7.290204487932382)
+(2.4849066497880004,7.462970039881465)
+(2.5649493574615367,7.622009297574981)
+(2.6390573296152584,7.769341287083899)
+(2.70805020110221,7.906570387820401)
+(2.772588722239781,8.034992522579467)
+(2.833213344056216,8.155669421575428)
+(2.8903717578961645,8.26948181802594)
+(2.9444389791664403,8.377168358730655)
+(2.995732273553991,8.479354596145765)
+	};
+
+	\addplot[color=green,mark=*, only marks] coordinates {
+(1.3862943611198906,6.930443449440396)
+(1.6094379124341003,7.606687874319425)
+(1.791759469228055,8.150587158527076)
+(1.9459101490553132,8.60285551756825)
+(2.0794415416798357,8.99084336938202)
+(2.1972245773362196,9.331460239210784)
+(2.302585092994046,9.635596734388546)
+(2.3978952727983707,9.91067061226246)
+(2.4849066497880004,10.161970818744233)
+(2.5649493574615367,10.393414824137718)
+(2.6390573296152584,10.607995522528059)
+(2.70805020110221,10.80805787148315)
+(2.772588722239781,10.995477728611041)
+(2.833213344056216,11.171781920273448)
+(2.8903717578961645,11.33823152549481)
+(2.9444389791664403,11.495881284685566)
+(2.995732273553991,11.645623011636145)
+	};
+	\addplot[color=purple,mark=*, only marks] coordinates {
+(1.3862943611198906,11.613796344378912)
+(1.6094379124341003,12.504194959159026)
+(1.791759469228055,13.23238188403467)
+(1.9459101490553132,13.848379911579531)
+(2.0794415416798357,14.382153985271868)
+(2.1972245773362196,14.853074668486146)
+(2.302585092994046,15.274387300953613)
+(2.3978952727983707,15.655548787330039)
+(2.4849066497880004,16.00354681050488)
+(2.5649493574615367,16.323690770126053)
+(2.6390573296152584,16.620109414260515)
+(2.70805020110221,16.896076777445682)
+(2.772588722239781,17.154232901786415)
+(2.833213344056216,17.396737589478487)
+(2.8903717578961645,17.62538021102702)
+(2.9444389791664403,17.841659915464817)
+(2.995732273553991,18.046845108913505)
+	};
+      \end{axis}
+
+      
+\end{tikzpicture}
+
+The dots from low to high are euler, heun, rk2, ab3, rk4.
+
 
 
 \newpage
 
 \subsection{Stiffness and Absolute Stability}
+
+All the methods we discussed so far can be easily generalized to systems of equations. Just see $y$ as a vector-valued function.
+
+\begin{exa}
+  \[y'=\left(\begin{array}{cc} -1 & 0 \\ 1 & -100\end{array}\right)y\]
+  \[y(0)=\left(\begin{array}{c}1\\1\end{array}\right)\]
+\end{exa}           
+
+Do time step $h=0.1$, $t=10h=1$, using Euler's, improved Euler's and trapezium rule methods:
+
+\[y(1)=\left(\begin{array}{c}1/e\\e^{-100}(e^{99}/99+98/99)\end{array}\right)\]
+
+Let $A=\left(\begin{array}{cc} -1 & 0 \\ 1 & -100\end{array}\right)$.\\
+
+\begin{itemize}
+\item Euler's method: 
+\[z(1)=(I_2+0.1A)^{10}\left(\begin{array}{c}1\\1\end{array}\right)\]
+\[=\left(\begin{array}{c}0.3486784401\\ 3451564356.5489765499 \end{array}\right)\]
+
+\newpage
+
+\item Heun's method:
+\[z(1)=(I_2+0.1A+0.005A^2)^{10}\left(\begin{array}{c}1\\1\end{array}\right)\]
+\[=\left(\begin{array}{c}0.0.368540984834\\ 1.32870768929\times 10^{16} \end{array}\right)\]
+
+\item Trapezium rule method:
+\[z(1)=((I_2+0.05A)/(I_2-0.05A))^{10}\left(\begin{array}{c}1\\1\end{array}\right)\]
+\[=\left(\begin{array}{c}0.367572542383\\ 0.02087921691 \end{array}\right)\]
+
+\end{itemize}
+
+
+
+\newpage
+
+\begin{itemize}
+\item A system of equations is called stiff, if, after linearization into $y'=Ay$, $A$ has eigenvalues with negative real parts, and the ratio between real parts of eigenvalues can be large.
+\item Stiffness means there are behavior in different time scale. A numerical method need to take small step size to accommodate for the faster behavior, but also need to calculate till a large $t$ to see the slow behavior, resulting in huge amount of computation.
+\item There are other cases of stiffness which are beyond the scope of this course.
+\end{itemize}
+
+\newpage
+
+To deal with stiff equations efficiently, we need numerical methods which does not require a small time scale to get good answers. Usually we use test equation $y'=\lambda y$, $y(0)=1$, where $Re(\lambda)<0$, and the set of values $h\lambda$ that makes $\lim_{n\rightarrow \infty}z(nh)=0$, are called {\bf the region of absolute stability}.
+
+\begin{exa}
+  \begin{itemize}
+\item For Euler's method,
+  \[z((n+1)h)=z(nh)+h\lambda(z(nh))=(1+h\lambda)z(nh)\]
+  So the solution goes to $0$ if $|1+h\lambda|<1$, the region of absolute stability is the circle of radius $1$ centered at $-1$.
+\item For Trapezium Rule Method,
+  \[z((n+1)h)=z(nh)+{h\over 2}(\lambda(z(nh))+\lambda(z((n+1)h))\]
+ So
+  \[z((n+1)h)={1+h\lambda/2\over 1-h\lambda/2}z(nh)\]
+  The region of absolute stability is the left half plane.
+  \end{itemize}
+\end{exa}
+
+A method whose region of absolute stability is the whole left half plane is called {\bf A-stable}.
+
+
+\newpage
+
+\subsection{Review}
+
+\begin{enumerate}
+\item Euler's method
+\item \begin{enumerate}
+   \item One step: truncated error, consistency, order of accuracy
+   \item Globally: global error, convergence, zero-stability
+   \end{enumerate}
+\item First Generalization of Euler's Method: Method based on quadrature rule (Adams-Bashforth, Adams-Moulton), general Linear Multistep methods
+\item Second Generalization of Euler's Method: Rouge-Kutta family
+\item Region of absolute stability.
+\end{enumerate}
+
+  
+
+
+\newpage
+
 
 \section{Boundary Value Problems}
 
