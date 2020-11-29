@@ -1671,7 +1671,7 @@ We can show that it is consistent with order of accuracy $2$.
 An alternative to implicit method is the {\bf predictor-corrector method}: for example, instead of Trapzsium method, we first estimate $z(t)$ using Euler's method, then ``correct'' it using the trapezium rule formula, and get:
 \[z_{p}(t)=z(t-h)+hf(t-h, z(t-h))\]
 \[z(t)=z(t-h)+{h\over 2}(f(t, z_p(t))+f(t-h, z(t-h)))\] 
-This is called {\bf Henu's method}.
+This is called {\bf Heun's method}.
 
 \newpage
 
@@ -1686,7 +1686,7 @@ This is called {\bf Henu's method}.
     \[z(nh)={(1+h/2)^n\over (1-h/2)^n}\]
     Truncated error is
     \[O({e^h-{1+h/2\over 1-h/2}\over h})=O(h^2)\]
-  \item Henu's rule is
+  \item Heun's rule is
     \[z(nh+h)=z(nh)+{h\over 2}(2z(nh)+hz(nh))\]
     \[z(nh)=(1+h+h^2/2)^n\]
     Truncated error is also $O(h^2)$.
@@ -1774,7 +1774,7 @@ For global convergence of linear multistep methods we have the Dahlquist's theor
 
 To get initial conditions for linear multistep methods, we need one step methods with higher orders of accuracy. To accomplish that we need to have more evaluations of $f$ per step.\\
 
-Recall Henu's method:
+Recall Heun's method:
 \[z_p((n+1)h)=z(nh)+hf(nh, z(nh))\]
 \[z((n+1)h)=z(nh)+{h\over 2}(f(nh, z(nh))+(f((n+1)h, z_p((n+1)h))))\]
 We can rewrite it as
@@ -1789,7 +1789,7 @@ General Runge-Kutta:
 \[z((n+1)h)=z(nh)+h\sum_jc_jk_j\]
 Some popular choice of parameters:
 \begin{enumerate}
-\item Henu's method, or improved Euler method: $\alpha_2=\beta_{12}=1$, $c_1=c_2=1/2$
+\item Heun's method, or improved Euler method: $\alpha_2=\beta_{12}=1$, $c_1=c_2=1/2$
 \item RK2, or modified Euler's method: $\alpha_2=\beta_{12}=1/2$, $c_1=0$, $c_2=1$.
 \item RK4: $\alpha_2=\alpha_3=\beta_{12}=\beta_{23}=1/2$, $\alpha_4=\beta_{34}=1$, $c_1=c_4=1/6$, $c_2=c_3=1/3$.   
 \end{enumerate}
@@ -1797,7 +1797,7 @@ Some popular choice of parameters:
 \newpage
 
 How to check consistency and order of accuracy: Taylor series expansion for $y$ and $f$.
-\begin{exa}Show that Henu's method is consistent and has order of accuracy $2$.\end{exa}
+\begin{exa}Show that Heun's method is consistent and has order of accuracy $2$.\end{exa}
 \begin{enumerate}
 \item
   \[f(t+s, y(t)+r)=f(t, y(t))+sf_1(t, y(t))+rf_2(t, y(t))+O(r^2+s^2)\]
@@ -1805,7 +1805,7 @@ How to check consistency and order of accuracy: Taylor series expansion for $y$ 
   \[a_1+2a_2s=f(t, y(t))+s((f_1+a_1f_2)(t, y(t)))+O(s^2)\]
   So $a_1=f(t, y(t))$, $a_2={f_1(t, y(t))+f(t, y(t))f_2(t, y(t))\over 2}$, and
   \[y(t+h)=y(t)+a_1h+a_2h^2+O(h^3)\]
-\item Now do Henu's method:
+\item Now do Heun's method:
   \[k_1=f(t, y(t))=a_1\]
   \[k_2=f(t+h, y(t)+hk_1)=a_1+hf_1+a_1hf_2+O(h^2)=a_1+2ha_2+O(h^2)\]
   So
