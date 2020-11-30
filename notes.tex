@@ -1801,15 +1801,14 @@ How to check consistency and order of accuracy: Taylor series expansion for $y$ 
 \begin{enumerate}
 \item
   \[f(t+s, y(t)+r)=f(t, y(t))+sf_1(t, y(t))+rf_2(t, y(t))+O(r^2+s^2)\]
-\item So, suppose $y(t+s)=y(t)+a_1s+a_2s^2+O(s^3)$, then $y'=f(t, y)$ implies
-  \[a_1+2a_2s=f(t, y(t))+s((f_1+a_1f_2)(t, y(t)))+O(s^2)\]
-  So $a_1=f(t, y(t))$, $a_2={f_1(t, y(t))+f(t, y(t))f_2(t, y(t))\over 2}$, and
-  \[y(t+h)=y(t)+a_1h+a_2h^2+O(h^3)\]
+\item Now calculate the Taylor series of $y(t+s)$:
+  \[y(t+s)=y(t)+y'(t)s+{y''(t)\over 2}s^2+O(s^3)\]
+  \[=y(t)+f(t, y(t))s+{f_1+ff_2\over 2}s^2+O(s^3)\]
 \item Now do Heun's method:
-  \[k_1=f(t, y(t))=a_1\]
-  \[k_2=f(t+h, y(t)+hk_1)=a_1+hf_1+a_1hf_2+O(h^2)=a_1+2ha_2+O(h^2)\]
+  \[k_1=f(t, y(t))\]
+  \[k_2=f(t+h, y(t)+hk_1)=f+h(f_1+ff_2)+O(h^2)\]
   So
-  \[z(t+h)=y_t+a_1h+a_2h^2+O(h^3)=y(t+h)+O(h^3)\]
+  \[z(t+h)=y_t+{h\over 2}(k_1+k_2)+O(h^3)\]
 \item The method is consistent and has order of accuracy $2$.
 \end{enumerate}
 
