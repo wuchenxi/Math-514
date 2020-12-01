@@ -1,0 +1,117 @@
+\documentclass[20pt]{article} % USenglish for autoref
+\usepackage[paper=screen, centering, papersize=20cm]{geometry}
+\usepackage{cmap}		% to search and copy ligatures
+\usepackage[utf8]{inputenc}	% for Linux computer and Mac
+%\usepackage[latin1]{inputenc}	% für Windows computer
+\usepackage[T1]{fontenc}	% to search for ligatures in the pdf
+\usepackage[USenglish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[]{algorithm2e}
+%\usepackage{stmaryrd}		% for \mapsfrom
+\usepackage{aliascnt}		% for Aliascounter so that autoref gives the thms the right names
+\usepackage[pdfborder={0 0 0}]{hyperref}   % if you want to have math environment in captions you have to use \texorpdfstring{$x^2$}{x2}; without frame around the links
+\usepackage[figure]{hypcap}		% to make autoref link to figures and not the captions of figures
+%\usepackage{paralist}		% for compactitem
+\usepackage{mathtools}		% for \coloneqq
+\usepackage[]{todonotes}	% use option disable to disable all the todos
+\usepackage{float}
+\usepackage{lipsum}
+\theoremstyle{break}
+\newtheorem{definition}{Definition}[section]  
+\newtheorem{exa}[definition]{Example}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{lem}[definition]{Lemma}
+\newtheorem{conj}[definition]{Conjecture}
+\newtheorem{quest}[definition]{Research question}
+\newtheorem{thm}[definition]{Theorem}  
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{rem}[definition]{Remark}
+
+
+\renewcommand{\labelenumi}{(\roman{enumi})} % roman numbers in enumerations
+
+\usepackage{graphicx,tikz,pgfplots} % Allows including images
+
+\usetikzlibrary{calc,decorations.markings}
+\usetikzlibrary{shapes,snakes}
+
+\DeclareMathOperator{\Aff}{Aff}
+\DeclareMathOperator{\der}{der}
+\DeclareMathOperator{\Trans}{Trans}
+\DeclareMathOperator{\dir}{dir}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\NN}{\mathbb{N}}
+
+
+%For L Cal and L Twidle:
+\newcommand{\LC}{\mathcal{L}} 
+\newcommand{\LT}{\widetilde{\mathcal{L}}}
+
+%For X bar
+\newcommand{\XB}{\overline{X}}
+
+%For the real and complex numbers
+\newcommand{\RR}{\mathbb{R}} 
+\newcommand{\CC}{\mathbb{C}} 
+
+
+\newcommand{\remark}[2][]{\todo[color=green!50, #1]{#2}}
+
+\title{Notes on ODE}
+
+
+\begin{document}
+\maketitle
+
+This is a review on some basics of the theory of ordinary differential equations.
+
+An {\bf ordinary differential equation} is an equation relating a function on $\mathbb{R}$ and its derivatives. For example, the followings are ordinary differential equations:
+
+\[y'=t\sin(y)\]
+\[y'=sin(t)\]
+\[y'=y\cos(t)+e^t\]
+
+We can also have systems of equations like the following
+\[y_1'=y_2, y_2'=-y_1\]
+
+
+The {\bf initial value problem} of an ordinary differential equation means finding a solution after specifying the value of the solution at some time $t_0$, which, for convenience, we can choose to be $0$. For example
+\[y'=y\cos(t)+e^t, y(0)=0\]
+
+In general the solution of an ODE can not be written down explicitly, however, in some situations we can get explicit solutions. For example, if the equation is of the form $y'=f(t)g(y)$, then the general solution is of the form
+\[\int_0^y {ds\over g(s)}=\int_0^t f(s)ds+C\]
+This is called {\bf separation of variables}.
+
+The most important result in the theory of ODE is Picard's theorem:
+
+\begin{thm}
+If $f(t, y)$ is continuous and Lipschitz in the second parameter with Lipschitz constant $L$, then $y'=f(t, y)$, $y(0)=a$ always has a unique solution.
+\end{thm}
+
+\begin{proof}
+ Firstly let's show uniqueness: if $y_1$ and $y_2$ are two solutions, then $|y_1(t)-y_2(t)|e^{-L|t|}$ is non increasing when $t>0$ and non decreasing when $t<0$, hence must always be $0$.\\
+  
+  Now let's show existence: consider a sequence of functions defined as below:
+  \[y_0(t)=a\]
+  \[y_i(t)=a+\int_0^t f(s, y_{i-1}(s))ds\]
+  Then $f$ being Lipschitz implies that
+  \[|y_i(t)-y_{i-1}(t)|\leq \int_0^t L|y_{i-1}(s)-y_{i-2}(s)|ds\]
+  \[\leq \int_0^t L^2(t-s)|y_{i-2}(s)-y_{i-3}(s)|ds\]
+  \[\leq \int_0^t L^3{(t-s)^2\over 2}|y_{i-3}(s)-y_{i-4}(s)|ds\]
+  \[\leq \dots \leq \int_0^t L^{i-1}{(t-s)^{i-2}\over (i-2)!}|y_1(s)-y_0(s)|ds\]
+  \[\leq {\max(|y_1-y_0|)L^{i-1}t^{i-1}\over (i-1)!}\]
+
+  Hence the sequence converges uniformly on any finite interval, and fundamental theorem of calculus implies that the limiting function $y$ is the solution.
+\end{proof}
+
+The argument above can be used to show that if $f$ is real analytic (i.e. has Taylor series convergent to itself), so is $y$.
+
+\end{document}

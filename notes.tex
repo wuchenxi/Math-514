@@ -277,7 +277,7 @@ Use the same strategy as the Lagrange case, possibly via a few trials and errors
 \newpage
 
 \subsection{Applications}
-\subsubsection{Numerical Differentiation}
+\subsubsection{Numerical Differentiation}\label{nd}
 Suppose $p$ is the Lagrange interpolation of $f$ at $n+1$ points. By mean value theorem, $f'-p'$ is zero at $n$ points $d_1, \dots d_n$, so $p'$ can be seen as the Lagrange interpolation polynomial with condition $p'(d_i)=f'(d_i)$ (see Theorem 6.5 in textbook). Now one can get an estimate for $f'(x)-p'(x)$ using Theorem~\ref{err_lag}.\\
 
 \begin{exa}
@@ -1808,7 +1808,7 @@ How to check consistency and order of accuracy: Taylor series expansion for $y$ 
   \[k_1=f(t, y(t))\]
   \[k_2=f(t+h, y(t)+hk_1)=f+h(f_1+ff_2)+O(h^2)\]
   So
-  \[z(t+h)=y_t+{h\over 2}(k_1+k_2)+O(h^3)\]
+  \[z(t+h)=y(t)+{h\over 2}(k_1+k_2)=y(t+h)+O(h^3)\]
 \item The method is consistent and has order of accuracy $2$.
 \end{enumerate}
 
@@ -1994,7 +1994,7 @@ Let $A=\left(\begin{array}{cc} -1 & 0 \\ 1 & -100\end{array}\right)$.\\
 
 \item Heun's method:
 \[z(1)=(I_2+0.1A+0.005A^2)^{10}\left(\begin{array}{c}1\\1\end{array}\right)\]
-\[=\left(\begin{array}{c}0.0.368540984834\\ 1.32870768929\times 10^{16} \end{array}\right)\]
+\[=\left(\begin{array}{c}0.368540984834\\ 1.32870768929\times 10^{16} \end{array}\right)\]
 
 \item Trapezium rule method:
 \[z(1)=((I_2+0.05A)/(I_2-0.05A))^{10}\left(\begin{array}{c}1\\1\end{array}\right)\]
@@ -2039,7 +2039,7 @@ A method whose region of absolute stability is the whole left half plane is call
 \begin{enumerate}
 \item Euler's method
 \item \begin{enumerate}
-   \item One step: truncated error, consistency, order of accuracy
+   \item One step: truncated error, consistency, order of accuracy. All can be calculated using Taylor series.
    \item Globally: global error, convergence, zero-stability
    \end{enumerate}
 \item First Generalization of Euler's Method: Method based on quadrature rule (Adams-Bashforth, Adams-Moulton), general Linear Multistep methods
@@ -2052,12 +2052,40 @@ A method whose region of absolute stability is the whole left half plane is call
 
 \newpage
 
-
 \section{Boundary Value Problems}
+
+{\bf This section will not be in final exam.}
+
+Example: $y''=-y$, $y(0)=0$, $y(1)=1$. True answer is $y(x)={\sin(x)\over\sin(1)}$.
+
+We discretize the problem by estimating the solution on a {\bf uniform mesh}: $x_i=i/n$, $i=0, 1, \dots n$. Denote $z$ as the estimation.
 
 \subsection{Finite Difference (Chap. 13)}
 
-\subsection{Finite Element Method (Chap. 14)}
+$z(0)=0$, $z(1)=1$. For any $x_i=i/n$, $i=1, \dots, n-1$, approximate the second order derivative using idea from Section~\ref{nd}:\\
 
+Lagrange interpolation using $x_{i-1}$, $x_i$ and $x_{i+1}$ as interpolation points, we get
+  \[p(x)=z((i-1)/n){(x-i/n)(x-(i+1)/n)\over 2/n^2}-z(i/n){(x-(i-1)/n)(x-(i+1)/n)\over 1/n^2}\]
+  \[+z((i+1)/n){(x-i/n)(x-(i-1)/n)\over 2/n^2}\]
+  So
+  \[p''(x_i)=n^2(z((i+1)/n)+z((i-1)/n)-2z(i/n))\]
+  So the question reduces to a system of equations:
+  \[z(0)=0\]
+  \[z(1)=1\]
+  \[n^2(z((i+1)/n)+z((i-1)/n)-2z(i/n))=-z(i/n)\]
+
+  When $n=3$, we get $z(1/3)=81/208$, $z(2/3)=153/208$. Error is about $0.0007$.
+
+  \newpage
+  
+  \subsection{Finite Element Method (Chap. 14)}
+  
+Rewrite the differential equation into a {\bf variational problem}, which is minimizing
+  
+\[\int_0^1y'^2-y^2 dx\]
+
+Now pick values of $z(i/n)$, such that the linear spline $g$ using $x_i$ minimizes $\int_0^1g'^2-g^2dx$.
+
+When $n=3$, this gives us $z(1/3)=3025/7791$, $z(2/3)=5720/7791$. Error is about $0.0007$.
   
 \end{document}
