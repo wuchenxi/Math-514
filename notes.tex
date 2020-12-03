@@ -2074,12 +2074,12 @@ How to analyze numerical methods:
 \begin{enumerate}
 \item Locally: Taylor series expansion.
 \item Globally: separate the error created at each step, as in the argument for Euler's method. We can summarize it as below:
-  \begin{thm}(Theorem 12.2 in textbook)
-    If $z((n+1)h)=z(nh)+\Phi(nh, z(nh))$, $z(0)=y(0)$, $|y((n+1)h)-\Phi(y(nh))|\leq Th$, and $\Phi$ is $hL$-Lispchitz with respect to the second parameter. Then
+  \begin{thm}\label{global}(Theorem 12.2 in textbook)
+    If $z((n+1)h)=z(nh)+h\Phi(nh, z(nh))$, $z(0)=y(0)$, $|y((n+1)h)-h\Phi(y(nh))|\leq Th$, and $\Phi$ is $L$-Lispchitz with respect to the second parameter. Then
     \[|z(nh)-y(nh)|\leq T\cdot {e^{nhL}-1\over L}\]
  \end{thm}
  \begin{proof}
-   Let $z_k(kh)=y(kh)$, $z_k((n+1)h)=z_k(nh)+\Phi(nh, z_k(nh))$, then
+   Let $z_k(kh)=y(kh)$, $z_k((n+1)h)=z_k(nh)+h\Phi(nh, z_k(nh))$, then
    \[|z_k(nh)-z_{k+1}(nh)|\leq (1+hL)^{n-k-1}|z_k((k+1)h)-z_{k+1}((k+1)h)|\leq Th(1+hL)^{n-k-1}\]
    \[|z(nh)-y(nh)|=|z_0(nh)-z_n(nh)|\leq T\cdot {e^{nhL}-1\over L}\]
  \end{proof}
@@ -2096,17 +2096,32 @@ How to analyze numerical methods:
   \[y(t+h)=y(t)+hy'(t)+{h^2\over 2}y''(t)+{h^3\over 6}y'''(t)+\dots\]
   \[=y(t)+f(t, y(t))h+(f_1(t, y(t))+f(t, y(t))f_2(t, y_t)){h^2\over 2}+(f_{11}+ff_{12}+(f_1+ff_2)f_2+f(f_{12}+ff_{22})){h^3\over 6}+\dots\]
   \[z(t+h)=y(t)+hf(t+{h\over 2}, y(t)+{h\over 2}f(t, z(t)))\]
-  \[=y(t)+f(t, y(t))h+(f_1+ff_2){h^2\over 2}+(f_{11}+2f_{12}f+f_{22}f^2){h^3\over 6}+\dots\]
+  \[=y(t)+f(t, y(t))h+(f_1+ff_2){h^2\over 2}+(f_{11}+2f_{12}f+f_{22}f^2){h^3\over 8}+\dots\]
+ \newpage
   So
-  \[y(t+h)-z(t+h)=O(h^3)\]
+  \[|y(t+h)-z(t+h)|=O(h^3)\]
   It is consistent with order of accuracy $2$.
-\item 
-
-
+\item If $f$, $f_1$, $f_2$, $f_{11}$, $f_{12}$, $f_{22}$ are all bounded, then there is uniform constant $K$ such that
+  \[|y(t+h)-z(t+h)|\leq Kh^3\]
+\item $\Phi(t, y)=f(t+{h\over 2}, z(t)+{h\over 2}f(t, z(t)))$, hence it is $L+hL^2$-Lipschitz.
+\item Hence in this case, by Theorem~\ref{global}, 
+  \[|y(t)-z(t)|\leq Kh^2(e^{(L+hL^2)t}-1)\]
 \end{enumerate}
 
-  
+\newpage
 
+Exercise: Consider $y'=y\cos(t)$, $y(0)=1$.
+\begin{enumerate}
+\item Find $A$, $B$ such that the linear multistep method
+  \[z(t+2h)=z(t)+Ahf(t, z(t))+Bhf(t+h, z(t+h))\]
+  is consistent.
+\item Find $A$, $B$ such that the linear multistep method has order of accuracy $2$.
+
+\newpage
+
+\item Estimate $y(h)$ using Euler's method, then $y(2h)$ using this linear multistep method.
+\item Find the region of absolute stability of this linear multistep method.
+\end{enumerate}
 
 \newpage
 
