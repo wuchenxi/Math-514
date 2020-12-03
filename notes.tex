@@ -1755,7 +1755,7 @@ This is when $t=1$, $h=0.1$ (See \url{https://github.com/wuchenxi/Math-514/blob/
 \begin{itemize}
 \item To get consistency, let $\sigma(z)=\sum_{j=0}^k\beta_jz^j$ be the {\bf second characteristic polynomial}. When $f$ is smooth, $s<<1$, $f(nh+s, y(nh+s))=f(nh, y(nh))+O(s)$, $y(nh+s)=y(nh)+sf(nh, y(nh))+O(s^2)$. To make method consistent, we want to make sure that if we put $y((n+j)h)$ in place of $z((n+j)h)$, the left hand side and right hand side are off by $o(h)$, hence
   \[\sum_i\alpha_i+\sum_ii\alpha_if(nh, y(nh))h=h\sum_i\beta_if(nh, y(nh))+O(h^2)\]
-  So $\rho(1)=\sum_i\alpha_i=0$, $\rho'(0)=\sum_ii\alpha_i=\sum_i\beta_i=\sigma(1)$.
+  So $\rho(1)=\sum_i\alpha_i=0$, $\rho'(1)=\sum_ii\alpha_i=\sum_i\beta_i=\sigma(1)$.
 \item All the methods obtained via Lagrange interpolation are consistent, by looking at $f=1$.
 \item To get order of accuracy, carry out the same argument as above but do higher order power expansion for $y(nh+s)$ and $f(nh+s, y(nh+s))$.
 \end{itemize}
@@ -2036,15 +2036,73 @@ A method whose region of absolute stability is the whole left half plane is call
 
 \subsection{Review}
 
+Key idea: estimate $y(h), y(2h), y(3h), \dots$ successively.\\
+
+Methods:
 \begin{enumerate}
 \item Euler's method
-\item \begin{enumerate}
-   \item One step: truncated error, consistency, order of accuracy. All can be calculated using Taylor series.
-   \item Globally: global error, convergence, zero-stability
-   \end{enumerate}
-\item First Generalization of Euler's Method: Method based on quadrature rule (Adams-Bashforth, Adams-Moulton), general Linear Multistep methods
+\item First Generalization of Euler's Method: Method based on quadrature rule (Adams-Bashforth, Adams-Moulton), general Linear Multistep methods 
 \item Second Generalization of Euler's Method: Rouge-Kutta family
-\item Region of absolute stability.
+\end{enumerate}
+
+\newpage
+
+Concepts:
+\begin{enumerate}
+\item Local
+  \begin{enumerate}
+    \item Truncated error
+    \item Consistency
+    \item Order of accuracy
+  \end{enumerate}
+\item Global
+  \begin{enumerate}
+   \item Zero stability
+   \item Convergence
+  \end{enumerate}
+\item Efficiency issue
+  \begin{enumerate}
+   \item Region of absolute stability.
+   \item A-stability.
+  \end{enumerate}
+\end{enumerate}
+
+\newpage
+
+How to analyze numerical methods:
+
+\begin{enumerate}
+\item Locally: Taylor series expansion.
+\item Globally: separate the error created at each step, as in the argument for Euler's method. We can summarize it as below:
+  \begin{thm}(Theorem 12.2 in textbook)
+    If $z((n+1)h)=z(nh)+\Phi(nh, z(nh))$, $z(0)=y(0)$, $|y((n+1)h)-\Phi(y(nh))|\leq Th$, and $\Phi$ is $hL$-Lispchitz with respect to the second parameter. Then
+    \[|z(nh)-y(nh)|\leq T\cdot {e^{nhL}-1\over L}\]
+ \end{thm}
+ \begin{proof}
+   Let $z_k(kh)=y(kh)$, $z_k((n+1)h)=z_k(nh)+\Phi(nh, z_k(nh))$, then
+   \[|z_k(nh)-z_{k+1}(nh)|\leq (1+hL)^{n-k-1}|z_k((k+1)h)-z_{k+1}((k+1)h)|\leq Th(1+hL)^{n-k-1}\]
+   \[|z(nh)-y(nh)|=|z_0(nh)-z_n(nh)|\leq T\cdot {e^{nhL}-1\over L}\]
+ \end{proof}
+\end{enumerate}
+
+\newpage
+
+\begin{exa}Consistency, order of accuracy, and convergence of rk2.\end{exa}
+\[y'=f(t, y), y(0)=y_0\]
+\[z(t+h)=z(t)+hf(t+{h\over 2}, z(t)+{h\over 2}f(t, z(t)))\]
+\begin{enumerate}
+\item Consistency and order of accuracy:
+  Suppose $z(t)=y(t)$, then
+  \[y(t+h)=y(t)+hy'(t)+{h^2\over 2}y''(t)+{h^3\over 6}y'''(t)+\dots\]
+  \[=y(t)+f(t, y(t))h+(f_1(t, y(t))+f(t, y(t))f_2(t, y_t)){h^2\over 2}+(f_{11}+ff_{12}+(f_1+ff_2)f_2+f(f_{12}+ff_{22})){h^3\over 6}+\dots\]
+  \[z(t+h)=y(t)+hf(t+{h\over 2}, y(t)+{h\over 2}f(t, z(t)))\]
+  \[=y(t)+f(t, y(t))h+(f_1+ff_2){h^2\over 2}+(f_{11}+2f_{12}f+f_{22}f^2){h^3\over 6}+\dots\]
+  So
+  \[y(t+h)-z(t+h)=O(h^3)\]
+  It is consistent with order of accuracy $2$.
+\item 
+
+
 \end{enumerate}
 
   
