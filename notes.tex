@@ -2097,7 +2097,7 @@ How to analyze numerical methods:
   Suppose $z(t)=y(t)$, then
   \[y(t+h)=y(t)+hy'(t)+{h^2\over 2}y''(t)+{h^3\over 6}y'''(t)+\dots\]
   \[=y(t)+f(t, y(t))h+(f_1(t, y(t))+f(t, y(t))f_2(t, y_t)){h^2\over 2}+(f_{11}+ff_{12}+(f_1+ff_2)f_2+f(f_{12}+ff_{22})){h^3\over 6}+\dots\]
-  \[z(t+h)=y(t)+hf(t+{h\over 2}, y(t)+{h\over 2}f(t, z(t)))\]
+  \[z(t+h)=y(t)+hf(t+{h\over 2}, y(t)+{h\over 2}f(t, y(t)))\]
   \[=y(t)+f(t, y(t))h+(f_1+ff_2){h^2\over 2}+(f_{11}+2f_{12}f+f_{22}f^2){h^3\over 8}+\dots\]
   So
   \[|y(t+h)-z(t+h)|=O(h^3)\]
@@ -2105,9 +2105,9 @@ How to analyze numerical methods:
 \newpage
 \item If $f$, $f_1$, $f_2$, $f_{11}$, $f_{12}$, $f_{22}$ are all bounded, then there is uniform constant $K$ such that
   \[|y(t+h)-z(t+h)|\leq Kh^3\]
-\item $\Phi(t, y)=f(t+{h\over 2}, z(t)+{h\over 2}f(t, z(t)))$, hence it is $L+hL^2$-Lipschitz.
+\item $\Phi(t, y)=f(t+{h\over 2}, z(t)+{h\over 2}f(t, z(t)))$, hence it is $L+hL^2/2$-Lipschitz.
 \item Hence in this case, by Theorem~\ref{global}, 
-  \[|y(t)-z(t)|\leq Kh^2(e^{(L+hL^2)t}-1)=O(h^2)\]
+  \[|y(t)-z(t)|\leq Kh^2{e^{(L+hL^2/2)t}-1\over L+hL^2/2}=O(h^2)\]
 \end{enumerate}
 
 \newpage
@@ -2116,15 +2116,21 @@ Exercise: Consider $y'=y\cos(t)$, $y(0)=1$.
 \begin{enumerate}
 \item Find $A$, $B$ such that the linear multistep method
   \[z(t+2h)=z(t)+Ahf(t, z(t))+Bhf(t+h, z(t+h))\]
-  is consistent.
-\item Find $A$, $B$ such that the linear multistep method has order of accuracy $2$.
-
+  is consistent. (Answer: $A+B=2$)
+\item Find $A$, $B$ such that the linear multistep method has order of accuracy $2$. (Answer:
+  \[y(t+2h)=y(t)+f\cdot 2h+(f_1+ff_2)(2h)^2/2+\dots\]
+\[z(t+2h)=y(t)+Ahf+Bh(f+h(f_1+ff_2))+\dots\]
+  Hence$A=0$, $B=2$)
+  
 \newpage
 
-\item Estimate $y(h)$ using Euler's method, then $y(2h)$ using this linear multistep method.
+\item Estimate $y(h)$ using Euler's method, then $y(2h)$ using this linear multistep method. (Answer: $z(h)=1+h$, $z(2h)=1+Ah+Bh(1+h)\cos(h)$.)
 \item Find the region of absolute stability of this linear multistep method, using the fact (from linear algebra) that iterative relation
   \[a_{n+2}=ca_{n+1}+da_n\]
-  has all solutions converging to $0$ iff all roots of $z^2-(cz+d)$ has absolute value less than $1$. 
+  has all solutions converging to $0$ iff all roots of $z^2-(cz+d)$ has absolute value less than $1$. (Answer: apply the algorithm to $y'=\lambda y$, we get
+  \[z((n+2)h)=z(nh)+Ah\lambda z(nh)+Bh\lambda z((n+1)h)\]
+  so $h\lambda$ is in region of absolute stability iff $z^2-Bh\lambda z-(1+Ah\lambda)=0$ has all roots inside the open unit circle, i.e.
+  \[|{Bh\lambda\pm\sqrt{B^2h^2\lambda^2+4+4Ah\lambda}\over 2}|<1\]
 \end{enumerate}
 
 \newpage
