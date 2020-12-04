@@ -1545,7 +1545,7 @@ Now let's estimate global error at time $t=nh$. Let $z_k(nh)$, $n\geq k$, be
 (Triangle inequality)
 \[\leq \sum_{k=0}^{n-1}e^{Lh(n-k-1)}|z_k((k+1)h)-z_{k+1}((k+1)h)|\]
 (The Lemma from previous page)
-\[\leq \sum_{k=0}^{n-1}Ch^2 e^{L(n-k-1)h}\leq {Ch^2(e^{Lnh}-1)\over e^h-1}\]
+\[\leq \sum_{k=0}^{n-1}Ch^2 e^{L(n-k-1)h}\leq {Ch^2(e^{Lnh}-1)\over e^{Lh}-1}\]
 (Bound on truncated error)\\
 So
 \begin{thm}
@@ -1595,7 +1595,7 @@ then the global error of Euler's method at time $nh$ converges to zero at $O(h)$
   \[=|{\sin(y)\cos(y)h\over 2!}|\leq Ch\]
   What is the number $C$?
 \item $\sin(y)$ is $L$-Lipschitz. In other words, $|\sin(a)-\sin(b)|\leq L|a-b|$ for all $a, b$. What's a valid $L$?
-\item Now the argument from last lecture shows that the global error bound at time $t=nh$ is ${Ch^2(e^{Lt}-1)\over e^h-1}$. 
+\item Now the argument from last lecture shows that the global error bound at time $t=nh$ is ${Ch^2(e^{Lt}-1)\over e^{Lh}-1}$. 
 \item Let $t=1$, $h=0.1$, Euler's method get $z(1)=1.95109$. True answer is $y(1)=1.95629$. Error bound as calculated from above, using $C=1/4, L=1$, is $0.04084$.
 \end{enumerate}
 
@@ -2036,6 +2036,8 @@ A method whose region of absolute stability is the whole left half plane is call
 
 \subsection{Review}
 
+\[y'=f(t, y), y(0)=y_0\]
+
 Key idea: estimate $y(h), y(2h), y(3h), \dots$ successively.\\
 
 Methods:
@@ -2097,15 +2099,15 @@ How to analyze numerical methods:
   \[=y(t)+f(t, y(t))h+(f_1(t, y(t))+f(t, y(t))f_2(t, y_t)){h^2\over 2}+(f_{11}+ff_{12}+(f_1+ff_2)f_2+f(f_{12}+ff_{22})){h^3\over 6}+\dots\]
   \[z(t+h)=y(t)+hf(t+{h\over 2}, y(t)+{h\over 2}f(t, z(t)))\]
   \[=y(t)+f(t, y(t))h+(f_1+ff_2){h^2\over 2}+(f_{11}+2f_{12}f+f_{22}f^2){h^3\over 8}+\dots\]
- \newpage
   So
   \[|y(t+h)-z(t+h)|=O(h^3)\]
   It is consistent with order of accuracy $2$.
+\newpage
 \item If $f$, $f_1$, $f_2$, $f_{11}$, $f_{12}$, $f_{22}$ are all bounded, then there is uniform constant $K$ such that
   \[|y(t+h)-z(t+h)|\leq Kh^3\]
 \item $\Phi(t, y)=f(t+{h\over 2}, z(t)+{h\over 2}f(t, z(t)))$, hence it is $L+hL^2$-Lipschitz.
 \item Hence in this case, by Theorem~\ref{global}, 
-  \[|y(t)-z(t)|\leq Kh^2(e^{(L+hL^2)t}-1)\]
+  \[|y(t)-z(t)|\leq Kh^2(e^{(L+hL^2)t}-1)=O(h^2)\]
 \end{enumerate}
 
 \newpage
@@ -2120,7 +2122,9 @@ Exercise: Consider $y'=y\cos(t)$, $y(0)=1$.
 \newpage
 
 \item Estimate $y(h)$ using Euler's method, then $y(2h)$ using this linear multistep method.
-\item Find the region of absolute stability of this linear multistep method.
+\item Find the region of absolute stability of this linear multistep method, using the fact (from linear algebra) that iterative relation
+  \[a_{n+2}=ca_{n+1}+da_n\]
+  has all solutions converging to $0$ iff all roots of $z^2-(cz+d)$ has absolute value less than $1$. 
 \end{enumerate}
 
 \newpage
