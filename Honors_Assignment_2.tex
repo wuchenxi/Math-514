@@ -71,13 +71,27 @@
 
 1. (Exercise 7.13) Show that the composite Trapezium rule always give accurate answer to $\int_0^{2\pi}\sin(x)dx$.\\  
 
-2. (Exercise 10.7) Let $[a, b]=[-1, 1]$, let $p_{n-1}$ be the degree $n-1$ Legendre polynomial, and let $I_n$ be the quadrature rule where the quadrature points are roots of $(x^2-1)p_{n-1}(x)$.
+%Answer: The composite trapezium rule with $n$ subintervals is
+%\[I_n={1\over n}\sum_{k=1}^{n-1}\sin({2\pi k\over n})={1\over n}\sum_{k=1}^{n-1}(\sin({2\pi k\over n})+\sin({2\pi(n-k)\over n}))/2\]
+%\[=0=\int_0^{2\pi}\sin(x)dx\]
+
+2. (Exercise 10.7) Let $[a, b]=[-1, 1]$, let $p_{n-1}$ be the degree $n-1$ orthogonal polynomial of weight $1-x^2$, and let $I_n$ be the quadrature rule where the quadrature points are roots of $(x^2-1)p_{n-1}(x)$.
 \begin{itemize}
 \item Show that if $q$ is a polynomial of degree no more than $2n-1$, then $\int_{-1}^1qdx=I_n(q)$.
 \item Show that all quadrature weights are positive.
 \item Suppose $f$ is smooth, find a constant $C$ such that
   \[|\int_{-1}^1fdx-I_n(f)|\leq C\max_{x\in [-1, 1]}|f^{(2n)}(x)|\]
 \end{itemize}
+
+%Answer:\\
+
+%Sorry there is a mistake in the statement of the problem, $p_{n-1}$ need to be of weight $1-x^2$. This problem is cancelled.\\
+
+%\begin{itemize}
+%\item $I_n$ has $n+1$ quadrature points hence gives accurate answer to any polynomial of degree up to $n$. If $q$ is of degree no more than $2n-1$, by long division of polynomials we have $q=(x^2-1)p_{n-1}q_1+r$, where $r$ is of degree at most $n$, and $q_1$ is a polynomial of degree no more than $n-2$.  
+%\
+
+%\end{itemize}
 
 %3. Suppose $f$ is smooth and periodic with period $1$, $|f^{(4)}|\leq 1$. Let $I_n$ be the result of composite trapezium rule for $\int_0^1fdx$ using $n$ subintervals. Find the largest integer $d$, and a number $C$, such that
 %\[|\int_0^1fdx-I_n(f)|\leq {C\over n^d}\]
