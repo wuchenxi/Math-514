@@ -2246,7 +2246,7 @@ The actual error is $0.00972<0.0237$.\\
 
 \newpage
 
-\begin{exa}Consider IVP $y'=f(y)$, $y(0)=y_0$, where $f, f^{(k)}$ are all bounded by $1$. Consider the linear multistep method
+\begin{exa}Consider IVP $y'=f(y)$, $y(0)=y_0$, where $|f|, |f^{(k)}|$ are all bounded by $1$. Consider the linear multistep method
 
   \[z(t+2h)=z(t)+{hf(z(t))\over 3}+{4hf(z(t+h))\over 3}+{hf(z(t+2h))\over 3}\]
     Here $z$ is an approximation of $y$. Find $C$ such that for sufficiently small $h$, if $z(t)=y(t)$, $z(t+h)=y(t+h)$, then
@@ -2268,5 +2268,35 @@ The actual error is $0.00972<0.0237$.\\
   \end{itemize}
   
 \newpage
-  
+
+\begin{exa}Suppose we use quadrature rule to estimate $\int_0^1fdx$, $x_0=-1$, $x_1=0$. Can you find a $x_2$ such that the quadrature rule gives accurate answer for any polynomial of degree $3$?\end{exa}
+
+
+\newpage
+
+\begin{exa}Suppose $f$ and all its partial derivatives are bounded by $1$. Consider IVP: $y'=f(t, y)$, $y(0)=y_0$, and the implicit one-step method
+  \[z(0)=y(0), z((n+1)h)=z(nh)+hf((n+1)h, z((n+1)h))\]
+  \begin{itemize}
+   \item Find the order of accuracy.
+   \item Show that this method is A-stable, i.e. the domain of absolute stability covers the whole left half plane.
+  \end{itemize}
+\end{exa}
+
+\newpage
+
+\begin{exa}Apply Euler's method to the IVP $y'=f(t)$, $y(0)=0$. Bound the error at time $t=1$ using the derivative of $f$ and step size $1/n$.\end{exa}
+
+\newpage
+
+\begin{exa}Consider solving IVP $y'=f(y), y(0)=0$. Here $|f|\leq 1$, $|f'|\leq 1$.
+  \begin{itemize}
+   \item Show that $y(t+h)=y(t)+\int_t^{t+h}f(y(s))ds$.
+   \item Write down the Hermite interpolation of $f(y(s))$ using interpolation point $x_0=t$.
+   \item Integrate this Hermite interpolation, and make a numerical method based on this integration.
+   \item Find the order of accuracy of this method. Bound its truncated error.
+  \end{itemize}
+
+\end{exa}
+
+
 \end{document}
