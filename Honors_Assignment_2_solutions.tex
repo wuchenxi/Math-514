@@ -1,0 +1,142 @@
+\documentclass[20pt]{article} % USenglish for autoref
+\usepackage[paper=screen, centering, papersize=20cm]{geometry}
+\usepackage{cmap}		% to search and copy ligatures
+\usepackage[utf8]{inputenc}	% for Linux computer and Mac
+%\usepackage[latin1]{inputenc}	% für Windows computer
+\usepackage[T1]{fontenc}	% to search for ligatures in the pdf
+\usepackage[USenglish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{graphicx}
+%\usepackage{stmaryrd}		% for \mapsfrom
+\usepackage{aliascnt}		% for Aliascounter so that autoref gives the thms the right names
+\usepackage[pdfborder={0 0 0}]{hyperref}   % if you want to have math environment in captions you have to use \texorpdfstring{$x^2$}{x2}; without frame around the links
+\usepackage[figure]{hypcap}		% to make autoref link to figures and not the captions of figures
+%\usepackage{paralist}		% for compactitem
+\usepackage{mathtools}		% for \coloneqq
+\usepackage[]{todonotes}	% use option disable to disable all the todos
+\usepackage{float}
+\usepackage{lipsum}
+\theoremstyle{break}
+\newtheorem{definition}{Definition}[section]  
+\newtheorem{exa}[definition]{Example}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{lem}[definition]{Lemma}
+\newtheorem{conj}[definition]{Conjecture}
+\newtheorem{quest}[definition]{Research question}
+\newtheorem{thm}[definition]{Theorem}  
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{rem}[definition]{Remark}
+
+
+\renewcommand{\labelenumi}{(\roman{enumi})} % roman numbers in enumerations
+
+\usepackage{graphicx,tikz} % Allows including images
+
+\usetikzlibrary{calc,decorations.markings}
+\usetikzlibrary{shapes,snakes}
+
+\DeclareMathOperator{\Aff}{Aff}
+\DeclareMathOperator{\der}{der}
+\DeclareMathOperator{\Trans}{Trans}
+\DeclareMathOperator{\dir}{dir}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\NN}{\mathbb{N}}
+
+
+%For L Cal and L Twidle:
+\newcommand{\LC}{\mathcal{L}} 
+\newcommand{\LT}{\widetilde{\mathcal{L}}}
+
+%For X bar
+\newcommand{\XB}{\overline{X}}
+
+%For the real and complex numbers
+\newcommand{\RR}{\mathbb{R}} 
+\newcommand{\CC}{\mathbb{C}} 
+
+
+\newcommand{\remark}[2][]{\todo[color=green!50, #1]{#2}}
+
+\title{Honor's Assignment 2}
+
+
+\begin{document}
+\maketitle
+
+1. (Exercise 7.13) Show that the composite Trapezium rule always give accurate answer to $\int_0^{2\pi}\sin(x)dx$.\\  
+
+Answer: The composite trapezium rule with $n$ subintervals is
+\[I_n={1\over n}\sum_{k=1}^{n-1}\sin({2\pi k\over n})={1\over n}\sum_{k=1}^{n-1}(\sin({2\pi k\over n})+\sin({2\pi(n-k)\over n}))/2\]
+\[=0=\int_0^{2\pi}\sin(x)dx\]
+
+2. (Exercise 10.7) Let $[a, b]=[-1, 1]$, let $p_{n-1}$ be the degree $n-1$ orthogonal polynomial of weight $1-x^2$, and let $I_n$ be the quadrature rule where the quadrature points are roots of $(x^2-1)p_{n-1}(x)$.
+\begin{itemize}
+\item Show that if $q$ is a polynomial of degree no more than $2n-1$, then $\int_{-1}^1qdx=I_n(q)$.
+\item Show that all quadrature weights are positive.
+\item Suppose $f$ is smooth, find a constant $C$ such that
+  \[|\int_{-1}^1fdx-I_n(f)|\leq C\max_{x\in [-1, 1]}|f^{(2n)}(x)|\]
+\end{itemize}
+
+Answer:\\
+
+\begin{itemize}
+\item $I_n$ has $n+1$ quadrature points hence gives accurate answer to any polynomial of degree up to $n$. If $q$ is of degree no more than $2n-1$, by long division of polynomials we have $q=(x^2-1)p_{n-1}q_1+r$, where $r$ is of degree at most $n$, and $q_1$ is a polynomial of degree no more than $n-2$. Hence $I_n(q)=I_n(r)=\int_{-1}^1rdx=\int_{-1}^1qdx$.  
+\item The $j$-th quadrature weight is
+  \[w_j=\int_{-1}^1 {\prod_{i\not=j}(x-x_i)\over \prod_{i\not=j}(x_j-x_i)}dx\]
+  If $j=0$ or $j=n$, the function being integrated is non negative, hence $w_j>0$. Now suppose $0<j<n$, then by calculation,
+  \[w_j=\int_{-1}^1{x^2-1\over x_j^2-1}\cdot {\prod_{i\not=j, 1<i<n}(x-x_i)^2\over \prod_{i\not=j, 1<i<n}(x_j-x_i)^2}dx\]
+  Which are all positive.
+\item Let $p$ be the polynomial of degree no more than $2n-1$ such that $p(x_i)=f(x_i)$, and for all $1<i<n$, $p'(x_i)=f'(x_i)$. Then by a similar argument to the error bound of Hermite interpolation polynomials we have
+  \[|f(x)-p(x)|\leq \max|f^{(2n)}|{(1-x^2)\prod_{1<i<n}(x-x_i)^2\over (2n)!}\]
+  So
+  \[C=\int_{-1}^1 {(1-x^2)\prod_{1<i<n}(x-x_i)^2\over (2n)!}dx\]
+\end{itemize}
+
+%3. Suppose $f$ is smooth and periodic with period $1$, $|f^{(4)}|\leq 1$. Let $I_n$ be the result of composite trapezium rule for $\int_0^1fdx$ using $n$ subintervals. Find the largest integer $d$, and a number $C$, such that
+%\[|\int_0^1fdx-I_n(f)|\leq {C\over n^d}\]
+%Hint: You can do it using Hermit cubic spline. The integral of the linear spline is the result from composite trapezium rule, show that this integral is the same as the integral of the Hermit cubic spline.\\
+
+3. Consider the initial value problem $y'=\sin(y)$, $y(0)=1$.
+
+\begin{itemize}
+\item Write down the formula for two step Adams-Bashforth.
+\item Show that the two step Adams-Bashforth has order of accuracy $2$ for this problem.
+\item Suppose we use starting points $z(0)=1$, $z(h)=1+h\sin(1)$ to carry out Adams-Bashforth till time $t=nh=1$. Find number $C$ such that
+  \[|z(1)-y(1)|\leq Ch^2\]
+\end{itemize}
+
+Answer:
+
+\begin{itemize}
+\item The quadrature weights for $\int_{t+h}^{t+2h}$, using $x_0=t$, $x_1=t+h$, are
+  \[w_0=\int_{t+h}^{t+2h}{(s-t-h)\over -h}ds=-h/2\]
+  \[w_1=\int_{t+h}^{t+2h}{(s-t)\over h}ds=3h/2\]
+  So the 2nd order Adams-Bashforth is
+  \[z(t+2h)-z(t+h)=h({3\over 2}f(t+h, z(t+h))-{1\over 2}f(t, z(t)))\]
+\item This can be done by doing power series expansion on both sides, or via the error formula for quadrature rules.
+\item Suppose $z_k(nh)$ satisfies
+  \[z_k(nh)=\begin{cases}y(nh) & n\leq k\\ z_k((n-1)h)+{3h\over 2}\sin(z_k((n-1)h))-{h\over 2}\sin(z_k((n-2)h)) & n>k, n\geq 2\\ 1+h & n=1, k=0 \end{cases}\]
+  Then by analyzing the truncated error for Euler's and Adams-Bashforth methods, we get
+  \[|z_k((k+1)h)-z_{k+1}((k+1)h)|=|z_k((k+1)h)-y((k+1)h)|\leq \begin{cases}{h^2\over 2} & k=0 \\ {5h^3\over 6} & k>0\end{cases}\]
+  You may be able to find better bounds.\\
+
+  Now we prove by induction on $m$ that $|z_k((k+1+m)h)-z_{k+1}((k+1+m)h)|\leq (1+2h)^m|z_k((k+1)h)-z_{k+1}((k+1)h)|$: when $m=0$ or $m=1$ one can verify it directly. If $m>1$, the left hand side is bounded by
+  \[|z_k((k+m)h)-z_{k+1}((k+m)h)|+{3h\over 2}|z_k((k+m)h)-z_{k+1}((k+m)h)|+{h\over 2}|z_k((k+m-1)h)-z_{k+1}((k+m-1)h)|\]
+  \[\leq ((1+2h)^{m-1}+{3h\over 2}(1+2h)^{m-1}+{h\over 2}(1+2h)^{m-2})|z_k((k+1)h)-z_{k+1}((k+1)h)|\]
+  \[\leq (1+2h)^m|z_k((k+1)h)-z_{k+1}((k+1)h)|\]
+  So
+  \[|z(nh)-y(nh)|\leq \sum_k|z_k(nh)-z_{k+1}(nh)|\]
+  \[\leq\sum_{k=0}^{n-1}(1+2h)^{n-k-1}h^2\]
+  \[\leq e^2{h^2\over 2}+{e^2-1\over 2h}{5h^3\over 6}\]
+  \[={11e^2-5\over 12}h^2\]
+\end{itemize}
+
+Sorry for the typo in the previous version of problem 2 and part 3 of problem 3. They won't be counted.
+
+\end{document}
