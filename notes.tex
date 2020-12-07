@@ -2260,12 +2260,13 @@ The actual error is $0.00972<0.0237$.\\
     \[y(t+2h)=y(t)+\int_0^{2h}f(y(s))ds\]
     \[=y(t)+{hf(y(t))\over 3}+{4hf(y(t+h))\over 3}+{hf(y(t+2h))\over 3}+E\]
     Here
-    \[|E|\leq{(f\circ y)^{(4)}(2h)^5\over 2880}\]
+    \[|E|\leq{\max|(f\circ y)^{(4)}|(2h)^5\over 2880}\]
     \[\leq {4h^5\over 45}\]
+  \newpage
   \item Now, by assumption,
-    \[|y(t+2h)-z(t+2h)|\leq h|y(t+2h)-z(t+2h)|+|E|\]
-    So, for example, if $h<1/2$, we have
-    \[|y(t+2h)-z(t+2h)|\leq {8\over 45}h^5\]
+    \[|y(t+2h)-z(t+2h)|\leq {h|y(t+2h)-z(t+2h)|\over 3}+|E|\]
+    So, for example, if $h<1$, we have
+    \[|y(t+2h)-z(t+2h)|\leq {2\over 15}h^5\]
   \item Apply the method to $y'=\lambda y$, we get
     \[z(t+2h)=z(t)+{h\lambda z(t)\over 3}+{4h\lambda z(t+h)\over 3}+{h\lambda z(t+2h)\over 3}\]
     So absolute stability implies
