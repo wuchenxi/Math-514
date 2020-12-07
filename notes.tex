@@ -2251,29 +2251,22 @@ The actual error is $0.00972<0.0237$.\\
   \[z(t+2h)=z(t)+{hf(z(t))\over 3}+{4hf(z(t+h))\over 3}+{hf(z(t+2h))\over 3}\]
     Here $z$ is an approximation of $y$. Find $C$ such that for sufficiently small $h$, if $z(t)=y(t)$, $z(t+h)=y(t+h)$, then
     \[|z(t+2h)-y(t+2h)|<Ch^5\]
-    And find the domain of absolute stability for this method.
   \end{exa}
 
   Answer:
   \begin{itemize}
   \item Firstly, by error bound of Simpson's rule,
-    \[y(t+2h)=y(t)+\int_0^{2h}f(y(s))ds\]
+    \[y(t+2h)=y(t)+\int_t^{t+2h}f(y(s))ds\]
     \[=y(t)+{hf(y(t))\over 3}+{4hf(y(t+h))\over 3}+{hf(y(t+2h))\over 3}+E\]
     Here
     \[|E|\leq{\max|(f\circ y)^{(4)}|(2h)^5\over 2880}\]
     \[\leq {4h^5\over 45}\]
-  \newpage
   \item Now, by assumption,
     \[|y(t+2h)-z(t+2h)|\leq {h|y(t+2h)-z(t+2h)|\over 3}+|E|\]
     So, for example, if $h<1$, we have
     \[|y(t+2h)-z(t+2h)|\leq {2\over 15}h^5\]
-  \item Apply the method to $y'=\lambda y$, we get
-    \[z(t+2h)=z(t)+{h\lambda z(t)\over 3}+{4h\lambda z(t+h)\over 3}+{h\lambda z(t+2h)\over 3}\]
-    So absolute stability implies
-    \[(1-h\lambda/3)z^2-(4h\lambda/3)-(1+h\lambda/3)\]
-    has all roots inside the unit circle.
   \end{itemize}
-
+  
 \newpage
   
 \end{document}
