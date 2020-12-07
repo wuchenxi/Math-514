@@ -1257,7 +1257,7 @@ Key ideas:
 \begin{itemize}
 \item By change of variable,
   \[I={\pi\over 2}\int_{-1}^1{1\over\sqrt{\cos (\pi x/2)}}dx\]
-\item Let $w=(1-x^2)^{-1/2}$, $f={(1-x^2)^{-1/2}\over\sqrt{\cos (\pi x/2)}}$. Then $I=\int fwdx$.
+\item Let $w=(1-x^2)^{-1/2}$, $f={(1-x^2)^{1/2}\over\sqrt{\cos (\pi x/2)}}$. Then $\int_{-1}^1{1\over\sqrt{\cos (\pi x/2)}}dx=\int fwdx$.
 \item Now do Chebyshev-Gauss formula for $f$. Suppose $n=2$, then the quadrature points, which are the roots of $T_3=\cos(3\cos^{-1}x)$, are $0, \pm{\sqrt{3}\over 2}$.
 \item The quadrature weights are
   \[w_1=\int_{-1}^1{(x^2-3/4)/(-3/4)\over\sqrt{1-x^2}}dx=\pi/3\]
@@ -2170,5 +2170,109 @@ Rewrite the differential equation into a {\bf variational problem}, which is min
 Now pick values of $z(i/n)$, such that the linear spline $g$ using $x_i$ minimizes $\int_0^1g'^2-g^2dx$.
 
 When $n=3$, this gives us $z(1/3)=3025/7791$, $z(2/3)=5720/7791$. Error is about $0.0007$.
+
+\newpage
+
+\section{Final review}
+{\footnotesize
+\begin{enumerate}
+  \item Interpolation
+  \begin{enumerate}
+   \item Lagrange and Hermite interpolation
+   \item Uniqueness
+   \item Error Estimate
+  \end{enumerate}
+\item Orthogonal Polynomials
+  \begin{enumerate}
+  \item $p_d$ is a degree $d$ orthogonal polynomial of weight $w$ on $[a, b]$, iff for any polynomial $q$ of degree no more than $d-1$, $\int_a^bwp_dqdx=0$. 
+    \item Gram-Schmidt process
+   \item Example: Legendre and Chebyshev polynomials.
+   \end{enumerate}
+ \item Numerical integration
+   \begin{enumerate}
+   \item Quadrature rule
+     \begin{enumerate}
+     \item Error estimate
+     \item Newton-Cotes quadrature. (Special cases: trapezium rule, Simpson's rule)
+       \begin{enumerate}
+        \item Improved error estimate for $n$ even. (Special case: error bound for Simpson's rule)
+        \end{enumerate}
+     \item Gauss quadrature (Special case: Gauss-Legendre quadrature)
+       \begin{enumerate}
+        \item Error bound
+        \item Positive weights
+        \item Convergence
+        \end{enumerate}
+     \end{enumerate}
+    \item Composite methods
+   \end{enumerate}
+ \item Numerical solution for IVP
+   \begin{enumerate}
+   \item Methods
+     \begin{enumerate}
+     \item Linear Multistep Methods (Special case: AB, AM)
+     \item Runge-Kutta methods (Special case: RK2, RK4, Heun)
+      \end{enumerate}
+    \item Analysis
+      \begin{enumerate}
+        \item One step: power series expansion w.r.t. $h$
+        \item Global error
+          \begin{enumerate}
+          \item Zero stability and Dahlquist theorem
+          \item One step method: $z(t+h)=z(t)+h\Phi(z(t))$, needs $\Phi$ Lipschitz.
+          \end{enumerate}
+        \item Domain of absolute stability
+       \end{enumerate}
+   \end{enumerate}
+
+\end{enumerate}
+}
+
+\newpage
+
+\begin{exa}Consider the function $f(x)={1\over \pi}\cos(\pi x)$. Find the Hermite interpolation polynomial $p$ with interpolation points at $\pm1/2, \pm 3/2$. Find the error bound at $x=0$ using the error bound of Hermite interpolation.\end{exa}
+
+Answer:
+\[p=-{(x+{3\over 2})(x-{3\over 2})^2(x^2-1/4)^2\over 36}+{(x+{1\over 2})(x-{1\over 2})^2(x^2-{9\over 4})^2\over 4}\]
+\[-{(x-{1\over 2})(x+{1\over 2})^2(x^2-{9\over 4})^2\over 4}+{(x+{3\over 2})(x-{3\over 2})^2(x^2-1/4)^2\over 36}\]
+The error bound at $0$ is
+\[{\max\|f^{(8)}\|\times {1\over 2}^4\times {3\over 2}^4\over 8!}={9\pi^7\over 1146880}\approx 0.0237\]
+The actual error is $0.00972<0.0237$.\\
+
+\begin{rem}When one add two more interpolation points at $\pm (m-{1\over 2})$, the theoretical error bound is multiplied by
+  \[{\pi^4(m-{1\over 2})^4\over (4m-3)(4m-2)(4m-1)(4m)}\approx {\pi^4\over 4^4}<1\]
+  So if we do interpolation at $\pm 1/2, \dots, \pm (m-1/2)$, as $m\rightarrow \infty$ the value of the interpolation polynomial at $x=0$ does converge to $1\over \pi$, though very slowly.
+\end{rem}
+
+\newpage
+
+\begin{exa}Consider IVP $y'=f(y)$, $y(0)=y_0$, where $f, f^{(k)}$ are all bounded by $1$. Consider the linear multistep method
+
+  \[z(t+2h)=z(t)+{hf(z(t))\over 3}+{4hf(z(t+h))\over 3}+{hf(z(t+2h))\over 3}\]
+    Here $z$ is an approximation of $y$. Find $C$ such that for sufficiently small $h$, if $z(t)=y(t)$, $z(t+h)=y(t+h)$, then
+    \[|z(t+2h)-y(t+2h)|<Ch^5\]
+    And find the domain of absolute stability for this method.
+  \end{exa}
+
+  Answer:
+  \begin{itemize}
+  \item Firstly, by error bound of Simpson's rule,
+    \[y(t+2h)=y(t)+\int_0^{2h}f(y(s))ds\]
+    \[=y(t)+{hf(y(t))\over 3}+{4hf(y(t+h))\over 3}+{hf(y(t+2h))\over 3}+E\]
+    Here
+    \[|E|\leq{(f\circ y)^{(4)}(2h)^5\over 2880}\]
+    \[\leq {4h^5\over 45}\]
+  \item Now, by assumption,
+    \[|y(t+2h)-z(t+2h)|\leq h|y(t+2h)-z(t+2h)|+|E|\]
+    So, for example, if $h<1/2$, we have
+    \[|y(t+2h)-z(t+2h)|\leq {8\over 45}h^5\]
+  \item Apply the method to $y'=\lambda y$, we get
+    \[z(t+2h)=z(t)+{h\lambda z(t)\over 3}+{4h\lambda z(t+h)\over 3}+{h\lambda z(t+2h)\over 3}\]
+    So absolute stability implies
+    \[(1-h\lambda/3)z^2-(4h\lambda/3)-(1+h\lambda/3)\]
+    has all roots inside the unit circle.
+  \end{itemize}
+
+\newpage
   
 \end{document}
