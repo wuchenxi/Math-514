@@ -2077,7 +2077,7 @@ How to analyze numerical methods:
 \item Locally: Taylor series expansion.
 \item Globally: separate the error created at each step, as in the argument for Euler's method. We can summarize it as below:
   \begin{thm}\label{global}(Theorem 12.2 in textbook)
-    If $z((n+1)h)=z(nh)+h\Phi(nh, z(nh))$, $z(0)=y(0)$, $|y((n+1)h)-h\Phi(y(nh))|\leq Th$, and $\Phi$ is $L$-Lispchitz with respect to the second parameter. Then
+    If $z((n+1)h)=z(nh)+h\Phi(nh, z(nh))$, $z(0)=y(0)$, $|y((n+1)h)-h\Phi(y(nh))-y(nh)|\leq Th$, and $\Phi$ is $L$-Lispchitz with respect to the second parameter. Then
     \[|z(nh)-y(nh)|\leq T\cdot {e^{nhL}-1\over L}\]
  \end{thm}
  \begin{proof}
