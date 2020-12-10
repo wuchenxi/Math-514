@@ -2271,6 +2271,12 @@ The actual error is $0.00972<0.0237$.\\
 
 \begin{exa}Suppose we use quadrature rule to estimate $\int_0^1fdx$, $x_0=-1$, $x_1=0$. Can you find a $x_2$ such that the quadrature rule gives accurate answer for any polynomial of degree $3$?\end{exa}
 
+Answer: For any $x_2$, the quadrature rule with 3 quadrature points $I_3$ will give accurate answer to any polynomial of degree at most $2$. Let $g_3=x(x+1)(x-x_3)$ (you can also choose any other polynomial of degree 3, e.g. $x^3$), then any polynomial of degree $3$ can be written as $cg_3+h$, where $c$ is a constant and $h$ is a polynomial of degree at most $2$. Hence
+\[0=I_3(f)-\int_0^1fdx\]
+\[=cI_3(g_3)+I_3(h)-c\int_0^1g_3dx-\int_0^1hdx\]
+\[=c(I_3(g_3)-\int_0^1g_3dx)\]
+So we only need to have $I_3(g_3)=\int_0^1g_3dx$. Because $g_3$ is zero at all three quadrature points, this is equivalent to $\int_0^1g_3dx=0$, by calculation $x_3=7/10$.
+
 
 \newpage
 
@@ -2282,21 +2288,60 @@ The actual error is $0.00972<0.0237$.\\
   \end{itemize}
 \end{exa}
 
+Answer: By Taylor series:
+\[y(nh+h)=y(nh)+hy'(nh)+h^2{y''(nh)\over 2}+\dots\]
+\[=y(nh)+hf(nh, y(nh))+{h^2\over 2}(f_t(nh, y(nh))+f(nh, y(nh))f_y(nh, y(nh))+\dots\]
+Now assume $z(nh)=y(nh)$, and do power series expansion for $z(nh+h)$: suppose $z(nh+h)=y(nh)+ah+bh^2+O(h^3)$, then the formula for this implicit method becomes
+\[y(nh)+ah+bh^2+O(h^3)=y(nh)+h(f(nh, y(nh))+f_t(nh, y(nh))h+f_y(nh, y(nh))(ah+bh^2+O(h^3))+O(h^2))\]
+Compare coefficients on both sides, we get
+\[a=f(nh, y(nh))\]
+\[b=f_t(nh, y(nh))+f(nh, y(nh))f_y(nh, y(nh))\]
+So $y(nh+h)-z(nh+h)=O(h^2)$, the order of accuracy is $1$.\\
+
+To see domain of absolute stability, consider equation $y'=\lambda y$, $\lambda\in\mathbb{C}$ and $Re(\lambda)<0$. The method becomes:
+\[z(nh+h)=z(nh)+h\lambda z(nh+h)\]
+Hence the solution converges to $0$ iff $|{1\over 1-h\lambda}|<1$, which is true for all $h>0$ and all $Re(\lambda)<0$. 
+
+
 \newpage
 
 \begin{exa}Apply Euler's method to the IVP $y'=f(t)$, $y(0)=0$. Bound the error at time $t=1$ using the derivative of $f$ and step size $1/n$.\end{exa}
 
+Answer: \begin{itemize}
+\item We can use the error bound for Euler's method discussed in the lecture, which is $Ch{e^L-1\over L}$ where $C$ is ${\max(|f_t|)+\max(|f|)\max(|f_y|)\over 2}={\max|f'|\over 2}$, and $L$ can be any positive number. Now let $L\rightarrow 0$, we get the upper bound ${\max|f'|h\over 2}={\max|f'|\over 2n}$.
+\item Alternatively, we can use Euler's method to get the estimate of $y$ at time $1$, which is
+  \[z(1)=\sum_{i=0}^{n-1}{1\over n}f({i\over n})\]
+  So
+  \[|y(1)-z(1)|=\sum_{i=0}^{n-1}\int_{i/n}^{(i+1)/n}|f(s)-f(i/n)|ds\]
+  \[\leq n{\max|f'|\over 2n^2}={\max|f'|\over 2n}\]
+\end{itemize}
+
 \newpage
 
-\begin{exa}Consider solving IVP $y'=f(y), y(0)=0$. Here $|f|\leq 1$, $|f'|\leq 1$.
+\begin{exa}Consider solving IVP $y'=f(y), y(0)=0$. Here $f\in C^2$, $|f|\leq 1$, $|f'|\leq 1$, $|f''|\leq 1$
   \begin{itemize}
    \item Show that $y(t+h)=y(t)+\int_t^{t+h}f(y(s))ds$.
    \item Write down the Hermite interpolation of $f(y(s))$ using interpolation point $x_0=t$.
    \item Integrate this Hermite interpolation, and make a numerical method based on this integration.
    \item Find the order of accuracy of this method. Bound its truncated error.
   \end{itemize}
-
 \end{exa}
+
+Answer:
+\begin{itemize}
+\item This is fundamental theorem of calculus.
+\item $p(s)=f(y(t))+f(y(t))f'(y(t))(s-t)$
+\item $\int_t^{t+h}=hf(y(t))+{h^2\over 2}f(y(t))f'(y(t))$. So we can approximate the IVP using
+  \[z(t+h)=z(t)+hf(z(t))+{h^2\over 2}f(z(t))f'(z(t))\]
+\item When $z(t)=y(t)$, we have
+  \[y(t+h)=y(t)+hf(y(t))+{h^2\over 2}f(y(t))f'(y(t))+{h^3\over 6}(f(y(s))f'^2(y(s))+f(y(s))f''(y(s)))\]
+  Where $s\in [t, t+h]$.
+  \[z(t+h)=y(t)+hf(y(t))+{h^2\over 2}f(y(t))f'(y(t))\]
+  So the truncated error is bounded by
+  \[|{y(t+h)-z(t+h)\over h}|\leq {\max|f|\max|f'|^2+\max|f|\max|f''|\over 6}h^2=O(h^2)\]
+  So order of accuracy is $2$.
+
+\end{itemize}
 
 
 \end{document}
