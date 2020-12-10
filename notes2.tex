@@ -1,5 +1,5 @@
-\documentclass[20pt]{article} % USenglish for autoref
-\usepackage[paper=screen, centering, papersize=20cm]{geometry}
+\documentclass{article} % USenglish for autoref
+%\usepackage[paper=screen, centering, papersize=20cm]{geometry}
 \usepackage{cmap}		% to search and copy ligatures
 \usepackage[utf8]{inputenc}	% for Linux computer and Mac
 %\usepackage[latin1]{inputenc}	% für Windows computer
@@ -75,8 +75,6 @@
  \item Section 1: 9:55-10:45 am Section 2: 12:05-12:55 pm  
   \item Office hours: 10:45am-noon Monday, Wednesday or by appointment
   \end{itemize}
-
-  \newpage
   
   Recall that in the first half of the semester, we covered the following topics:
   \begin{enumerate}
@@ -93,8 +91,8 @@
   The first topic will be the foundation of the second and third topic.
 
   \newpage
+  
 \tableofcontents
-
 \newpage
   
   \section{Polynomial interpolation (Chapter 6)}
@@ -111,7 +109,6 @@
 
   An application for Hermite interpolation is for approximating smooth curves where the direction of the curve at certain points are also specified.
 
-  \newpage
   
   \subsection{Lagrange interpolation}
   \subsubsection{Existence}
@@ -125,7 +122,6 @@
   Hence, finding $p$ is like solving a system of non homogenous linear equations. Recall from linear algebra, let $e_i$ be the standard basis vector of $\mathbb{R}^{n+1}$ corresponding to $y_i=1$ and $y_j=0$ for all $j\not=i$, then, if we can find some $p_i$ of degree at most $n$ such that $T(p_i)=e_i$, (i.e. $p_i(x_j)=\begin{cases} 1 & i=j\\ 0 &i\not=j\end{cases}$)  then
   \[T(\sum_iy_ip_i)=\sum_iy_ie_i=[y_0, \dots y_n]^T\ .\]
 
-  \newpage
   
   Now we try and find the $p_i$: $p_i(x_j)=0$ for all $j\not=i$, so $(x-x_j)$ must be a factor of $p_i$. So $p_i$ must be something times
   \[\prod_{j\not=i}(x-x_j)\ .\]
@@ -141,7 +137,6 @@
     Then $p(x_k)=\sum_i\left( y_i\cdot {\prod_{j\not=i}(x_k-x_j)\over \prod_{j\not=i}(x_i-x_j)}\right)y_i$. The $k$-th term is $y_k\times 1$ while all other terms are zero, hence the answer is $y_k$.
   \end{proof}
 
-  \newpage
 
   \subsubsection{Uniqueness}
   
@@ -154,7 +149,6 @@
   \begin{proof}
     The first step of the proof is to reduce the problem to the case where $y_i=0$. Suppose $p$ and $q$ are two such polynomials, then $(p-q)(x_i)=0$ for all $i$. So, to prove the theorem, we only need to show that if a polynomial $r=p-q$ of degree at most $n$ vanishes at $n+1$ distinct points, then $r=0$. This fact follows from the ``fundamental theorem of algebra'' and can be proved using long division. Here we provide two other alternative proofs:
 
-    \newpage
     \begin{enumerate}
     \item Approach I: use the mean value theorem in calculus. Firstly we show the following fact:
       \begin{lem}\label{key_lem} If $f \in C^{m-1}$ ($f$ is $m-1$-th order differentiable with $m-1$-th derivative continuous), and $f=0$ at $m$ distinct points, then for any $0\leq k\leq m-1$, $f^{(k)}=0$ at at least $m-k$ points.
@@ -163,14 +157,12 @@
        By mean value theorem, between two consecutive zeros of $f$ there must be a zero of $f'$. Hence $f'$ vanishes at at least $m-1$ points. Now let $f'$ take the role of $f$ and continue the process, we get $f''$ vanishes at at least $m-2$ points, etc. 
       \end{proof}
       Suppose $r$ vanishes at $x_0, \dots, x_n$, and $r$ is of degree $d>0$. Then $r^{(d)}$ is a non zero constant. Apply Lemma~\ref{key_lem} with $m=n+1$ and $k=d$, we see a contradiction. Hence $r=const$, which implies $r=0$.
-      \newpage
   \item Approach II: Let $r=\sum_ja_jx^j$, then $a_j$ are solutions of a system of linear equation $\sum_ja_jx_i^j=0$. However from linear algebra, 
   \[\left|\begin{array}{cccc}1 & 1& \dots & 1\\ x_1 & x_2 &\dots &x_{n+1}\\ \dots & \dots & \dots & \dots \\ x_1^n & x_2^n & \dots & x_{n+1}^n\end{array}\right|=\prod_{i<j}(x_j-x_i)\not=0\]
 Hence $a_j=0$ for all $j$, which implies that $r=0$.  
     \end{enumerate}
   \end{proof}
 
-  \newpage
 
   \subsubsection{Error Estimate}
   
@@ -179,7 +171,6 @@ Hence $a_j=0$ for all $j$, which implies that $r=0$.
   \[f(x)-p(x)={f^{(n+1)}(s)\prod_i(x-x_i)\over (n+1)!}\]
 \end{thm}
 
-\newpage
 
  \begin{proof} When $x=x_i$ it's obvious. Now suppose $x$ is distinct from all $x_i$. Consider the auxiliary function:
   \[G(t)=f(t)-p(t)-(f(x)-p(x))\cdot{\prod_i(t-x_i)\over \prod_i(x-x_i)}\]
@@ -189,7 +180,6 @@ Hence $a_j=0$ for all $j$, which implies that $r=0$.
   \[f(x)-p(x)={f^{(n+1)}(s)\prod_i(x-x_i)\over (n+1)!}\]
 \end{proof}
 
-\newpage
 
 When the set $\{x_i\}$ becomes denser, $\prod_i(x-x_i)$ decreases, and $(n+1)!$ increases. However, when $n\rightarrow \infty$, the Lagrange interpolation polynomial may not converge to $f$ even if $f$ is smooth, if $f^{(n)}$ increases too fast.
 
@@ -208,7 +198,6 @@ Blue line: Lagrange interpolation with 11 points.}
 \end{figure}
 \end{exa}
 
-\newpage
 
 \begin{exa}\label{exa2} $f(x)=1/(1+2(x-2)^2)$, $x_i=5i/n$,  $i=0, 1, 2, \dots n$.
   \begin{figure}[H]
@@ -227,7 +216,6 @@ Blue line: Lagrange interpolation with 11 points.}
 
 The reason that the Lagrange interpolation polynomials in Example \ref{exa1} converges but those in Example \ref{exa2} don't, is that the higher order derivatives of $\cos$ is $\pm \sin$, $\pm \cos$ hence all bounded, while it is not true for the function in Example \ref{exa2}. As a practice, calculate the $k$-th derivative of $1/(1+2(x-2)^2)$ at $x=2$.
 
-\newpage
 
 \subsection{Hermite interpolation polynomial}
 
@@ -248,7 +236,6 @@ Use the same strategy as the Lagrange case, possibly via a few trials and errors
   Similarly, by taking derivative and let $x=x_k$, we can show that $p'(x_k)=z_k$.
   \end{proof}
 
-\newpage
   
 \subsubsection{Uniqueness and Error Estimate}
   
@@ -262,8 +249,6 @@ Use the same strategy as the Lagrange case, possibly via a few trials and errors
   We can also prove $r=0$ using analysis like in Theorem~\ref{uniq_lag}. If $r$ has degree at most $2n+1$, $r'=r=0$ at $n+1$ points, then there must be $n$ other points where $r'=0$. Now suppose $r$ has degree $d>0$. Apply Lemma~\ref{key_lem}, let $m=2n+2$, $k=d$, then we get $r^{(d)}$ vanishes at $2n+2-d$ points, which contradicts with the fact that $r^{(d)}$ is a non zero constant. Hence $r=const$ which implies that $r=0$.
 \end{proof}
 
-\newpage
-
 \begin{thm}\label{err_her} (Theorem 6.4 in textbook) If $f\in C^{(2n+2)}$, there is $s\in [\min\{x_i, x\}, \max\{x_i, x\}]$, such that
   \[f(x)-p(x)={f^{(2n+2)}(s)\prod_i(x-x_i)^2\over (2n+2)!}\]
 \end{thm}
@@ -274,7 +259,6 @@ Use the same strategy as the Lagrange case, possibly via a few trials and errors
   Then $G$ vanishes at the $n+2$ points $x, x_0, \dots x_n$, and $G'$ vanishes at $n+1$ of them $x_0, \dots, x_n$. By the same argument as above, $G'$ vanishes at $n+1$ more points, hence it is zero at at least $2n+2$ points. Now use Lemma~\ref{key_lem} on $G'$ for $m=2n+2$, $k=2n+1$.
 \end{proof}
 
-\newpage
 
 \subsection{Applications}
 \subsubsection{Numerical Differentiation}\label{nd}
@@ -292,7 +276,6 @@ However, this approach is generally unstable. If $f$ is complex analytic one can
 
 Numerical differentiation is useful in optimization or root finding via Newton's method.
 
-\newpage
 
 \subsubsection{Cubic B{\'e}zier curves}
 The {\bf cubic B{\'e}zier curve} is a curve parametrized by cubic functions: $\gamma: [0, 1]\rightarrow \mathbb{R}^2$, $\gamma(t)=(\gamma_1(t), \gamma_2(t))$, where $\gamma_1$ and $\gamma_2$ are both of degree at most $3$, and $\gamma(0)=P_0$, $\gamma'(0)=3(P_1-P_0)$, $\gamma(1)=P_3$, $\gamma'(1)=3(P_3-P_2)$, where $P_0$, $P_1$, $P_2$ and $P_3$ are the four ``control points''.
@@ -307,7 +290,6 @@ To find the formula for cubic B{\'e}zier curve, we can apply the formula for Her
     \draw (0, 2) .. controls (-1, 0) and (1, 3) .. (3, 1);
   \end{tikzpicture}
 \end{figure}
-\newpage
 
 \subsubsection{Linear and Hermite splines (Chapter 11)}
 
@@ -321,7 +303,6 @@ From the Example 2 above we see that polynomial interpolation with high degree i
 \end{definition}
 In other words, use the 2-point Lagrange interpolation for each interval $[x_{i-1}, x_i]$.\\
 
-\newpage
 
 \begin{thm}\label{err_spline_lin} (Theorem 11.1 in textbook)
 Let $f\in C^2$, $h=\max\{x_i-x_{i-1}\}$, $M=\max|f''|$, then for any $x\in [a, b]$, $|f(x)-s_L(x)|\leq {1\over 8}h^2M$.
@@ -339,7 +320,6 @@ The linear spline formula can be alternatively written as $s_L=\sum_if(x_i)\phi_
     (x-x_{i+1})/(x_i-x_{i+1}) & x\in [x_i, x_{i+1}] \\ 0 & otherwise \end{cases}\]
 $\phi_0$ and $\phi_n$ can be written down similarly. As a consequence, $s_L$ lies in the span of $\phi_n$. \\
 
-\newpage
 
 \paragraph{Hermite cubic spline}
 
@@ -396,7 +376,6 @@ One can also find a set of basis functions for $s_H$.
 % The natural cubic spline $s_2$ also lies in a finite dimensional vector space.  When $x_i$ are equally spaced, $x_{i}-x_{i-1}=h$, $j=2, \dots, n-2$, a basis function can be chosen as
 % \[\psi_j(x)=\begin{cases}{1\over 4h^4}\sum_{k=0}^4(-1)^k{4 \choose k}(x-(x_j-(2+k)h))^3 & |x-x_j|<2h \\ 0 & otherwise \end{cases}\]
 
-\newpage
 
 \subsection{Review}
 
@@ -412,7 +391,6 @@ We can see that the Lagrange interpolation polynomial, Hermite interpolation pol
 
 Recall that a set of functions form a vector space if it is closed under addition and scalar multiplication.
 
-\newpage
 
 \subsection{Approximation in normed vector space}
 
@@ -432,7 +410,6 @@ Recall that a set of functions form a vector space if it is closed under additio
   \end{enumerate}
 \end{exa}
 
-\newpage
 
 \begin{definition}
 Let $L=span\{x_1, \dots x_m\}$ be a $m$-dimensional subspace of $V$, $x\in V$. The {\bf best approximation} of $x$ is the element $x'\in L$ that minimizes $\|x-x'\|$.  
@@ -449,7 +426,6 @@ The proof has two steps:
 
 Key idea: if a function is defined on a finite dimensional vector space, continuous, and goes to infinity at infinity, then it has a minimum.
 
-\newpage
 
 Please ignore the proof below if you are not interested.
 
@@ -464,14 +440,12 @@ Please ignore the proof below if you are not interested.
   This implies that if $t'$ is sufficiently small, $F_x(t+t')$ can be arbitrarily close to $F_x(t)$, hence $F_x$ is continuous.
 \end{proof}
 
-  \newpage
   
   Now, let $D_R\subset\mathbb{R}^m=\{t:|t_i|\leq R\text{ for all }i\}$. It is a closed set, hence compact (recall the definition of compactness in your analysis class), hence a continuous function $F_x$ takes minimum at some point $x^*_R$ on $D_R$. We just need to show that if $R$ is large enough, $x^*_R$ is also the minimum of $F_x$.\\
 
   Let $g>0$ be the minimum of $F_0$ on the set $D_1$. Now we set $R_0=(2|x|+1)/g$. Then for any $y$ outside $D_{R_0}$, then $F_x(y)=\|y-x\|\geq \|x\|+1>F_x(0)\geq F_x(x^*_{R_0})$
 \end{proof}
 
-\newpage
 
 \subsection{Stone-Weiersterass theorem}
 
@@ -481,7 +455,6 @@ Please ignore the proof below if you are not interested.
 There are many proofs, some work for more general settings. An easy proof is first use linear spline to approximate $f$, then use polynomials to approximate the basis function (which is a linear combination of absolute values, which can be approximated by $(x^2+\epsilon')^{1/2}$, which can be approximated using Taylor expansion).
 
 
-\newpage
 
 \subsection{Approximation in inner product space}
 
@@ -496,7 +469,6 @@ It's easy to see that the $L^2_w$ norm satisfies:
   \[(f, g)_{1, 2}=\int_a^b f(x)g(x)+f'(x)g'(x)dx\]
 \end{exa}
 
-\newpage
 
 Let $L=span\{x_1,\dots,  x_m\}$, then we can use Gram-Schmidt process to get an orthonormal basis of $L$ under $(\cdot, \cdot)$, called $\{e_1,\dots, e_m\}$. Then we have:
 
@@ -514,7 +486,6 @@ Let $L=span\{x_1,\dots,  x_m\}$, then we can use Gram-Schmidt process to get an 
   And equality is reached only when $x'=x^*$.
 \end{proof}
 
-\newpage
 
 When the inner product is the $L^2_w$ inner product, the integrals in the formula for best approximation will often be calculated numerically (cf. next Section).\\
 
@@ -528,7 +499,6 @@ If $x_i$ are not known to be orthogonal either, the formula becomes
 Where
 \[A_{i,j}=(x_i, x_j)\]
 
-\newpage
 
 \subsection{Orthogonal polynomials}
 
@@ -547,7 +517,6 @@ Where
   \[\phi_j=x^j-\sum_{i=0}^{j-1}{\int_a^b wt^j\phi_i(t)dt\over \int_a^b w\phi_i^2(t)dt}\phi_i(x)\] 
 \end{proof}
 
-\newpage
 
 From linear algebra, we know that the system of orthogonal polynomials is unique up to scaling, since $\phi_j$ is the basis vector of the orthogonal complement of $span\{1, x, \dots, x^{j-1})$ in $span\{1, x, \dots, x^j\}$.\\
 
@@ -555,7 +524,6 @@ From linear algebra, we know that the system of orthogonal polynomials is unique
  \begin{rem}Stone-Weiersterass theorem implies that as degree increases, optimal approximation in $L^2_w([a, b])$ can become arbitrarily accurate. In other words, the orthogonal polynomials form an orthonormal basis of $L^2_w([a, b])$. (Which is NOT a basis in the sense of linear algebra. In algebra there is only finite sum.)
  \end{rem}
 
-\newpage
 
 \begin{exa}
   Let $(a, b)=(-1, 1)$.
@@ -575,7 +543,6 @@ They are polynomials because
 \[-\sin(\cos^{-1}x)\sin((j-2)\cos^{-1}x)\cos(\cos^{-1}x)\]
 \[=xT_{j-1}-(1-x^2)T_{j-2}-x(T_{j-3}-T_{j-1})/2\ .\]
 
-\newpage
 
  They are othogonal, because $j\not=j'$,
 \[\int_{-1}^1 \cos(j\cos^{-1}x)\cos(j'\cos^{-1}x)(1-x^2)^{-1/2}dx\]
@@ -586,7 +553,6 @@ They are polynomials because
 \begin{rem}Furthermore, if $T_j=\cos(j\cos^{-1}x)$, $2^{-j}T_{j+1}$ is the degree $j+1$ monic (leading coefficient being 1) polynomial with the smallest $L^\infty$ norm. This tells us that the term $\prod_i(x-x_i)$ in Theorem~\ref{err_lag} can be minimized (in $L^\infty$) if $x_i$ are chosen as the roots of Chebyshev polynomials, or, in other words, if $\prod_i(x-x_i)=2^{-n}T_{n+1}$. This is proved in Chapter 8 of the textbook.
 \end{rem}
 
-\newpage
 
 \begin{figure}[H]
 \begin{tikzpicture}[yscale=1, xscale=1]
@@ -622,7 +588,6 @@ They are polynomials because
 
 
 
-\newpage
 
 
 \begin{thm}\label{orth_roots}
@@ -642,7 +607,6 @@ This Theorem will be used in the next section when we discuss Gauss's method for
 \item Concept of orthogonal polynomials.
 \end{itemize}
 
-\newpage
 
 \begin{exa} Consider the function $y=e^x$ on $[-1, 1]$.
   \begin{itemize}
@@ -662,7 +626,6 @@ This Theorem will be used in the next section when we discuss Gauss's method for
     \[+e^{-1}\cdot (1+(x+1))\cdot {(x-1)^2\over (-1-1)^2}+e\cdot (1-(x-1))\cdot {(x+1)^2\over (1+1)^2}\]
     \[=(e^{-1}/2)x^3+(e/4-e^{-1}/4)x^2+(e/2-e^{-1})x+e/4+3e^{-1}/4\]
 
-    \newpage
     
     \item Use formula $x^*=\sum_i((x, x_i)/(x_i, x_i))x_i$:
   \[p_2(x)={\int_{-1}^1e^tdt\over \int_{-1}^1 1^2 dt}\cdot 1+{\int_{-1}^1 te^tdt\over \int_{-1}^1 t^2}\cdot x+{\int_{-1}^1(t^2-1/3)e^tdt\over \int_{-1}^1 (t^2-1/3)^2dt}\cdot (x^2-1/3)\]
@@ -671,7 +634,6 @@ This Theorem will be used in the next section when we discuss Gauss's method for
   \[={15e-105e^{-1}\over 4}x^2+3e^{-1}x+{-3e+33e^{-1}\over 4}\]
   \end{itemize}
 
-\newpage
 
 
 \begin{figure}[H]
@@ -686,7 +648,6 @@ This Theorem will be used in the next section when we discuss Gauss's method for
 \caption{Black line: $y=e^x$. Blue line: Lagrange interpolation. Green line: Hermite interpolation. Red line: $L^2$ best approximation}
 \end{figure}
 
-\newpage
 
 
 \section{Numerical Integration (Chapter 7, 10)}
@@ -703,7 +664,6 @@ To estimate the integration.\\
 
 The points $x_i$ are called {\bf quadrature points}, and $w_i$ called {\bf quadrature weights}. The formula still works if some $x_i$ is outside $[a, b]$.
 
-\newpage
 
 \subsection{Newton-Cotes method}
 
@@ -720,7 +680,6 @@ The points $x_i$ are called {\bf quadrature points}, and $w_i$ called {\bf quadr
   The true value is $1-\cos(1)=0.4597$.
 \end{exa}
 
-\newpage
 
 \begin{thm} \label{bound1}(Theorem 7.1 in the textbook)
 The error for the quadrature is bounded by
@@ -729,7 +688,6 @@ The error for the quadrature is bounded by
 
 The proof is follows immediately from the error estimate of Lagrange interpolation. When $x_i$ are Newton-Cotes quadrature, the error bound is $O(\max|f^{(n+1)}|(b-a)^{n+2})$, because when we scale the interval $[a, b]$ by $C$, the function being integrated is scaled by $C^{n+1}$ while the range of the integration is also scaled by $C$.
 
-\newpage
 
 For Newton-Cotes, when $n$ is even (in order words when we have odd number of quadrature points), the error bound can be improved to $\max|f^{(n+2)}|\cdot O((b-a)^{n+3})$ provided $f\in C^{n+2}$:
 
@@ -739,7 +697,6 @@ For Newton-Cotes, when $n$ is even (in order words when we have odd number of qu
 \begin{proof}
   The uniqueness of Lagrange interpolation implies that if $f$ is a polynomial of degree at most $n$, $\int_a^bf(x)dx=I_n(f)$. Now consider the polynomial $g=\prod_i(x-x_i)$. Because $x_i$ are evenly spaced, the graph of $\prod_i(x-x_i)$ is symmetric with respect to the point $(x_{n/2}, 0)$ where $x_{n/2}=(a+b)/2$. So $\int_a^bgdx=0=I_n(g)$. However, any polynomial of degree at most $n+1$ can be written in the form $cg+h$, where $h$ is a polynomial of degree at most $n$. Hence, if $f$ is any polynomial of degree at most $n+1$, $\int_a^bf(x)dx=I_n(f)$.\\
 
-\newpage
   
   Now suppose $f\in C^{n+2}$. Let $x_{n+1}$ be the midpoint of $[x_0, x_1]$, let $p'$ be the Lagrange interpolation polynomial of $f$, then $f-p'$ vanishes at $x_0, \dots, x_n, x_{n+1}$, hence the quadrature formula using $x_0, \dots x_{n+1}$ is $0$. Apply Theorem~\ref{bound1} we get
   \[|\int_a^b(f-p')dx|\leq C_n\max|f^{n+2}|(b-a)^{n+3}\]
@@ -748,7 +705,6 @@ For Newton-Cotes, when $n$ is even (in order words when we have odd number of qu
   Which proves the theorem.
 \end{proof}
 
-\newpage
 
 We can also use mean value theorem to get finer bounds. As an example, when $n=2$, we have
 
@@ -761,9 +717,7 @@ We can also use mean value theorem to get finer bounds. As an example, when $n=2
   \[G_1(t)=\int_{(a+b)/2-t}^{(a+b)/2+t}f(s)ds-2t\cdot(f((a+b)/2-t)/6\]
   \[+2f((a+b)/2)/3+f((a+b)/2+t)/6)\]
   \[G(t)=G_1(t)-({t\over (b-a)/2})^5G_1((b-a)/2)\]
-  Then $G(0)=G((b-a)/2)=G'(0)=G''(0)=0$. So there is $0<c_1<(b-a)/2$ such that $G'(c_1)=0$, $0<c_2<c_1$ such that $G''(c_2)=0$, $0<c_3<c_2$ such that $G'''(c_3)=0$.
-
-\newpage
+  Then $G(0)=G((b-a)/2)=G'(0)=G''(0)=0$. So there is $0<c_1<(b-a)/2$ such that $G'(c_1)=0$, $0<c_2<c_1$ such that $G''(c_2)=0$, $0<c_3<c_2$ such that $G'''(c_3)=0$.\\
 
 By calculation, $G_1'''(c_3)={c_3\over 3}\cdot(f'''((a+b)/2-c_3)-f'''((a+b)/2+c_3))$, so
 \[{c_3\over 3}\cdot(f'''((a+b)/2-c_3)-f'''((a+b)/2+c_3))-{1920\over (b-a)^5}c_3^2G_1((b-a)/2)=0\]
@@ -783,7 +737,6 @@ Now apply mean value theorem for $f'''$ on $[(b+a)/2-c_3, (b+a)/2+c_3]$, we get 
   Now push $d$ towards $c$, which makes $(x-a)(x-b)(x-(a+b)/2)(x-d)$ non positive on $[a, b]$. Now integrate for $x\in [a, b]$ and use integration mean value theorem, we get the theorem.
 \end{proof}
 
-\newpage
 
 \subsection{Composite Method}
 
@@ -796,7 +749,6 @@ For example, if $d=1$, we cut $[a, b]$ into $n$ subintervals and apply trapezium
 If $d=2$, we cut $[a, b]$ into $n/2$ subintervals, and apply simpson's rule on each, we get
 \[{b-a\over 3n}(f(x_0)+4\sum_{i=1}^{n/2}f(x_{2i-1})+2\sum_{i=1}^{n/2-1}f(x_{2i})+f(x_n))\]
 
-\newpage
 
 
 When $f$ is smooth with bounded higher order derivatives, the error estimate for each subinterval is $O(n^{-3})$ and $O(n^{-5})$ using the trapezium and Simpson's rule. Hence, the error composite trapezium and composite Simpson's rules decay like $O(n^{-2})$ and $O(n^{-4})$ respectively.
@@ -813,7 +765,6 @@ When $f$ is smooth with bounded higher order derivatives, the error estimate for
   \[{\cos({1\over 2n})\over 2n\sin({1\over 2n})}=1-{1\over 3}(2n)^{-2}+\dots\]
   So the error decay at $O(n^{-2})$.
 
-\newpage
 
 \item Composite Simpson's rule with $2m+1$ points:
   \[I_m={4\sum_{i=1}^{m}\sin({2i-1\over 2m})+2\sum_{i=1}^{m-1}\sin({i\over m})+sin(1)\over 6m}\]
@@ -823,7 +774,6 @@ When $f$ is smooth with bounded higher order derivatives, the error estimate for
   \[=(1-\cos(1))+O(m^{-4})\]
 \end{itemize}
 
-\newpage
 
 \begin{exa}$\int_{-0.5}^{0.5}\sqrt{1-x^2}dx$. The right answer should be
   \[\sqrt{3}/4+\pi/6=0.9566114774905181\]
@@ -836,7 +786,6 @@ When $f$ is smooth with bounded higher order derivatives, the error estimate for
     \[\sqrt{3/4}/6+1\times 2/3+\sqrt{3/4}/6=0.9553418012614795\]
   \end{enumerate}
 
- \newpage
 \RestyleAlgo{boxruled}
 \LinesNumbered
  \begin{algorithm}[H]
@@ -866,7 +815,6 @@ When $f$ is smooth with bounded higher order derivatives, the error estimate for
 \end{algorithm}
 
 
- \newpage
  
 \begin{lstlisting}[language=Python]
 from math import *
@@ -887,7 +835,6 @@ def composite_simpsons(n, a, b, f):
     return r*(b-a)/3/n
 \end{lstlisting}
 
-\newpage
 
 \begin{tikzpicture}
 	\begin{axis}[
@@ -945,7 +892,6 @@ def composite_simpsons(n, a, b, f):
       
 \end{tikzpicture}
 
-\newpage
 
 If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
 
@@ -1007,7 +953,6 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
     
    Because the derivatives go to infinity at $x$ close to $\pm 1$, both methods only have $O(n^{-1})$ error bound.
 
-   \newpage
 
 \subsection{Friday Review And Examples}
    
@@ -1032,7 +977,6 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
         \item Composite methods
         \end{itemize}
       \end{itemize}
-      \newpage
       Example: $f(x)=\sin(x)$, $x\in [0, \pi]$, $x_0=0, x_1=\pi/2, x_2=\pi$.
       \begin{itemize}
       \item The Lagrange interpolation polynomial is
@@ -1059,7 +1003,6 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
          \end{enumerate}
        \item The actual error is $2\pi/3-2=0.094$.
       \end{itemize}
-      \newpage
       Exercises 1: Let $f(x)=x^3(1-x)$, $x\in [0, 1]$. $x_0=0$, $x_1=c$, $x_2=1$, $c\in (0, 1)$.
       \begin{itemize}
       \item Find the Lagrange interpolation of $f$ at $x_0$, $x_1$, $x_2$.
@@ -1088,11 +1031,9 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
        \item $f(x)=x^2$. $f(x)=|x-0.5|$. 
        \end{itemize}
 
-\newpage
        
        Correction for the lecture on 11/6: We can also estimate the integral by decomposing the interval into $n$ subintervals with the same length, and calculate the sum of the areas of rectangles with those subintervals as base. If the height is taken as the value of the function at end points (i.e. $I={b-a\over n}\sum_{i=0}^{n-1}f(x_i)$), or use the maximum or minimum on the interval as in the definition of Riemann integration, then the error grows as $O(1/n)$ if $f$ is smooth, where $n$ is the number of subintervals, which is worse than composite trapezium rule. However, if the height is taken as the value of the function at midpoints (i.e. $I={b-a\over n}\sum_{i=0}^{n-1}f({x_i+x_{i+1}\over 2})$) the error grows as $O(1/n^2)$ if $f$ is smooth (so it's about as accurate as the trapezium rule).
        
-  \newpage     
   \subsection{Gauss quadrature (Also see Sections 10.2-10.4 in the textbook)}
   Motivation:
   \begin{enumerate}
@@ -1104,9 +1045,8 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
 
   Recall from the definition of Legendre polynomial, if $L_j$ are the Legendre polynomials, then
   \[L_j\perp span\{L_0, L_1, \dots L_{j-1}\}\]
-  Under $L^2([-1, 1])$ norm.
+  Under $L^2([-1, 1])$ norm.\\
 
-  \newpage
 
   \begin{thm}\label{high_poly} Let $I(f)$ be the result of quadrature rule on $[-1, 1]$, using quadrature points  $x_i$, $i=0, \dots, n$, which the roots of $L_{n+1}$. For any polynomial $g$ of degree no more than $2n+1$, $I(g)=\int_{-1}^1gdx$.\end{thm}
 
@@ -1115,9 +1055,8 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
   \[span\{1, x, \dots x^{2n+1}\}=span\{L_0, \dots L_{n+1}, L_{n+1}L_1, \dots, L_{n+1}L_n\}\]
   (A way to see it is by first recognizing that $span\{1, x, \dots x^{2n+1}\}$ has dimension $2n+2$, and show, from definition, that
   \[\{L_0, \dots L_{n+1}, L_{n+1}L_1, \dots, L_{n+1}L_n\}\]
-  is a linearly independent set of $2n+2$ elements (because they all have different degrees) hence must be a basis.)
+  is a linearly independent set of $2n+2$ elements (because they all have different degrees) hence must be a basis.)\\
 
-  \newpage
 
   Because both $I$ and $\int_{-1}^1$ are linear on the vector space consisting of polynomials of degree no more than $2n+1$, and two linear transformations are the same if and only if they are identical on the basis vectors, we only need to prove it when $g$ is $L_j$, $0\leq j\leq n$, as well as when $g$ is $L_jL_{n+1}$, $0\leq j\leq n$.
   \begin{itemize}
@@ -1126,8 +1065,6 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
   \end{itemize}
   \end{proof}
 
-\newpage
-  
   \begin{definition}
   The Gauss-Legendre quadrature points $x_0,\dots, x_n$ on $[a, b]$ is defined as $x_j={a+b\over 2}+c_j{b-a\over 2}$, where $c_j$ is the $j+1$-th root of the $n+1$-th Legendre polynomial. In other words, $x_j$ is the $j+1$-th root of the weight-$1$ orthogonal polynomial on $[a, b]$ with index $n+1$, $\psi_{n+1}$.
 \end{definition}
@@ -1139,9 +1076,8 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
   \end{thm}
 
   \begin{proof}
-    Let $H$ be the Hermite interpolation polynomial of $f$ at $x_i$, then Theorem~\ref{high_poly} implies that $\int_a^bHdx=I(H)=I(f)$. Hence the result follows from the error bound of Hermite interpolation (Theorem~\ref{err_her}).
+    Let $H$ be the Hermite interpolation polynomial of $f$ at $x_i$, then Theorem~\ref{high_poly} implies that $\int_a^bHdx=I(H)=I(f)$. Hence the result follows from the error bound of Hermite interpolation (Theorem~\ref{err_her}).\\
 
-    \newpage
 
   More precisely, if $M$ and $m$ are the upper and lower bound of $f^{(2n+2)}$ on $[a, b]$ respectively, we have
     \[{m\prod_i(x-x_i)^2\over(2n+1)!}\leq f(x)-H(x)\leq {M\prod_i(x-x_i)^2\over(2n+1)!}\]
@@ -1156,7 +1092,6 @@ If we do $[a, b]=[-1, 1]$, with the same function as above, we get:
 As $|b-a|\rightarrow 0$ the error decay at $|b-a|^{2n+3}$, which is better than the $|b-a|^{n+2}$ or $|b-a|^{n+3}$ in Newton-Cotes.
     \end{rem}
   
-    \newpage
 
     \begin{exa} Use $n=1$ Gauss-Legendre quadrature to estimate $\int_0^\pi \sin(x)dx$.
     \end{exa}
@@ -1166,18 +1101,15 @@ As $|b-a|\rightarrow 0$ the error decay at $|b-a|^{2n+3}$, which is better than 
     The second method is by finding a monic quadratic polynomial orthogonal to both $1$ and $x$ under $L^2([0, \pi])$. In other words, we need $a$ and $b$ such that
 \[\int_0^\pi (x^2+ax+b)dx={\pi^3\over 3}+{a\pi^2\over 2}+b\pi=0\]
 \[\int_0^\pi (x^2+ax+b)xdx={\pi^4\over 4}+{a\pi^3\over 3}+{b\pi^2\over 2}=0\]
-Solve for $a$ and $b$ then find the roots.
+Solve for $a$ and $b$ then find the roots.\\
 
-     \newpage
 
     The quadrature weights are 
 \[w_0=\int_0^\pi{x-x_1\over x_0-x_1}dx={x_1\pi-\pi^2/2\over x_1-x_0}=\pi/2=1.5708\]
 \[w_1=\int_0^\pi{x-x_0\over x_1-x_0}dx={\pi^2/2-x_0\pi\over x_1-x_0}=\pi/2=1.5708\]
     So 
     \[I_1(\sin)=w_0\sin(x_0)+w_1\sin(x_1)=1.9358\]
-    Error is $0.064$.
-
-    \newpage
+    Error is $0.064$.\\
 
 Another key property of the Gauss-Legendre quadrature is that all its weights are positive, because we have
 \begin{thm}\label{pos_wt}
@@ -1193,7 +1125,6 @@ Let $h(x)=\prod_{j\not=k}(x_k-x_j)-\prod_{j\not=k}(x-x_j)$, then $\deg(h)=n$, an
 \[\int_a^b\prod_{j\not=k}(x-x_j)(\prod_{j\not=k}(x_k-x_j)-\prod_{j\not=k}(x-x_j))dx=\int_a^b(\psi_{n+1}\cdot{h_1\over c})dx=0\]
 \end{proof}
 
-\newpage
 
 \begin{rem} For comparison, when $n=8$, the Newton-Cotes quadrature weights are not all positive.\end{rem}
 
@@ -1209,7 +1140,6 @@ As a consequence, we have:
 \end{proof}
 If $w_i$ are not all positive, one can not remove the absolute value, hence this may not be true for other quadrature rules.
 
-\newpage  
 
     \begin{rem} The Gauss-Legendre quadrature can be generalized to deal with the problem of estimating $\int_a^bfwdx$ where $w$ is a given weight function not depend on $f$, by replacing Legendre polynomials with other orthogonal polynomials, which are called ``Gauss quadrature''.
     \end{rem}
@@ -1231,7 +1161,6 @@ If $w_i$ are not all positive, one can not remove the absolute value, hence this
 
 The proof is very similar to the Gauss-Legendre case.
 
-\newpage
 
 \subsection{Friday Review and Examples}
 
@@ -1250,7 +1179,6 @@ Key ideas:
 \item Inner product and orthogonal polynomials.
 \end{itemize}
 
-\newpage
 
 \begin{exa}$I=\int_0^\pi{1\over \sqrt{\sin x}}dx$. The correct answer is 5.2441151\end{exa}
 
@@ -1268,7 +1196,6 @@ Key ideas:
 \item The final answer is $5.2439$, difference is $0.00018$.
 \end{itemize}
 
-\newpage
 
 Exercises:
 
@@ -1287,7 +1214,6 @@ Exercises:
 \end{enumerate}
 
 \end{enumerate}
-\newpage
 Answer:
 
 \begin{enumerate}
@@ -1308,13 +1234,11 @@ Answer:
 \end{enumerate}
 \end{enumerate}
 
-\newpage
 
 \subsection{Composite Gauss quadrature (Section 10.5)}
 
 One can combine composite method and Gauss quadrature: divide the interval into $m$ subintervals of equal length, then apply Gauss quadrature on each. For example, if we apply Gauss-Legendre quadrature with $k+1$ quadrature points to each subinterval, when the function is in $C^{2k+2}$, the error decay at a speed of $O(m^{-2k-2})$.
 
-\newpage
 
 \begin{exa} $\int_{-0.5}^{0.5}\sqrt{1-x^2}dx$, using composite Gauss quadrature with $k=1$\end{exa}
 
@@ -1407,7 +1331,6 @@ def composite_gauss(n, a, b, f):
 \end{tikzpicture}
 
 
-\newpage
 
 \subsection{Other topics in numerical integration}
 
@@ -1417,7 +1340,6 @@ Sometimes some quadrature points are pre-determined while others can be chosen s
 
 If there are $n+1$ quadrature points, $k$ of them are predetermined and the rest roots of Legendre polynomial of degree $n+1-k$, the error is bounded by $O((b-a)^{2n+3-k})$. When $n=k=2$ we get Simpson's method.\\
 
-\newpage
 
 \subsubsection{Richardson Extrapolation (Section 7.6, 7.7), won't be in final exam}
 
@@ -1434,7 +1356,6 @@ So ${4I_{2n}-I_n\over 3}$ (which is identical to composite Simpson's rule) has $
 \item Composite method
 \end{itemize}
 
-\newpage
 
 \section{Numerical ODE: IVP (Chapter 12)}
 
@@ -1448,7 +1369,6 @@ Numerical integration can be seen as a special case of IVP of numerical ODE, wit
 
 Strategy: Find some small positive number $h$ as the ``step size'', estimate the value of $y$ at $nh$ for all $n$.\\
 
-\newpage
 
 \subsection{Euler's Method (12.2, 12.3)}
 
@@ -1466,7 +1386,6 @@ $h$ is a small number, $z$ an approximation of $y$ evaluated using:
 \item Under certain assumptions, global error at given time $t$ is controlled by the bound on truncated error (Theorem 12.2 and 12.5 in textbook).
 \end{itemize}
 
-\newpage
 
 \begin{exa}\label{Euler} Euler's method applied to $y'=y$, $y(0)=1$\end{exa}
 
@@ -1485,7 +1404,6 @@ So
 \[T_n={e^{(n+1)h}-e^{nh}(1+h)\over h}=O(h)\]
 So the method is consistent with order of accuracy $1$.\\
 
-\newpage
 
 \begin{tikzpicture}[yscale=2, xscale=8]
   \draw[->] (0, 0) -- (1, 0) node[right] {$x$};
@@ -1504,7 +1422,6 @@ To study global error, we need to understand:
 \item How do error introduced in prior steps grow with time?
 \end{itemize}
 
-\newpage
 
 \begin{itemize}
 \item By definition of derivative, if $t=nh$,
@@ -1519,7 +1436,6 @@ So $T_n=O(h)$, Euler's method is of order of accuracy $1$.
 for some $s\in [t, t+h]$, $f_1$ and $f_2$ are the partial derivative in first and second parameter. So,  if $f$ and its partial derivatives are all bounded, $T$ is uniformly bounded by some $Ch$.
 \end{itemize}
 
-\newpage
 
 Let's now analyze how error grows in Euler's method:
 
@@ -1536,7 +1452,6 @@ Let's now analyze how error grows in Euler's method:
  And \[(1+hL)^{n-m}\leq e^{L(n-m)h}\]
 \end{proof}
 
-\newpage
 
 Now let's estimate global error at time $t=nh$. Let $z_k(nh)$, $n\geq k$, be
 \[z_k(kh)=y(kh)\]
@@ -1557,7 +1472,6 @@ If
 then the global error of Euler's method at time $nh$ converges to zero at $O(h)$. In other words, Euler's method is {\bf convergent}.
 \end{thm}
 
-\newpage
 
 \subsection{Friday Review and Examples}
 
@@ -1570,7 +1484,6 @@ then the global error of Euler's method at time $nh$ converges to zero at $O(h)$
 \end{itemize}
 
 
-\newpage
 
 \begin{exa}Midpoint rule\end{exa}
 \begin{enumerate}
@@ -1583,7 +1496,6 @@ then the global error of Euler's method at time $nh$ converges to zero at $O(h)$
   And the error bound is $\max|f''|(b-a)^3\over 24m^2$.
 \end{enumerate}
 
-\newpage
 
 \begin{exa} $y'=\sin(y)$, $y(0)=1$\end{exa}
 \begin{enumerate}
@@ -1600,7 +1512,6 @@ then the global error of Euler's method at time $nh$ converges to zero at $O(h)$
 \end{enumerate}
 
 
-\newpage
 
 \begin{exa}Consider IVP $y'=f(y)$, $y(0)=y_0$. Suppose $f$ is {\bf real analytic}, i.e. the Taylor series at every point converges at a neighborhood of the point. Suppose $h$ is a small positive number. The theory of ODE tells us that $y$ is also real analytic.\end{exa}
 
@@ -1623,7 +1534,6 @@ Answer:
 \end{enumerate}
 
 
-\newpage
 
 \subsection{Ways to get higher order methods}
 
@@ -1635,7 +1545,6 @@ Firstly some methods based on Lagrange interpolation:
 
 \paragraph{Implicit Methods} One can also use $g(t), g(t-h), \dots, g(t-kh)$ as quadrature point to estimate $\int_{t-dh}^{t}g(s)ds$, then use $y(t)=y(t-dh)+\int_{t-dh}^{t}g(s)ds$. This way $y(t)$ appears on the right hand side and the estimate of $y(t)$ requires solving an equation, hence is called {\bf implicit}.
 
-\newpage
 
 \begin{exa}\begin{itemize}
   \item Explicit method for $d=1$, $k=1$ is Euler's Method.
@@ -1649,7 +1558,6 @@ We can show that it is consistent with order of accuracy $2$.
 \end{itemize}
 \end{exa}
 
-\newpage
 
 \begin{exa}Let's deduce the Adams-Bashforth method for $k=4$.\end{exa}
 
@@ -1666,14 +1574,12 @@ We can show that it is consistent with order of accuracy $2$.
 \end{enumerate}
 
 
-\newpage
 
 An alternative to implicit method is the {\bf predictor-corrector method}: for example, instead of Trapzsium method, we first estimate $z(t)$ using Euler's method, then ``correct'' it using the trapezium rule formula, and get:
 \[z_{p}(t)=z(t-h)+hf(t-h, z(t-h))\]
 \[z(t)=z(t-h)+{h\over 2}(f(t, z_p(t))+f(t-h, z(t-h)))\] 
 This is called {\bf Heun's method}.
 
-\newpage
 
 \begin{exa}
   $y'=y$, $y(0)=1$
@@ -1694,7 +1600,6 @@ This is called {\bf Heun's method}.
 \end{exa}
 
 
-\newpage
 
 \subsubsection{Theory of General Linear Multistep Methods (12.7-12.9)}
 
@@ -1708,7 +1613,6 @@ If $\beta_k=0$ it is explicit, otherwise it is implicit. To start the $k$-step m
 \item We want a linear $k$-step method to be {\bf zero-stable}. In other words, if the equation is $y'=0$, then the $z(nh)$ does not go to infinity as $n\rightarrow\infty$. From the theory in linear difference equations in linear algebra, we know that this is equivalent to the {\bf first characteristic polynomial} $\rho(z)=\sum_{j=0}^k\alpha_jz^j$ having all roots inside the closed unit disc and at most only single roots on the unit circle.
 \item All the method obtained via Lagrange interpolation, including Adams-Moulton and Adams-Bashforth, are zero-stable.
 
-\newpage
 
 \item Why do we need zero-stability? Suppose we let $h\rightarrow 0$ and $t=hn$ remain unchanged, then $n\rightarrow\infty$. If there is no zero stability, error at previous steps will grow indefinitely.
 \end{itemize}
@@ -1721,7 +1625,6 @@ If $\beta_k=0$ it is explicit, otherwise it is implicit. To start the $k$-step m
 \item Then the error created at time $(k+2)h$ is
   \[z_k((k+2)h)-y((k+2)h)=z_k((k+2)h)-z_{k+1}((k+2)h)=O(h^2)\]
 
-\newpage
 \item Now let's see how this error grow with time: Let $w_m=z_k((k+1+m)h)-z_{k+1}((k+1+m)h)$. Then
   \[w_0=0\]
   \[w_1=O(h^2)\]
@@ -1750,7 +1653,6 @@ This is when $t=1$, $h=0.1$ (See \url{https://github.com/wuchenxi/Math-514/blob/
 \end{tikzpicture}
 
 
-\newpage
 
 \begin{itemize}
 \item To get consistency, let $\sigma(z)=\sum_{j=0}^k\beta_jz^j$ be the {\bf second characteristic polynomial}. When $f$ is smooth, $s<<1$, $f(nh+s, y(nh+s))=f(nh, y(nh))+O(s)$, $y(nh+s)=y(nh)+sf(nh, y(nh))+O(s^2)$. To make method consistent, we want to make sure that if we put $y((n+j)h)$ in place of $z((n+j)h)$, the left hand side and right hand side are off by $o(h)$, hence
@@ -1760,7 +1662,6 @@ This is when $t=1$, $h=0.1$ (See \url{https://github.com/wuchenxi/Math-514/blob/
 \item To get order of accuracy, carry out the same argument as above but do higher order power expansion for $y(nh+s)$ and $f(nh+s, y(nh+s))$.
 \end{itemize}
 
-\newpage
 
 For global convergence of linear multistep methods we have the Dahlquist's theorems:
 \begin{itemize}
@@ -1768,7 +1669,6 @@ For global convergence of linear multistep methods we have the Dahlquist's theor
 \item (First Dahlquist barrier) If a linear $k$-step method is 0-stable then the order of accuracy is no more than $k+1$ if $k$ is odd (e.g. Adams-Moulton, by Theorem~\ref{bound1}), $k+2$ if $k$ is even (e.g. $d=k$ implicit, by Theorem~\ref{qbound}), and $k$ if it has to be explicit (e.g. Adams-Bashforth, by Theorem~\ref{bound1}).
 \end{itemize}
 
-\newpage
 
 \subsubsection{Runge-Kutta methods (12.5)}
 
@@ -1782,7 +1682,6 @@ We can rewrite it as
 \[k_2=f(nh+h, z(nh)+hk_1)\]
 \[z((n+1)h)=z(nh)+h({k_1\over 2}+{k_2\over 2})\]
 
-\newpage
 General Runge-Kutta:
 \[k_1=f(nh, z(nh))\]
 \[k_j=f(nh+\alpha_jh, z(nh)+\sum_{i<j}\beta_{ij}hk_i)\]
@@ -1794,7 +1693,6 @@ Some popular choice of parameters:
 \item RK4: $\alpha_2=\alpha_3=\beta_{12}=\beta_{23}=1/2$, $\alpha_4=\beta_{34}=1$, $c_1=c_4=1/6$, $c_2=c_3=1/3$.   
 \end{enumerate}
 
-\newpage
 
 How to check consistency and order of accuracy: Taylor series expansion for $y$ and $f$.
 \begin{exa}Show that Heun's method is consistent and has order of accuracy $2$.\end{exa}
@@ -1816,9 +1714,8 @@ Similarly, rk2 can be shown to have order of accuracy $2$ and rk4 order of accur
 
 Global error bound can then be obtained in a way similar to Euler's method.\\
 
-When using linear multistep methods of order of accuracy $n$, we can calculate the initial values using one-step methods of order $n-1$. This way the error created in the initial steps will be $O(h^n)$ which is comparable with global error of an $n$-th order method.
+When using linear multistep methods of order of accuracy $n$, we can calculate the initial values using one-step methods of order $n-1$. This way the error created in the initial steps will be $O(h^n)$ which is comparable with global error of an $n$-th order method.\\
 
-\newpage
 
 \begin{exa}$y'=\sin(y)$, $y(0)=1$. $h=0.25$, $t=4h=1$.\end{exa}
 True answer is $y(1)=1.9562950$.
@@ -1831,7 +1728,6 @@ True answer is $y(1)=1.9562950$.
   \[z(0.25)=y(0)+h\sin(y(0)+h\sin(y(0))/2)=1.2233867\]
   \[z(0.5)=1.4668103, z(0.75)=1.7167586, z(1)=1.9577257\]
 
-\newpage
 \item Improved Euler's Method+Adams-Bashforth 3rd order
   \begin{enumerate}
   \item Improved Euler's Method for $z(0.25)$ and $z(0.5)$:
@@ -1841,7 +1737,6 @@ True answer is $y(1)=1.9562950$.
     \[z(0.75)=z(0.5)+h({23\over 12}\sin(z(0.5))-{4\over 3}\sin(z(0.25))+{5\over 12}\sin(y(0)))=1.7146269\]
     \[z(1)=1.9553174\]
   \end{enumerate}
-  \newpage
   \item Rouge-Kutta 4th Order:
     \begin{enumerate}
     \item Calculate $z(0.25)$:
@@ -1853,7 +1748,6 @@ True answer is $y(1)=1.9562950$.
      \end{enumerate}
 \end{enumerate}
 
-\newpage
 
 Let $h=1/n$, $n=4, 5, \dots, 20$, the behavior of the global error at $t=1$ is (see \url{https://github.com/wuchenxi/Math-514/blob/main/ivp.py}):\\
 
@@ -1968,7 +1862,6 @@ The dots from low to high are euler, heun, rk2, ab3, rk4.
 
 
 
-\newpage
 
 \subsection{Stiffness and Absolute Stability}
 
@@ -1990,7 +1883,6 @@ Let $A=\left(\begin{array}{cc} -1 & 0 \\ 1 & -100\end{array}\right)$.\\
 \[z(1)=(I_2+0.1A)^{10}\left(\begin{array}{c}1\\1\end{array}\right)\]
 \[=\left(\begin{array}{c}0.3486784401\\ 3451564356.5489765499 \end{array}\right)\]
 
-\newpage
 
 \item Heun's method:
 \[z(1)=(I_2+0.1A+0.005A^2)^{10}\left(\begin{array}{c}1\\1\end{array}\right)\]
@@ -2004,7 +1896,6 @@ Let $A=\left(\begin{array}{cc} -1 & 0 \\ 1 & -100\end{array}\right)$.\\
 
 
 
-\newpage
 
 \begin{itemize}
 \item A system of equations is called stiff, if, after linearization into $y'=Ay$, $A$ has eigenvalues with negative real parts, and the ratio between real parts of eigenvalues can be large.
@@ -2012,7 +1903,6 @@ Let $A=\left(\begin{array}{cc} -1 & 0 \\ 1 & -100\end{array}\right)$.\\
 \item There are other cases of stiffness which are beyond the scope of this course.
 \end{itemize}
 
-\newpage
 
 To deal with stiff equations efficiently, we need numerical methods which does not require a small time scale to get good answers. Usually we use test equation $y'=\lambda y$, $y(0)=1$, where $Re(\lambda)<0$, and the set of values $h\lambda$ that makes $\lim_{n\rightarrow \infty}z(nh)=0$, are called {\bf the region of absolute stability}.
 
@@ -2032,7 +1922,6 @@ To deal with stiff equations efficiently, we need numerical methods which does n
 A method whose region of absolute stability is the whole left half plane is called {\bf A-stable}.
 
 
-\newpage
 
 \subsection{Review}
 
@@ -2047,7 +1936,6 @@ Methods:
 \item Second Generalization of Euler's Method: Rouge-Kutta family
 \end{enumerate}
 
-\newpage
 
 Concepts:
 \begin{enumerate}
@@ -2069,7 +1957,6 @@ Concepts:
   \end{enumerate}
 \end{enumerate}
 
-\newpage
 
 How to analyze numerical methods:
 
@@ -2087,7 +1974,6 @@ How to analyze numerical methods:
  \end{proof}
 \end{enumerate}
 
-\newpage
 
 \begin{exa}Consistency, order of accuracy, and convergence of rk2.\end{exa}
 \[y'=f(t, y), y(0)=y_0\]
@@ -2102,7 +1988,6 @@ How to analyze numerical methods:
   So
   \[|y(t+h)-z(t+h)|=O(h^3)\]
   It is consistent with order of accuracy $2$.
-\newpage
 \item If $f$, $f_1$, $f_2$, $f_{11}$, $f_{12}$, $f_{22}$ are all bounded, then there is uniform constant $K$ such that
   \[|y(t+h)-z(t+h)|\leq Kh^3\]
 \item $\Phi(t, y)=f(t+{h\over 2}, z(t)+{h\over 2}f(t, z(t)))$, hence it is $L+hL^2/2$-Lipschitz.
@@ -2110,7 +1995,6 @@ How to analyze numerical methods:
   \[|y(t)-z(t)|\leq Kh^2{e^{(L+hL^2/2)t}-1\over L+hL^2/2}=O(h^2)\]
 \end{enumerate}
 
-\newpage
 
 Exercise: Consider $y'=y\cos(t)$, $y(0)=1$.
 \begin{enumerate}
@@ -2122,7 +2006,6 @@ Exercise: Consider $y'=y\cos(t)$, $y(0)=1$.
 \[z(t+2h)=y(t)+Ahf+Bh(f+h(f_1+ff_2))+\dots\]
   Hence$A=0$, $B=2$)
   
-\newpage
 
 \item Estimate $y(h)$ using Euler's method, then $y(2h)$ using this linear multistep method. (Answer: $z(h)=1+h$, $z(2h)=1+Ah+Bh(1+h)\cos(h)$.)
 \item Find the region of absolute stability of this linear multistep method, using the fact (from linear algebra) that iterative relation
@@ -2133,7 +2016,6 @@ Exercise: Consider $y'=y\cos(t)$, $y(0)=1$.
   \[|{Bh\lambda\pm\sqrt{B^2h^2\lambda^2+4+4Ah\lambda}\over 2}|<1\]
 \end{enumerate}
 
-\newpage
 
 \section{Boundary Value Problems}
 
@@ -2159,7 +2041,6 @@ Lagrange interpolation using $x_{i-1}$, $x_i$ and $x_{i+1}$ as interpolation poi
 
   When $n=3$, we get $z(1/3)=81/208$, $z(2/3)=153/208$. Error is about $0.0007$.
 
-  \newpage
   
   \subsection{Finite Element Method (Chap. 14)}
   
@@ -2171,10 +2052,8 @@ Now pick values of $z(i/n)$, such that the linear spline $g$ using $x_i$ minimiz
 
 When $n=3$, this gives us $z(1/3)=3025/7791$, $z(2/3)=5720/7791$. Error is about $0.0007$.
 
-\newpage
 
 \section{Final review}
-{\footnotesize
 \begin{enumerate}
   \item Interpolation
   \begin{enumerate}
@@ -2226,9 +2105,6 @@ When $n=3$, this gives us $z(1/3)=3025/7791$, $z(2/3)=5720/7791$. Error is about
    \end{enumerate}
 
 \end{enumerate}
-}
-
-\newpage
 
 \begin{exa}Consider the function $f(x)={1\over \pi}\cos(\pi x)$. Find the Hermite interpolation polynomial $p$ with interpolation points at $\pm1/2, \pm 3/2$. Find the error bound at $x=0$ using the error bound of Hermite interpolation.\end{exa}
 
@@ -2244,7 +2120,6 @@ The actual error is $0.00972<0.0237$.\\
   So if we do interpolation at $\pm 1/2, \dots, \pm (m-1/2)$, as $m\rightarrow \infty$ the value of the interpolation polynomial at $x=0$ does converge to $1\over \pi$, though very slowly.
 \end{rem}
 
-\newpage
 
 \begin{exa}Consider IVP $y'=f(y)$, $y(0)=y_0$, where $|f|, |f^{(k)}|$ are all bounded by $1$. Consider the linear multistep method
 
@@ -2267,7 +2142,6 @@ The actual error is $0.00972<0.0237$.\\
     \[|y(t+2h)-z(t+2h)|\leq {2\over 15}h^5\]
   \end{itemize}
   
-\newpage
 
 \begin{exa}Suppose we use quadrature rule to estimate $\int_0^1fdx$, $x_0=-1$, $x_1=0$. Can you find a $x_2$ such that the quadrature rule gives accurate answer for any polynomial of degree $3$?\end{exa}
 
@@ -2278,7 +2152,6 @@ Answer: For any $x_2$, the quadrature rule with 3 quadrature points $I_3$ will g
 So we only need to have $I_3(g_3)=\int_0^1g_3dx$. Because $g_3$ is zero at all three quadrature points, this is equivalent to $\int_0^1g_3dx=0$, by calculation $x_3=7/10$.
 
 
-\newpage
 
 \begin{exa}Suppose $f$ and all its partial derivatives are bounded by $1$. Consider IVP: $y'=f(t, y)$, $y(0)=y_0$, and the implicit one-step method
   \[z(0)=y(0), z((n+1)h)=z(nh)+hf((n+1)h, z((n+1)h))\]
@@ -2303,7 +2176,6 @@ To see domain of absolute stability, consider equation $y'=\lambda y$, $\lambda\
 Hence the solution converges to $0$ iff $|{1\over 1-h\lambda}|<1$, which is true for all $h>0$ and all $Re(\lambda)<0$. 
 
 
-\newpage
 
 \begin{exa}Apply Euler's method to the IVP $y'=f(t)$, $y(0)=0$. Bound the error at time $t=1$ using the derivative of $f$ and step size $1/n$.\end{exa}
 
@@ -2316,7 +2188,6 @@ Answer: \begin{itemize}
   \[\leq n{\max|f'|\over 2n^2}={\max|f'|\over 2n}\]
 \end{itemize}
 
-\newpage
 
 \begin{exa}Consider solving IVP $y'=f(y), y(0)=0$. Here $f\in C^2$, $|f|\leq 1$, $|f'|\leq 1$, $|f''|\leq 1$
   \begin{itemize}
