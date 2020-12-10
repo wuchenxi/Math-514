@@ -2656,9 +2656,9 @@ And
 \[|f(x)-p(x)|={|-\sin(s)|x^2(x-\pi)^2\over 4!}\leq{x^2(x-\pi)^2\over 24}\]
 
 2. Find two points $x_0$ and $x_1$, such that for any polynomial $f$ of degree no more than $3$,
-\[\int_0^\pi\sin(x)f(x)dx={\pi\over 2}(f(x_0)+f(x_1))\]
+\[\int_0^\pi\sin(x)f(x)dx=f(x_0)+f(x_1)\]
 And find constant $c$ such that if $g\in C^6([0, \pi])$,
-\[|\int_0^\pi\sin(x)g(x)dx-{\pi\over 2}(g(x_0)+g(x_1))|\leq C\max|g^{(6)}|\]
+\[|\int_0^\pi\sin(x)g(x)dx-(g(x_0)+g(x_1))|\leq C\max|g^{(6)}|\]
 
 Answer: These two points are the Gauss quadrature points on interval $[0, \pi]$ with weight function $\sin(x)$, hence must be the root of the degree-2 orthogonal polynomial on $[0, \pi]$ with weight $\sin(x)$. Suppose this polynomial is $p_2=x^2+ax+b$, then
 \[0=\int_0^\pi \sin(x)p_2(x)dx=\pi^2-4+a\pi+2b\]
