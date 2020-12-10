@@ -2135,11 +2135,13 @@ The actual error is $0.00972<0.0237$.\\
     \[=y(t)+{hf(y(t))\over 3}+{4hf(y(t+h))\over 3}+{hf(y(t+2h))\over 3}+E\]
     Here
     \[|E|\leq{\max|(f\circ y)^{(4)}|(2h)^5\over 2880}\]
-    \[\leq {4h^5\over 45}\]
+    \[\leq {4h^5\over 15}\]
+    This is because
+    \[|(f\circ y)^{(4)}|=|(ff'^4+11f^2f'^2f''+4f^3f''^2+7f^3f'f''+f^4f''')\circ y|\leq 24\]
   \item Now, by assumption,
     \[|y(t+2h)-z(t+2h)|\leq {h|y(t+2h)-z(t+2h)|\over 3}+|E|\]
     So, for example, if $h<1$, we have
-    \[|y(t+2h)-z(t+2h)|\leq {2\over 15}h^5\]
+    \[|y(t+2h)-z(t+2h)|\leq {2\over 5}h^5\]
   \end{itemize}
   
 
@@ -2602,6 +2604,169 @@ So after integration we get
 \[g''=-\cos(y)\cos(2y)=-{\cos(3y)+\cos(y)\over 2}\]
 \[g'''={3\sin(3y)\cos(y)+\sin(y)\cos(y)\over 2}\]
 So $|g'''|\leq 7/4$, or you can use a better bound, and $C=21/32$.
+
+
+\section{Notes on Prior Subjects}
+
+\subsection{Notes on linear algebra}
+
+Recall that a (real) {\bf Vector space} $V$ is a set with an element $0$, a ``scalar multiplication'' map $\mathbb{R}\times V\rightarrow V$ and an ``addition'' map $V\times V\rightarrow V$, such that, for any $x, y, z\in V$, any $a, b\in \mathbb{R}$, the followings are true:
+\begin{enumerate}
+\item $x+y=y+x$
+\item $(x+y)+z=x+(y+z)$
+\item $0+x=x$
+\item $1x=x$
+\item $0x=0$
+\item $(a+b)x=ax+bx$
+\item $a(x+y)=ax+ay$
+\item $(ab)x=a(bx)$
+\end{enumerate}
+
+If $V$ is a vector space, any non empty subset $V'\subset V$ which is closed under addition and scalar multiplication is called a {\bf subspace}.\\
+
+The {\bf span} of a set $S\subset V$ is the subset of $V$ consisting of finite linear combinations of elements of $S$. We call $S\subset V$ a {\bf linearly independent set} if for any finite collection of vectors $s_1, \dots s_n\in S$, $\sum_ia_is_i=0\implies a_i=0\forall i$. We call $S\subset V$ a {\bf basis} of $V$ if $S$ is linearly independent and $V=span(S)$.\\
+
+Any two basis of the same vector space have the same cardinality (number of elements). This cardinality is called the {\bf dimension} of $V$.\\
+
+\begin{exa}
+  \begin{itemize}
+  \item The set of $n$ dimensional column vectors $\mathbb{R}^n$, under the usual addition and scalar multiplication, is a vector space, and it has dimension $n$.
+  \item The set of polynomials of degree no more than $n$, under the usual addition and scalar multiplication, is also a vector space. A basis is $\{1, x, \dots, x^n\}$ hence its dimension is $n+1$.
+  \end{itemize}
+\end{exa}
+
+
+If $B=\{b_1, \dots, b_n\}$ is a basis of a vector space $V$ of dimension $n$, $v\in V$, the {\bf coordinate} of $v$ under $B$ is a vector $x\in\mathbb{R}^n$ such that $v=\sum_ix_ib_i$ where $x_i$ is the $i$-th entry of $x$.\\
+
+A map between two vector spaces $T: V\rightarrow W$ is called a {\bf linear transformation}, if
+\begin{itemize}
+\item $T(x+y)=T(x)+T(y)$
+\item $T(cx)=cT(x)$
+\end{itemize}
+
+If $T: V\rightarrow W$ is a linear transformation between two linear spaces, $x$ is the coordinate of $v$ in basis $B$, $y$ is the coordinate of $T(v)$ under basis $C$, then $y=Ax$ where $A=[a_{ij}]$, and $T(b_j)=\sum_ia_{ij}c_i$.\\
+
+The {\bf inner product} on $\mathbb{R}^n$ is defined as $(x, y)=x^Ty=\sum_ix_iy_i$. It is easy to check that this inner product satisfies the following properties:
+\begin{enumerate}
+\item Symmetry: $(x, y)=(y, x)$
+\item Bilinearity: $(ax+a'x', y)=a(x, y)+a'(x', y)$, $(x, by+b'y')=b(x, y)+b'(x, y')$.
+\item Positive definiteness: $(x, x)\geq 0$ and $(x, x)=0$ iff $x=0$.
+\end{enumerate}
+
+Two vectors are {\bf orthogonal} to each other iff their inner product is $0$. A set of vectors is orthogonal to another set if every vector in the first set is orthogonal to every vector in the second.
+
+Let $V$ be a subspace of $\mathbb{R}^n$. We call a basis of $V$ {\bf orthogonal} if the inner product of distinct basis vectors are all $0$, {\bf orthonomal} if in addition, the inner product of any basis vector with itself is $1$.\\
+
+Given any basis $\{x_1, \dots, x_d\}$ of a subspace $V\subset \mathbb{R}^n$, we can make it into an orthogonal or orthonormal basis via the {\bf Gram-Schmidt process}:
+\[y_1=x_1\]
+\[y_i=x_i-\sum_{j<i}((y_j, x_i)/(y_j, y_j))y_j\]
+Then $\{y_i\}$ is an orthogonal basis, and $\{(y_i, y_i)^{-1/2}y_i\}$ is an orthonormal basis.\\
+
+If $V$ is a subspace of $\mathbb{R}^n$, $x\in \mathbb{R}^n$, we call the {\bf orthogonal projection} of $x$ on $V$, denoted as $P_V(x)$, the unique vector that satisfies $P_V(x)\in V$ and $(x-P_V(x), y)=0$ for all $y\in V$.\\
+
+For any $x'\in V$, $(x-P_V(x), x-P_V(x))\leq (x-x', x-x')$ and equality happens iff $x'=P_V(x)$.\\
+
+To calculate $P_V(x)$, we can use either of these formulas:
+
+\begin{enumerate}
+\item If $\{x_i\}$ is an orthonormal basis of $V$, then $P_V(x)=\sum_i(x, x_i)x_i$.
+\item If $\{x_i\}$ is an orthogonal basis of $V$, then $P_V(x)=\sum_i((x, x_i)/(x_i, x_i))x_i$.
+\item If $\{x_i\}$ is just a basis of $V$, let $X=[x_1, \dots x_d]$ be a $n\times d$ matrix, then
+  \[P_V(x)=X(X^TX)^{-1}X^Tx=\sum_i(\sum_j a_{ij}(x_j, x)) x_i\]
+  Where $A=[a_{ij}]=[(x_i, x_j)]^{-1}$ is a $d\times d$ matrix. 
+\end{enumerate}
+
+If one replace $(x, y)$ with $(x, y)_A$ defined as $x^TAy$, where $A$ is a symmetric matrix with all eigenvalues positive, then $(\cdot, \cdot)_A$ still satisfies symmetry, bilinearity and positive definiteness, and all the conclusions about $(\cdot, \cdot)$ above are still valid.\\
+
+Furthermore, if $V$ is any vector space and $(\cdot, \cdot)$ is a $\mathbb{R}$-valued function on $V\times V$ which is symmetric, bilinear and positive definite, all the conclusions above are valid as well.
+
+\subsection{Notes on ODE}
+
+This is a review on some basics of the theory of ordinary differential equations.
+
+An {\bf ordinary differential equation} is an equation relating a function on $\mathbb{R}$ and its derivatives. For example, the followings are ordinary differential equations:
+
+\[y'=t\sin(y)\]
+\[y'=sin(t)\]
+\[y'=y\cos(t)+e^t\]
+
+We can also have systems of equations like the following
+\[y_1'=y_2, y_2'=-y_1\]
+
+
+The {\bf initial value problem} of an ordinary differential equation means finding a solution after specifying the value of the solution at some time $t_0$, which, for convenience, we can choose to be $0$. For example
+\[y'=y\cos(t)+e^t, y(0)=0\]
+
+In general the solution of an ODE can not be written down explicitly, however, in some situations we can get explicit solutions. For example, if the equation is of the form $y'=f(t)g(y)$, then the general solution is of the form
+\[\int_0^y {ds\over g(s)}=\int_0^t f(s)ds+C\]
+This is called {\bf separation of variables}.
+
+The most important result in the theory of ODE is Picard's theorem:
+
+\begin{thm}
+If $f(t, y)$ is continuous and Lipschitz in the second parameter with Lipschitz constant $L$, then $y'=f(t, y)$, $y(0)=a$ always has a unique solution.
+\end{thm}
+
+\begin{proof}
+ Firstly let's show uniqueness: if $y_1$ and $y_2$ are two solutions, then $|y_1(t)-y_2(t)|e^{-L|t|}$ is non increasing when $t>0$ and non decreasing when $t<0$, hence must always be $0$.\\
+  
+  Now let's show existence: consider a sequence of functions defined as below:
+  \[y_0(t)=a\]
+  \[y_i(t)=a+\int_0^t f(s, y_{i-1}(s))ds\]
+  Then $f$ being Lipschitz implies that
+  \[|y_i(t)-y_{i-1}(t)|\leq \int_0^t L|y_{i-1}(s)-y_{i-2}(s)|ds\]
+  \[\leq \int_0^t L^2(t-s)|y_{i-2}(s)-y_{i-3}(s)|ds\]
+  \[\leq \int_0^t L^3{(t-s)^2\over 2}|y_{i-3}(s)-y_{i-4}(s)|ds\]
+  \[\leq \dots \leq \int_0^t L^{i-1}{(t-s)^{i-2}\over (i-2)!}|y_1(s)-y_0(s)|ds\]
+  \[\leq {\max(|y_1-y_0|)L^{i-1}t^{i-1}\over (i-1)!}\]
+
+  Hence the sequence converges uniformly on any finite interval, and fundamental theorem of calculus implies that the limiting function $y$ is the solution.
+\end{proof}
+
+The argument above can be used to show that if $f$ is real analytic (i.e. has Taylor series convergent to itself), so is $y$.
+
+\subsection{Notes on Linear difference and differential equations and Taylor's theorem}
+
+\subsubsection{Linear Difference Equations}
+
+A homogeneous linear difference equation is an iterative relationship:
+\[z_{n+k}+a_{k-1}z_{n+k-1}+\dots+a_0z_n=0\]
+
+The general solution of a homogeneous linear difference equation can be obtained as follows:
+\begin{itemize}
+\item Firstly, define the characteristic polynomial $\chi(z)=z^k+a_{k-1}z^{k-1}+\dots+a_0$.
+\item Let $\lambda_1, \dots, \lambda_l$ be its distinct roots, $m_1, \dots, m_l$ their multiplicities (hence $\sum_im_i=k$).
+\item Then, the general solution can be written as
+
+\[z_n=\sum_ip_i(n)\lambda_i^n\]
+
+Where $p_i(n)$ is any polynomial of degree no more than $m_i-1$.
+\end{itemize}
+
+\subsubsection{Linear Differential Equations}
+
+Similarly, a homogeneous linear differential equation is
+\[y^{(k)}+a_{k-1}y^{(k-1)}+\dots+a_1y'+a_0y=0\]
+
+The general solution of a homogeneous linear differential equation is as follows:
+\begin{itemize}
+\item Firstly, define the characteristic polynomial $\chi(z)=z^k+a_{k-1}z^{k-1}+\dots+a_0$.
+\item Let $\lambda_1, \dots, \lambda_l$ be its distinct roots, $m_1, \dots, m_l$ their multiplicities (hence $\sum_im_i=k$).
+\item Then, the general solution can be written as
+
+\[y(t)=\sum_ip_i(t)e^{\lambda_i t}\]
+
+Where $p_i(n)$ is any polynomial of degree no more than $m_i-1$.
+\end{itemize}
+
+
+\subsubsection{Taylor Series}
+
+If $f\in C^{k+1}$, then the Taylor series of $f$ at $a$, with Lagrange remainder, is
+
+\[f(x)=f(a)+\sum_{j=1}^{k}{f^{(j)}(a)(x-a)^j\over j!}+{f^{(j+1)}(c)(x-a)^{j+1}\over(j+1)!}\] 
+
+Where $c$ is in the closed interval between $x$ and $a$.
 
 
 \end{document}

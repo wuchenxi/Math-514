@@ -1,0 +1,115 @@
+\documentclass[20pt]{article} % USenglish for autoref
+\usepackage[paper=screen, centering, papersize=20cm]{geometry}
+\usepackage{cmap}		% to search and copy ligatures
+\usepackage[utf8]{inputenc}	% for Linux computer and Mac
+%\usepackage[latin1]{inputenc}	% für Windows computer
+\usepackage[T1]{fontenc}	% to search for ligatures in the pdf
+\usepackage[USenglish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[]{algorithm2e}
+%\usepackage{stmaryrd}		% for \mapsfrom
+\usepackage{aliascnt}		% for Aliascounter so that autoref gives the thms the right names
+\usepackage[pdfborder={0 0 0}]{hyperref}   % if you want to have math environment in captions you have to use \texorpdfstring{$x^2$}{x2}; without frame around the links
+\usepackage[figure]{hypcap}		% to make autoref link to figures and not the captions of figures
+%\usepackage{paralist}		% for compactitem
+\usepackage{mathtools}		% for \coloneqq
+\usepackage[]{todonotes}	% use option disable to disable all the todos
+\usepackage{float}
+\usepackage{lipsum}
+\theoremstyle{break}
+\newtheorem{definition}{Definition}[section]  
+\newtheorem{exa}[definition]{Example}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{lem}[definition]{Lemma}
+\newtheorem{conj}[definition]{Conjecture}
+\newtheorem{quest}[definition]{Research question}
+\newtheorem{thm}[definition]{Theorem}  
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{rem}[definition]{Remark}
+
+
+\renewcommand{\labelenumi}{(\roman{enumi})} % roman numbers in enumerations
+
+\usepackage{graphicx,tikz,pgfplots} % Allows including images
+
+\usetikzlibrary{calc,decorations.markings}
+\usetikzlibrary{shapes,snakes}
+
+\DeclareMathOperator{\Aff}{Aff}
+\DeclareMathOperator{\der}{der}
+\DeclareMathOperator{\Trans}{Trans}
+\DeclareMathOperator{\dir}{dir}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\NN}{\mathbb{N}}
+
+
+%For L Cal and L Twidle:
+\newcommand{\LC}{\mathcal{L}} 
+\newcommand{\LT}{\widetilde{\mathcal{L}}}
+
+%For X bar
+\newcommand{\XB}{\overline{X}}
+
+%For the real and complex numbers
+\newcommand{\RR}{\mathbb{R}} 
+\newcommand{\CC}{\mathbb{C}} 
+
+
+\newcommand{\remark}[2][]{\todo[color=green!50, #1]{#2}}
+
+\title{Notes on Linear Difference and Differential Equations and Taylor Series}
+
+
+\begin{document}
+\maketitle
+
+\section{Linear Difference Equations}
+
+A homogeneous linear difference equation is an iterative relationship:
+\[z_{n+k}+a_{k-1}z_{n+k-1}+\dots+a_0z_n=0\]
+
+The general solution of a homogeneous linear difference equation can be obtained as follows:
+\begin{itemize}
+\item Firstly, define the characteristic polynomial $\chi(z)=z^k+a_{k-1}z^{k-1}+\dots+a_0$.
+\item Let $\lambda_1, \dots, \lambda_l$ be its distinct roots, $m_1, \dots, m_l$ their multiplicities (hence $\sum_im_i=k$).
+\item Then, the general solution can be written as
+
+\[z_n=\sum_ip_i(n)\lambda_i^n\]
+
+Where $p_i(n)$ is any polynomial of degree no more than $m_i-1$.
+\end{itemize}
+
+\section{Linear Differential Equations}
+
+Similarly, a homogeneous linear differential equation is
+\[y^{(k)}+a_{k-1}y^{(k-1)}+\dots+a_1y'+a_0y=0\]
+
+The general solution of a homogeneous linear differential equation is as follows:
+\begin{itemize}
+\item Firstly, define the characteristic polynomial $\chi(z)=z^k+a_{k-1}z^{k-1}+\dots+a_0$.
+\item Let $\lambda_1, \dots, \lambda_l$ be its distinct roots, $m_1, \dots, m_l$ their multiplicities (hence $\sum_im_i=k$).
+\item Then, the general solution can be written as
+
+\[y(t)=\sum_ip_i(t)e^{\lambda_i t}\]
+
+Where $p_i(n)$ is any polynomial of degree no more than $m_i-1$.
+\end{itemize}
+
+
+\section{Taylor Series}
+
+If $f\in C^{k+1}$, then the Taylor series of $f$ at $a$, with Lagrange remainder, is
+
+\[f(x)=f(a)+\sum_{j=1}^{k}{f^{(j)}(a)(x-a)^j\over j!}+{f^{(j+1)}(c)(x-a)^{j+1}\over(j+1)!}\] 
+
+Where $c$ is in the closed interval between $x$ and $a$.
+
+\end{document}
