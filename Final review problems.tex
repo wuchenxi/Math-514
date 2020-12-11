@@ -89,7 +89,7 @@ Answer: These two points are the Gauss quadrature points on interval $[0, \pi]$ 
 \[0=\int_0^\pi \sin(x)xp_2(x)dx=\pi^3-6\pi+a(\pi^2-4)+b\pi\]
 So $a=-\pi$, $b=2$, $x_0={\pi-\sqrt{\pi^2-8}\over 2}$, $x_1={\pi+\sqrt{\pi^2-8}\over 2}$.
 And by Theorem 10.1 from the textbook or 3.19(iv) in the Lecture notes,
-\[C={\int_0^\pi\sin(x)(x^2-\pi x+2)^2dx\over 6!}={10-\pi^2\over 180}\]
+\[C={\int_0^\pi\sin(x)(x^2-\pi x+2)^2dx\over 4!}={10-\pi^2\over 6}\]
 
 3. Estimate the solution of $y'=\sin(y)$, $y(0)=1$ at time $0.1$ using Euler's method, improved Euler's method, and rk4, using time step $h=0.1$. \\
 
@@ -111,7 +111,7 @@ Where $h$ is step size and $z(t)$ is the estimate for $y(t)$. Find all real numb
 
 Answer: The first characteristic polynomial is
 \[\rho(z)=z^2-az-b\]
-To make it consistent, $\rho(1)=0$, $c+d=2-a$, so $1-a-b=0$, $b=1-a$, and the other root must be $a-1$, so $0\leq a<2$ and $b=1-a$.
+To make it consistent, $\rho(1)=0$, $c+d=2-a$, so $1-a-b=0$, $b=1-a$, and the roots of $\rho$ must be $1$ and $a-1$, so $0\leq a<2$ and $b=1-a$.
 
 Now let's calculate the order of accuracy. Firstly, let $t=nh$, suppose $y$ is the solution of the IVP, then
 \[y'(t)=f(t, y(t))\]
